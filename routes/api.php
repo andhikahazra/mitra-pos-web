@@ -36,6 +36,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::post('/transactions', [TransactionController::class, 'store']);
     Route::get('/transactions/{id}', [TransactionController::class, 'show']);
+    Route::patch('/transactions/{id}/settle', [TransactionController::class, 'settle']);
 
     // Supplier API
     Route::get('/suppliers', [SupplierController::class, 'index']);

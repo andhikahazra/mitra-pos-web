@@ -58,8 +58,15 @@
                 <input class="field" name="start_date" type="date" value="{{ $startDate }}" placeholder="Mulai">
                 <span class="text-slate-400">s/d</span>
                 <input class="field" name="end_date" type="date" value="{{ $endDate }}" placeholder="Akhir">
+                <select name="method" class="field">
+                    <option value="">Semua Metode</option>
+                    <option value="Tunai" {{ request('method') === 'Tunai' ? 'selected' : '' }}>Tunai</option>
+                    <option value="QRIS" {{ request('method') === 'QRIS' ? 'selected' : '' }}>QRIS</option>
+                    <option value="Transfer" {{ request('method') === 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                    <option value="Piutang" {{ request('method') === 'Piutang' ? 'selected' : '' }}>Piutang</option>
+                </select>
                 <button class="btn btn-primary" type="submit">Filter</button>
-                @if(request('start_date') || request('end_date'))
+                @if(request('start_date') || request('end_date') || request('method'))
                     <a class="btn btn-ghost" href="{{ route('transaksi.index') }}">Reset</a>
                 @endif
             </div>

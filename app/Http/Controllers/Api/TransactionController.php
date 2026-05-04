@@ -231,4 +231,47 @@ class TransactionController extends Controller
             'data' => $transaksi
         ]);
     }
+
+    public function settle(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'metode_pembayaran' => 'required|string|in:Tunai,QRIS,Transfer',
+            'biaya_admin' => 'nullable|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak valid',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $transaksi = Transaksi::find($id);
+
+        if (!$transaksi) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
+        }
+
+        if ($transaksi->metode_pembayaran !== 'Piutang') {
+            return response()->json(['success' => false, 'message' => 'Hanya transaksi piutang yang dapat dilunasi'], 400);
+        }
+
+        $updateData = [
+            'metode_pembayaran' => $request->metode_pembayaran,
+            'status' => 'Selesai',
+        ];
+
+        if ($request->has('biaya_admin')) {
+            $updateData['biaya_admin'] = $request->biaya_admin;
+        }
+
+        $transaksi->update($updateData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Piutang berhasil dilunasi',
+            'data' => $transaksi
+        ]);
+    }
 }

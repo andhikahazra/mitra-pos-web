@@ -31,6 +31,10 @@ class TransaksiController extends Controller
             $query->whereDate('tanggal', '<=', $endDate);
         }
 
+        if ($request->filled('method')) {
+            $query->where('metode_pembayaran', $request->method);
+        }
+
         $transaksi = $query->orderByDesc('tanggal')
             ->orderByDesc('id')
             ->paginate(20)
@@ -44,6 +48,10 @@ class TransaksiController extends Controller
             $summaryQuery->whereDate('tanggal', '>=', $startDate);
         } elseif ($endDate) {
             $summaryQuery->whereDate('tanggal', '<=', $endDate);
+        }
+
+        if ($request->filled('method')) {
+            $summaryQuery->where('metode_pembayaran', $request->method);
         }
 
         $summaryIds = $summaryQuery->pluck('id');
