@@ -89,45 +89,33 @@ class RopController extends Controller
             $status = 'aman';
         }
 
-        // Ambil periode dari database, jika tidak ada default ke 30
+        // Tentukan titik referensi waktu (Waktu Kalkulasi), jika belum pernah dihitung pakai 'now'
+        $calculationTime = $produk->rop->updated_at ?? now();
         $periode = $produk->rop->periode ?? 30;
 
-        // Ambil data penjualan harian selama periode tersebut
-        $startDate = now()->subDays($periode)->format('Y-m-d');
+        // Ambil data penjualan harian selama periode tersebut (berdasarkan waktu kalkulasi)
+        $startDate = $calculationTime->copy()->subDays($periode - 1)->startOfDay();
+        $endDate   = $calculationTime->copy()->endOfDay();
+        
         $salesHistory = LogStok::where('produk_id', $produk->id)
-            ->where('tipe', 'Keluar')
-            ->whereHas('transaksi', function ($q) use ($startDate) {
-                $q->where('tanggal', '>=', $startDate);
+            ->whereIn('tipe', ['Keluar', 'keluar'])
+            ->whereHas('transaksi', function ($q) use ($startDate, $endDate) {
+                $q->whereBetween('tanggal', [$startDate, $endDate]);
             })
             ->with('transaksi:id,tanggal')
             ->get()
             ->groupBy(function ($item) {
-                return $item->transaksi->tanggal;
+                return \Carbon\Carbon::parse($item->transaksi->tanggal)->format('Y-m-d');
             })
             ->map(function ($day) {
                 return $day->sum('jumlah');
             });
 
-        // Pastikan ada data sesuai periode
+        // Buat urutan kronologis (Dari Terlama ke Terbaru)
         $dailyData = [];
-        $hasRealData = false;
-        for ($i = 0; $i < $periode; $i++) {
-            $date = now()->subDays($i)->format('Y-m-d');
-            $qty = $salesHistory[$date] ?? 0;
-            if ($qty > 0) $hasRealData = true;
-            $dailyData[$date] = $qty;
-        }
-
-        // Jika tidak ada data real, buat simulasi agar "Bagus" untuk presentasi
-        $isSample = false;
-        if (!$hasRealData) {
-            $isSample = true;
-            // Buat angka acak yang masuk akal berdasarkan rata_penjualan di tabel ROP
-            $baseVal = $rataJual > 0 ? $rataJual : 5;
-            foreach ($dailyData as $date => $qty) {
-                // Randomize sedikit agar terlihat alami (base +/- 30%)
-                $dailyData[$date] = max(0, round($baseVal + rand(-($baseVal*0.5), ($baseVal*0.5))));
-            }
+        for ($i = $periode - 1; $i >= 0; $i--) {
+            $date = $calculationTime->copy()->subDays($i)->format('Y-m-d');
+            $dailyData[$date] = $salesHistory[$date] ?? 0;
         }
 
         return view('rop.show', [
@@ -142,8 +130,8 @@ class RopController extends Controller
             'usageLT'         => $rataJual * $leadTime,
             'sqrtLT'          => sqrt($leadTime),
             'zScore'          => 1.65, 
-            'dailyData'       => array_reverse($dailyData),
-            'isSample'        => $isSample,
+            'dailyData'       => $dailyData,
+            'isSample'        => false, // Simulasi dimatikan untuk integritas data
             'periode'         => $periode,
             'calculatedAt'    => $produk->rop->updated_at ? $produk->rop->updated_at->translatedFormat('l, d F Y H:i') : '-'
         ]);
