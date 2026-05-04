@@ -5,7 +5,65 @@
     <div class="section-head mb-6">
         <div>
             <h1>Approval Barang Masuk</h1>
+            <p class="text-slate-500 text-sm mt-1">Kelola dan tinjau riwayat pengadaan stok barang.</p>
         </div>
+    </div>
+
+    {{-- Ringkasan Modal --}}
+    <div class="kpi-strip mb-6">
+        <div class="kpi-card">
+            <span class="kpi-label">Total Uang Modal Keseluruhan</span>
+            <div class="flex items-baseline gap-1">
+                <h3 class="text-indigo-600">Rp {{ number_format($totalModalOverall, 0, ',', '.') }}</h3>
+            </div>
+            <p class="kpi-trend info mt-1">Total akumulasi modal disetujui</p>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Modal Bulan Ini ({{ \Carbon\Carbon::create(null, $selectedMonth)->translatedFormat('F') }} {{ $selectedYear }})</span>
+            <div class="flex items-baseline gap-1">
+                <h3 class="text-slate-800">Rp {{ number_format($totalModalMonth, 0, ',', '.') }}</h3>
+            </div>
+            <p class="kpi-trend warning mt-1">Pengeluaran modal periode dipilih</p>
+        </div>
+    </div>
+
+    {{-- Filter Toolbar --}}
+    <div class="panel-card mb-6 p-4">
+        <form action="{{ route('barang-masuk.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
+            <div class="flex-1 min-w-[200px]">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Status Approval</label>
+                <select name="status" class="field" onchange="this.form.submit()">
+                    <option value="">Semua Status</option>
+                    <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                    <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                </select>
+            </div>
+            <div class="w-[180px]">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Bulan</label>
+                <select name="month" class="field" onchange="this.form.submit()">
+                    @for($i = 1; $i <= 12; $i++)
+                        <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::create(null, $i)->translatedFormat('F') }}
+                        </option>
+                    @endfor
+                </select>
+            </div>
+            <div class="w-[120px]">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Tahun</label>
+                <select name="year" class="field" onchange="this.form.submit()">
+                    @php $currentYear = now()->year; @endphp
+                    @for($y = $currentYear; $y >= $currentYear - 3; $y--)
+                        <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+            </div>
+            <div>
+                <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost" title="Reset Filter">
+                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </a>
+            </div>
+        </form>
     </div>
 
     <article class="panel-card">

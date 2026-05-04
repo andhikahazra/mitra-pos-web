@@ -14,20 +14,56 @@ use Illuminate\Support\Facades\DB;
 
 class BarangMasukController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $incomingGoods = BarangMasuk::query()
+        $query = BarangMasuk::query()
             ->with([
                 'user:id,nama',
                 'supplier:id,nama',
                 'detail.produk:id,nama',
-            ])
-            ->orderByDesc('tanggal_pesan')
+            ]);
+
+        // Filter Status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter Bulan/Tahun (berdasarkan tanggal_pesan)
+        if ($request->filled('month')) {
+            $query->whereMonth('tanggal_pesan', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('tanggal_pesan', $request->year);
+        }
+
+        $incomingGoods = $query->orderByDesc('tanggal_pesan')
             ->orderByDesc('id')
             ->get();
 
+        // Hitung Modal Keseluruhan (Hanya yang Disetujui)
+        $totalModalOverall = DB::table('barang_masuk')
+            ->join('detail_barang_masuk', 'barang_masuk.id', '=', 'detail_barang_masuk.barang_masuk_id')
+            ->where('barang_masuk.status', 'Disetujui')
+            ->sum(DB::raw('detail_barang_masuk.jumlah * detail_barang_masuk.harga'));
+
+        // Hitung Modal Bulan Ini (Hanya yang Disetujui)
+        // Jika ada filter month/year, gunakan filter tersebut. Jika tidak, gunakan bulan saat ini.
+        $targetMonth = $request->month ?? now()->month;
+        $targetYear = $request->year ?? now()->year;
+
+        $totalModalMonth = DB::table('barang_masuk')
+            ->join('detail_barang_masuk', 'barang_masuk.id', '=', 'detail_barang_masuk.barang_masuk_id')
+            ->where('barang_masuk.status', 'Disetujui')
+            ->whereMonth('barang_masuk.tanggal_pesan', $targetMonth)
+            ->whereYear('barang_masuk.tanggal_pesan', $targetYear)
+            ->sum(DB::raw('detail_barang_masuk.jumlah * detail_barang_masuk.harga'));
+
         return view('barang-masuk.index', [
-            'incomingGoods' => $incomingGoods
+            'incomingGoods' => $incomingGoods,
+            'totalModalOverall' => $totalModalOverall,
+            'totalModalMonth' => $totalModalMonth,
+            'selectedMonth' => $targetMonth,
+            'selectedYear' => $targetYear
         ]);
     }
 

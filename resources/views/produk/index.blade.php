@@ -53,11 +53,6 @@
                                     <div class="row-actions">
                                         <a class="link-btn more" href="{{ route('produk.show', $item) }}">Detail</a>
                                         <a class="link-btn edit" href="{{ route('produk.edit', $item) }}">Edit</a>
-                                        <form method="POST" action="{{ route('produk.destroy', $item) }}" data-confirm-submit="true" data-confirm-title="Hapus Produk" data-confirm-message="Yakin ingin menghapus produk {{ $item->nama }}? Aksi ini tidak dapat dibatalkan.">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="link-btn delete" type="submit">Hapus</button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>
