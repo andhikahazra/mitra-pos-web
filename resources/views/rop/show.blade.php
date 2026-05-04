@@ -156,15 +156,16 @@
                     <div class="p-5">
                         <div class="flex gap-2 overflow-x-auto pb-4 custom-scroll">
                             @php 
-                                $sum = 0; 
-                                $mean = count($dailyData) > 0 ? array_sum($dailyData) / count($dailyData) : 0;
+                                $sum = array_sum($dailyData); 
+                                $rawMean = count($dailyData) > 0 ? $sum / count($dailyData) : 0;
+                                $mean = round($rawMean, 2);
                             @endphp
                             
                             <div class="flex">
                                 {{-- Kolom Label Tetap di Kiri --}}
                                 <div class="flex-none w-20 flex flex-col gap-1 mr-4">
                                     <div class="h-[38px] flex items-center">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase leading-tight">Penjualan<br>(x)</span>
+                                        <span class="text-[9px] font-black text-slate-400 uppercase leading-tight">Penjualan<br>(x<sub>i</sub>)</span>
                                     </div>
                                     <div class="h-[26px] flex items-center">
                                         <span class="text-[9px] font-black text-slate-400 uppercase leading-tight">Kuadrat<br>Selisih</span>
@@ -180,7 +181,7 @@
                                         @php 
                                             $sum += $qty;
                                             $diff = ($qty ?? 0) - $mean;
-                                            $sqDiff = pow($diff, 2);
+                                            $sqDiff = round(pow($diff, 2), 2);
                                         @endphp
                                         <div class="flex-none w-12 flex flex-col gap-1 text-center">
                                             {{-- Penjualan --}}
