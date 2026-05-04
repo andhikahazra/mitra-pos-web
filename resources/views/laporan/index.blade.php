@@ -5,8 +5,7 @@
     <div class="pemilik-hero">
         <div class="hero-copy">
             <p class="hero-kicker">Financial Analysis & Performance</p>
-            <h1>Laporan Laba Rugi</h1>
-            <p>Analisis omzet dan laba kotor toko berdasarkan rentang waktu yang dipilih.</p>
+            <h1>Laporan Keuangan</h1>
         </div>
 
         <div class="hero-filter-panel">

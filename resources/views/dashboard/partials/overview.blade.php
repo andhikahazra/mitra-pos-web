@@ -31,7 +31,7 @@
 
             <div class="hero-actions">
                 <p class="hero-filter-label" id="heroFilterLabel">Menampilkan data hari ini</p>
-                <button class="btn btn-primary">Unduh Ringkasan</button>
+
             </div>
         </div>
     </div>

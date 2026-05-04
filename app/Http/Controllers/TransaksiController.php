@@ -57,15 +57,16 @@ class TransaksiController extends Controller
         $summaryIds = $summaryQuery->pluck('id');
         
         $summary = [
-            'total_transaksi' => $summaryQuery->count(),
-            'total_item'      => (int) \App\Models\DetailTransaksi::whereIn('transaksi_id', $summaryIds)->sum('jumlah'),
-            'total_nilai'     => (float) $summaryQuery->sum('total_harga'), // Murni harga barang
-            'total_admin'     => (float) $summaryQuery->sum('biaya_admin'), // Pisah biaya admin
-            'pembayaran'      => [
+            'total_transaksi'  => $summaryQuery->count(),
+            'total_item'       => (int) \App\Models\DetailTransaksi::whereIn('transaksi_id', $summaryIds)->sum('jumlah'),
+            'total_omzet'      => (float) $summaryQuery->sum('total_harga'),
+            'total_pendapatan' => (float) $summaryQuery->clone()->where('metode_pembayaran', '!=', 'Piutang')->sum('total_harga'),
+            'total_piutang'    => (float) $summaryQuery->clone()->where('metode_pembayaran', 'Piutang')->sum('total_harga'),
+            'total_admin_qris' => (float) $summaryQuery->clone()->where('metode_pembayaran', 'QRIS')->sum('biaya_admin'),
+            'pembayaran'       => [
                 'Tunai'    => (float) $summaryQuery->clone()->where('metode_pembayaran', 'Tunai')->sum('total_harga'),
                 'QRIS'     => (float) $summaryQuery->clone()->where('metode_pembayaran', 'QRIS')->sum('total_harga'),
                 'Transfer' => (float) $summaryQuery->clone()->where('metode_pembayaran', 'like', 'Transfer%')->sum('total_harga'),
-                'Piutang'  => (float) $summaryQuery->clone()->where('metode_pembayaran', 'Piutang')->sum('total_harga'),
             ]
         ];
 

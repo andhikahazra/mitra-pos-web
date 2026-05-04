@@ -10,43 +10,41 @@
 
     {{-- Summary Cards --}}
     <div class="kpi-strip mb-4">
-        <article class="kpi-card">
-            <p class="kpi-label">Total Transaksi</p>
-            <h3>{{ $summary['total_transaksi'] }}</h3>
-            <p class="kpi-trend info">{{ $summary['total_item'] }} items terjual</p>
+        <article class="kpi-card" style="border-left: 4px solid #4f46e5;">
+            <p class="kpi-label">Total Omzet (Kotor)</p>
+            <h3 style="color: #1e1b4b;">Rp {{ number_format($summary['total_omzet'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend info">{{ $summary['total_transaksi'] }} transaksi | {{ $summary['total_item'] }} item</p>
+        </article>
+        <article class="kpi-card" style="border-left: 4px solid #16a34a;">
+            <p class="kpi-label">Total Pendapatan (Lunas)</p>
+            <h3 style="color: #064e3b;">Rp {{ number_format($summary['total_pendapatan'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend positive">Uang riil yang sudah diterima</p>
+        </article>
+        <article class="kpi-card" style="border-left: 4px solid #ea580c;">
+            <p class="kpi-label">Piutang (Belum Terbayar)</p>
+            <h3 style="color: #7c2d12;">Rp {{ number_format($summary['total_piutang'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend warning">Uang yang masih di pelanggan</p>
         </article>
         <article class="kpi-card">
-            <p class="kpi-label">Total Nilai (Barang)</p>
-            <h3>Rp {{ number_format($summary['total_nilai'], 0, ',', '.') }}</h3>
-            <p class="kpi-trend positive">Belum termasuk biaya admin</p>
-        </article>
-        <article class="kpi-card">
-            <p class="kpi-label">Biaya Admin & QRIS</p>
-            <div class="mt-2 text-xs space-y-1">
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Total Admin:</span>
-                    <span class="font-bold">Rp {{ number_format($summary['total_admin'], 0, ',', '.') }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Omzet QRIS:</span>
-                    <span class="font-bold">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</span>
-                </div>
-            </div>
-        </article>
-        <article class="kpi-card">
-            <p class="kpi-label">Metode Lainnya</p>
+            <p class="kpi-label">Rincian Per Metode</p>
             <div class="mt-2 text-xs space-y-1">
                 <div class="flex justify-between">
                     <span class="text-slate-500">Tunai:</span>
                     <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between">
+                    <span class="text-slate-500">QRIS:</span>
+                    <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</span>
+                </div>
+                @if($summary['total_admin_qris'] > 0)
+                    <div class="flex justify-between">
+                        <span class="text-[10px] text-slate-400">Total Admin QRIS:</span>
+                        <span class="text-[10px] font-medium text-slate-400">Rp {{ number_format($summary['total_admin_qris'], 0, ',', '.') }}</span>
+                    </div>
+                @endif
+                <div class="flex justify-between">
                     <span class="text-slate-500">Transfer:</span>
                     <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Piutang:</span>
-                    <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Piutang'] ?? 0, 0, ',', '.') }}</span>
                 </div>
             </div>
         </article>
@@ -82,7 +80,6 @@
                         <th>Metode</th>
                         <th>Item</th>
                         <th>Total Nilai</th>
-                        <th>Biaya Admin</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -103,13 +100,11 @@
                             </td>
                             <td class="text-slate-900">{{ $trx->detail_transaksi->sum('jumlah') }} item</td>
                             <td>
-                                <div class="font-bold text-slate-900">Rp {{ number_format((float) $trx->total_harga, 0, ',', '.') }}</div>
-                            </td>
-                            <td>
+                                <div class="font-bold text-slate-900">
+                                    Rp {{ number_format((float) $trx->total_harga, 0, ',', '.') }}
+                                </div>
                                 @if($trx->biaya_admin > 0)
-                                    <div class="font-medium text-slate-900">Rp {{ number_format($trx->biaya_admin, 0, ',', '.') }}</div>
-                                @else
-                                    <span class="text-slate-300">-</span>
+                                    <div class="text-[10px] text-slate-400">+ Admin Rp {{ number_format($trx->biaya_admin, 0, ',', '.') }}</div>
                                 @endif
                             </td>
                             <td>
