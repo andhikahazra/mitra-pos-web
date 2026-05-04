@@ -325,7 +325,7 @@
     }
 
     .kpi-card {
-        @apply rounded-[18px] border border-slate-200/80 bg-[#F8F9FA] p-5 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_6px_20px_-8px_rgba(0,0,0,0.05)] dark:border-slate-800/80 dark:bg-slate-900;
+        @apply rounded-[18px] border border-slate-200/80 bg-white p-5 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_6px_20px_-8px_rgba(0,0,0,0.05)] dark:border-slate-800/80 dark:bg-slate-900;
     }
 
     .kpi-label {
@@ -333,7 +333,7 @@
     }
 
     .kpi-card h3 {
-        @apply mt-2 text-2xl font-bold tracking-tight text-slate-700 dark:text-slate-200;
+        @apply mt-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-200;
     }
 
     .kpi-trend {

@@ -14,14 +14,14 @@
         <div class="kpi-card">
             <span class="kpi-label">Total Uang Modal Keseluruhan</span>
             <div class="flex items-baseline gap-1">
-                <h3 class="text-indigo-600">Rp {{ number_format($totalModalOverall, 0, ',', '.') }}</h3>
+                <h3 class="text-slate-900">Rp {{ number_format($totalModalOverall, 0, ',', '.') }}</h3>
             </div>
             <p class="kpi-trend info mt-1">Total akumulasi modal disetujui</p>
         </div>
         <div class="kpi-card">
             <span class="kpi-label">Modal Bulan Ini ({{ \Carbon\Carbon::create(null, $selectedMonth)->translatedFormat('F') }} {{ $selectedYear }})</span>
             <div class="flex items-baseline gap-1">
-                <h3 class="text-slate-800">Rp {{ number_format($totalModalMonth, 0, ',', '.') }}</h3>
+                <h3 class="text-slate-900">Rp {{ number_format($totalModalMonth, 0, ',', '.') }}</h3>
             </div>
             <p class="kpi-trend warning mt-1">Pengeluaran modal periode dipilih</p>
         </div>
@@ -58,8 +58,9 @@
                     @endfor
                 </select>
             </div>
-            <div>
-                <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost" title="Reset Filter">
+            <div class="flex flex-col">
+                <label class="text-[11px] mb-2 block opacity-0">&nbsp;</label>
+                <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost !h-11 w-11 !p-0 flex items-center justify-center" title="Reset Filter">
                     <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                 </a>
             </div>
@@ -89,7 +90,7 @@
                         <tr>
                             <td>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-slate-800">#{{ $item->kode }}</span>
+                                    <span class="font-bold text-slate-900">#{{ $item->kode }}</span>
                                     <span class="text-[10px] text-slate-400 font-mono">{{ $item->tanggal_pesan ? $item->tanggal_pesan->format('d M Y, H:i') : '-' }}</span>
                                 </div>
                             </td>
@@ -110,7 +111,7 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="font-extrabold text-slate-800 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
+                                <span class="font-extrabold text-slate-900 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
                             </td>
                             <td>
                                 @if (strtolower($item->status) === 'disetujui')

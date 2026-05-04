@@ -10,17 +10,17 @@
 
     {{-- Summary Cards --}}
     <div class="kpi-strip mb-4">
-        <article class="kpi-card !bg-white">
+        <article class="kpi-card">
             <p class="kpi-label">Total Transaksi</p>
             <h3>{{ $summary['total_transaksi'] }}</h3>
             <p class="kpi-trend info">{{ $summary['total_item'] }} items terjual</p>
         </article>
-        <article class="kpi-card !bg-white">
+        <article class="kpi-card">
             <p class="kpi-label">Total Nilai (Barang)</p>
             <h3>Rp {{ number_format($summary['total_nilai'], 0, ',', '.') }}</h3>
             <p class="kpi-trend positive">Belum termasuk biaya admin</p>
         </article>
-        <article class="kpi-card !bg-white">
+        <article class="kpi-card">
             <p class="kpi-label">Biaya Admin & QRIS</p>
             <div class="mt-2 text-xs space-y-1">
                 <div class="flex justify-between">
@@ -33,16 +33,20 @@
                 </div>
             </div>
         </article>
-        <article class="kpi-card !bg-white">
+        <article class="kpi-card">
             <p class="kpi-label">Metode Lainnya</p>
             <div class="mt-2 text-xs space-y-1">
                 <div class="flex justify-between">
                     <span class="text-slate-500">Tunai:</span>
-                    <span class="font-bold">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</span>
+                    <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-slate-500">Transfer/Piutang:</span>
-                    <span class="font-bold">Rp {{ number_format($summary['pembayaran']['Transfer'] + $summary['pembayaran']['Piutang'], 0, ',', '.') }}</span>
+                    <span class="text-slate-500">Transfer:</span>
+                    <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-500">Piutang:</span>
+                    <span class="font-bold text-slate-900">Rp {{ number_format($summary['pembayaran']['Piutang'] ?? 0, 0, ',', '.') }}</span>
                 </div>
             </div>
         </article>
@@ -79,9 +83,9 @@
                 <tbody>
                     @forelse($transaksi as $trx)
                         <tr>
-                            <td class="font-bold text-indigo-600">{{ $trx->kode }}</td>
+                            <td class="font-bold text-slate-900">{{ $trx->kode }}</td>
                             <td>
-                                <div class="text-sm font-bold">{{ $trx->tanggal ? $trx->tanggal->format('d M Y') : '-' }}</div>
+                                <div class="text-sm font-bold text-slate-900">{{ $trx->tanggal ? $trx->tanggal->format('d M Y') : '-' }}</div>
                                 <div class="text-xs text-slate-500">{{ $trx->tanggal ? $trx->tanggal->format('H:i') : '' }} WIB</div>
                             </td>
                             <td>{{ $trx->user->nama ?? '-' }}</td>
@@ -90,13 +94,13 @@
                                     {{ $trx->metode_pembayaran }}
                                 </span>
                             </td>
-                            <td>{{ $trx->detail_transaksi->sum('jumlah') }} item</td>
+                            <td class="text-slate-900">{{ $trx->detail_transaksi->sum('jumlah') }} item</td>
                             <td>
-                                <div class="font-bold text-slate-700">Rp {{ number_format((float) $trx->total_harga, 0, ',', '.') }}</div>
+                                <div class="font-bold text-slate-900">Rp {{ number_format((float) $trx->total_harga, 0, ',', '.') }}</div>
                             </td>
                             <td>
                                 @if($trx->biaya_admin > 0)
-                                    <div class="font-medium text-orange-600">Rp {{ number_format($trx->biaya_admin, 0, ',', '.') }}</div>
+                                    <div class="font-medium text-slate-900">Rp {{ number_format($trx->biaya_admin, 0, ',', '.') }}</div>
                                 @else
                                     <span class="text-slate-300">-</span>
                                 @endif

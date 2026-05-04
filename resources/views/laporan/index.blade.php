@@ -29,22 +29,22 @@
     <div class="kpi-strip">
         <article class="kpi-card">
             <p class="kpi-label">Total Omset</p>
-            <h3>Rp {{ number_format($totalOmset, 0, ',', '.') }}</h3>
+            <h3 class="text-slate-900">Rp {{ number_format($totalOmset, 0, ',', '.') }}</h3>
             <p class="kpi-trend positive">Total Penjualan Kotor</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Total Modal</p>
-            <h3 class="text-orange-600">Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
+            <h3 class="text-slate-900">Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
             <p class="kpi-trend neutral">HPP (Harga Pokok Penjualan)</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Laba Kotor</p>
-            <h3 class="text-green-600">Rp {{ number_format($labaKotor, 0, ',', '.') }}</h3>
+            <h3 class="text-slate-900">Rp {{ number_format($labaKotor, 0, ',', '.') }}</h3>
             <p class="kpi-trend success">Keuntungan Penjualan</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Total Transaksi</p>
-            <h3>{{ $totalTransaksi }}</h3>
+            <h3 class="text-slate-900">{{ $totalTransaksi }}</h3>
             <p class="kpi-trend info">Volume Penjualan</p>
         </article>
     </div>
@@ -65,12 +65,12 @@
                             <th>Omset (Rp)</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-slate-900">
                         @forelse($dailyStats as $stat)
                             <tr>
                                 <td class="font-bold">{{ date('d M Y', strtotime($stat->date)) }}</td>
-                                <td>{{ $stat->count }}</td>
-                                <td>{{ number_format($stat->omset, 0, ',', '.') }}</td>
+                                <td class="font-mono">{{ $stat->count }}</td>
+                                <td class="font-mono">{{ number_format($stat->omset, 0, ',', '.') }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -97,12 +97,12 @@
                             <th class="text-right">Total Penjualan</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-slate-900">
                         @forelse($topProducts as $top)
                             <tr>
                                 <td class="font-medium">{{ $top->produk->nama ?? '-' }}</td>
-                                <td class="text-center">{{ (int)$top->total_qty }}</td>
-                                <td class="text-right font-bold">Rp {{ number_format($top->total_sales, 0, ',', '.') }}</td>
+                                <td class="text-center font-mono">{{ (int)$top->total_qty }}</td>
+                                <td class="text-right font-bold font-mono">Rp {{ number_format($top->total_sales, 0, ',', '.') }}</td>
                             </tr>
                         @empty
                             <tr>

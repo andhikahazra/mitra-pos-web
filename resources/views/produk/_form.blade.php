@@ -22,6 +22,10 @@
                 <input class="field" name="nama" id="productName" placeholder="Contoh: Sabun Mandi Lifebuoy..." value="{{ old('nama', $isEdit ? $produk->nama : '') }}" required>
             </label>
 
+            <label>SKU (Stock Keeping Unit)
+                <input class="field font-mono" name="sku" id="productSku" placeholder="Contoh: PRD-0001..." value="{{ old('sku', $isEdit ? $produk->sku : ($suggestedSku ?? '')) }}" required>
+            </label>
+
 
 
             <label>Kategori

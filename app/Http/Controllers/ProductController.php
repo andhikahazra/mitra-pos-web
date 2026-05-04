@@ -171,7 +171,7 @@ class ProductController extends Controller
         return $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'sku' => [
-                'nullable',
+                'required',
                 'string',
                 'max:255',
                 Rule::unique('produk', 'sku')->ignore($ignoreId),
