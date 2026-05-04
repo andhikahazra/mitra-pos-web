@@ -18,12 +18,10 @@
         <article class="kpi-card" style="border-left: 4px solid #16a34a;">
             <p class="kpi-label">Total Pendapatan (Lunas)</p>
             <h3 style="color: #064e3b;">Rp {{ number_format($summary['total_pendapatan'], 0, ',', '.') }}</h3>
-            <p class="kpi-trend positive">Uang riil yang sudah diterima</p>
         </article>
         <article class="kpi-card" style="border-left: 4px solid #ea580c;">
             <p class="kpi-label">Piutang (Belum Terbayar)</p>
             <h3 style="color: #7c2d12;">Rp {{ number_format($summary['total_piutang'], 0, ',', '.') }}</h3>
-            <p class="kpi-trend warning">Uang yang masih di pelanggan</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Rincian Per Metode</p>
