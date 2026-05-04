@@ -5,7 +5,6 @@
     <div class="section-head">
         <div>
             <h1>Pengaturan Sistem</h1>
-            <p>Konfigurasi operasional toko dan informasi struk untuk aplikasi mobile.</p>
         </div>
         <button type="button" id="btn-edit" class="btn secondary" style="padding: 8px 20px;">
             <i class="fas fa-edit"></i> Edit Pengaturan
@@ -68,7 +67,7 @@
 
                     <div class="field-group">
                         <label>Biaya Admin QRIS (Rp)</label>
-                        <input type="number" name="biaya_admin_qris" class="field setting-input" value="{{ old('biaya_admin_qris', (int)$setting->biaya_admin_qris) }}" required disabled>
+                        <input type="number" name="biaya_admin_qris" class="field setting-input" value="{{ old('biaya_admin_qris', round($setting->biaya_admin_qris)) }}" required disabled>
                     </div>
                 </div>
             </article>

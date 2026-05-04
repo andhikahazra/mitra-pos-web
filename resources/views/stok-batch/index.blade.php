@@ -5,7 +5,6 @@
     <div class="section-head">
         <div>
             <h1>Monitoring Stok & Inventori</h1>
-            <p>Daftar stok produk aktif yang tersedia di seluruh batch (FIFO).</p>
         </div>
     </div>
 

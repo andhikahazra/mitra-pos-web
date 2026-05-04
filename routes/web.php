@@ -41,6 +41,7 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
 
     // ROP
     Route::get('/rop', [RopController::class, 'index'])->name('rop.index');
+    Route::get('/rop/{produk}', [RopController::class, 'show'])->name('rop.show');
 
     // Transaksi
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');

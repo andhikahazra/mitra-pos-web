@@ -37,11 +37,12 @@ class DashboardController extends Controller
             ];
         }
 
-        // Ambil info toko dasar
+        // Ambil info toko dasar dari pengaturan
+        $setting = \App\Models\Setting::first();
         $storeInfo = [
-            'name' => 'Toko MitraPOS',
-            'username' => $request->user()->name,
-            'category' => 'Operasional POS',
+            'name' => $setting->nama_toko ?? 'Toko MitraPOS',
+            'username' => $request->user()->nama,
+            'category' => 'Operasional POS', // Bisa diambil dari pengaturan jika ada
             'totalProducts' => Produk::count(),
             'activeProducts' => Produk::where('status', true)->count(),
         ];

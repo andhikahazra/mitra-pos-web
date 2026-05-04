@@ -39,7 +39,7 @@
         {{-- Summary Cards --}}
         <div class="trx-detail-layout">
             <article class="trx-summary-card">
-                <p class="trx-summary-label">Informasi Kasir</p>
+                <p class="trx-summary-label">Staff</p>
                 <h3>{{ $transaksi->user->nama ?? '-' }}</h3>
                 <p class="trx-summary-sub">Bertanggung jawab atas transaksi</p>
             </article>

@@ -18,6 +18,7 @@ class LaporanController extends Controller
         // 1. Ambil Data Summary
         $summary = Transaksi::query()
             ->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+            ->where('metode_pembayaran', '!=', 'Internal')
             ->select(
                 DB::raw('COUNT(id) as total_transaksi'),
                 DB::raw('SUM(total_harga) as total_omset')
@@ -26,7 +27,8 @@ class LaporanController extends Controller
 
         // 2. Hitung Total Modal dari Detail
         $totalModal = DetailTransaksi::whereHas('transaksi', function ($q) use ($startDate, $endDate) {
-                $q->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                $q->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+                  ->where('metode_pembayaran', '!=', 'Internal');
             })
             ->select(DB::raw('SUM(harga_modal * jumlah) as total_modal'))
             ->value('total_modal') ?? 0;
@@ -37,6 +39,7 @@ class LaporanController extends Controller
         // 3. Data per hari untuk Chart/Table (jika rentang > 1 hari)
         $dailyStats = Transaksi::query()
             ->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+            ->where('metode_pembayaran', '!=', 'Internal')
             ->select(
                 DB::raw('DATE(tanggal) as date'),
                 DB::raw('COUNT(id) as count'),
@@ -48,7 +51,8 @@ class LaporanController extends Controller
 
         // 4. Top Products dalam rentang tersebut
         $topProducts = DetailTransaksi::whereHas('transaksi', function ($q) use ($startDate, $endDate) {
-                $q->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                $q->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+                  ->where('metode_pembayaran', '!=', 'Internal');
             })
             ->with('produk:id,nama')
             ->select(

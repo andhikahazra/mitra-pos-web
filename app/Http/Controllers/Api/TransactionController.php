@@ -67,6 +67,8 @@ class TransactionController extends Controller
                            str_pad($batch, 3, '0', STR_PAD_LEFT) . '-' . 
                            str_pad($sequence, 3, '0', STR_PAD_LEFT);
 
+                $isInternal = $request->metode_pembayaran === 'Internal';
+
                 // 2. Buat Header Transaksi
                 $transaksi = Transaksi::create([
                     'kode' => $kodeTrx,
@@ -75,7 +77,7 @@ class TransactionController extends Controller
                     'nama_pelanggan' => $request->nama_pelanggan,
                     'catatan' => $request->catatan,
                     'total_harga' => 0, // Akan diupdate setelah detail selesai
-                    'biaya_admin' => $request->biaya_admin ?? 0,
+                    'biaya_admin' => $isInternal ? 0 : ($request->biaya_admin ?? 0),
                     'metode_pembayaran' => $request->metode_pembayaran,
                     'status' => $request->metode_pembayaran === 'Piutang' ? 'Tertunda' : 'Selesai',
                 ]);
@@ -111,16 +113,16 @@ class TransactionController extends Controller
                             'produk_id' => $produk->id,
                             'batch_id' => $batch->id,
                             'jumlah' => $ambil,
-                            'harga' => $item['harga'],
+                            'harga' => $isInternal ? 0 : $item['harga'],
                             'harga_modal' => $batch->harga_beli,
-                            'subtotal' => $ambil * $item['harga'],
+                            'subtotal' => $isInternal ? 0 : ($ambil * $item['harga']),
                         ]);
 
                         // Update Batch
                         $batch->qty_sisa -= $ambil;
                         $batch->save();
 
-                        $totalHargaTransaksi += ($ambil * $item['harga']);
+                        $totalHargaTransaksi += ($isInternal ? 0 : ($ambil * $item['harga']));
                         $sisaPerluDiambil -= $ambil;
                     }
 
@@ -137,7 +139,7 @@ class TransactionController extends Controller
                         'produk_id' => $produk->id,
                         'tipe' => 'Keluar',
                         'jumlah' => $jumlahDiminta,
-                        'keterangan' => 'Penjualan: ' . $kodeTrx,
+                        'keterangan' => ($isInternal ? 'Pemakaian Sendiri: ' : 'Penjualan: ') . $kodeTrx,
                         'transaksi_id' => $transaksi->id,
                     ]);
                 }

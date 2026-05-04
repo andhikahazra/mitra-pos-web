@@ -5,7 +5,6 @@
     <div class="section-head">
         <div>
             <h1>Manajemen Supplier</h1>
-            <p>Kelola daftar mitra pemasok barang toko Anda.</p>
         </div>
         <a class="btn btn-primary" href="{{ route('supplier.create') }}">
             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>

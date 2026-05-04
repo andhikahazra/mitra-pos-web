@@ -10,19 +10,62 @@ class TransaksiController extends Controller
 {
     public function index(Request $request): View
     {
-        $date = $request->string('date')->trim()->value();
+        $startDate = $request->string('start_date')->trim()->value();
+        $endDate   = $request->string('end_date')->trim()->value();
 
-        $transaksi = Transaksi::query()
+        // Default: hari ini jika tidak ada filter
+        if (!$startDate && !$endDate) {
+            $startDate = now()->toDateString();
+            $endDate   = now()->toDateString();
+        }
+
+        $query = Transaksi::query()
             ->with(['user:id,nama', 'detail_transaksi.produk:id,nama'])
-            ->when($date, fn ($q) => $q->whereDate('tanggal', $date))
-            ->orderByDesc('tanggal')
+            ->where('metode_pembayaran', '!=', 'Internal');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } elseif ($startDate) {
+            $query->whereDate('tanggal', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->whereDate('tanggal', '<=', $endDate);
+        }
+
+        $transaksi = $query->orderByDesc('tanggal')
             ->orderByDesc('id')
             ->paginate(20)
             ->withQueryString();
 
+        // Summary Data (Filtered Range)
+        $summaryQuery = Transaksi::query()->where('metode_pembayaran', '!=', 'Internal');
+        if ($startDate && $endDate) {
+            $summaryQuery->whereBetween('tanggal', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+        } elseif ($startDate) {
+            $summaryQuery->whereDate('tanggal', '>=', $startDate);
+        } elseif ($endDate) {
+            $summaryQuery->whereDate('tanggal', '<=', $endDate);
+        }
+
+        $summaryIds = $summaryQuery->pluck('id');
+        
+        $summary = [
+            'total_transaksi' => $summaryQuery->count(),
+            'total_item'      => (int) \App\Models\DetailTransaksi::whereIn('transaksi_id', $summaryIds)->sum('jumlah'),
+            'total_nilai'     => (float) $summaryQuery->sum('total_harga'), // Murni harga barang
+            'total_admin'     => (float) $summaryQuery->sum('biaya_admin'), // Pisah biaya admin
+            'pembayaran'      => [
+                'Tunai'    => (float) $summaryQuery->clone()->where('metode_pembayaran', 'Tunai')->sum('total_harga'),
+                'QRIS'     => (float) $summaryQuery->clone()->where('metode_pembayaran', 'QRIS')->sum('total_harga'),
+                'Transfer' => (float) $summaryQuery->clone()->where('metode_pembayaran', 'like', 'Transfer%')->sum('total_harga'),
+                'Piutang'  => (float) $summaryQuery->clone()->where('metode_pembayaran', 'Piutang')->sum('total_harga'),
+            ]
+        ];
+
         return view('transaksi.index', [
             'transaksi' => $transaksi,
-            'date'      => $date,
+            'startDate' => $startDate,
+            'endDate'   => $endDate,
+            'summary'   => $summary,
         ]);
     }
 

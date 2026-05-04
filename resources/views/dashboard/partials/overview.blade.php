@@ -92,7 +92,7 @@
                         <tr>
                             <th>Invoice</th>
                             <th>Tanggal</th>
-                            <th>Kasir</th>
+                            <th>Staff</th>
                             <th>Item</th>
                             <th>Total</th>
                             <th>Status</th>

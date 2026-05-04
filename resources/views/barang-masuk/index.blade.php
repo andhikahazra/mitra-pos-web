@@ -5,7 +5,6 @@
     <div class="section-head mb-6">
         <div>
             <h1>Approval Barang Masuk</h1>
-            <p>Daftar kiriman barang dari supplier yang menunggu verifikasi Anda.</p>
         </div>
     </div>
 

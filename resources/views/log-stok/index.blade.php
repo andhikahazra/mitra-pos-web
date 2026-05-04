@@ -5,7 +5,6 @@
     <div class="section-head">
         <div>
             <h1>Log Pergerakan Stok</h1>
-            <p>Riwayat kronologis arus masuk dan keluar barang di gudang/toko.</p>
         </div>
     </div>
 

@@ -19,29 +19,19 @@
                     <div class="absolute -bottom-16 -right-10 h-44 w-44 rounded-full bg-blue-900/20 blur-xl"></div>
 
                     <div class="relative z-10">
-                        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-blue-100">MitraPOS pemilik Portal</p>
-                        <h1 class="mt-4 max-w-md font-['Poppins'] text-4xl font-semibold leading-tight">Kelola operasional toko dalam satu command center.</h1>
-                        <p class="mt-4 max-w-md text-sm text-blue-50/90">Pantau transaksi, approval barang masuk, dan kendali user dari dashboard pemilik yang lebih cepat dan fokus data.</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-blue-100">MitraPOS Pemilik Portal</p>
+                        <h1 class="mt-4 max-w-md font-['Poppins'] text-4xl font-semibold leading-tight">Optimalkan performa bisnis Anda dengan cerdas.</h1>
+                        <p class="mt-4 max-w-md text-sm text-blue-50/90">Akses kendali penuh operasional, pantau pertumbuhan secara real-time, dan ambil keputusan strategis lebih cepat.</p>
                     </div>
 
-                    <div class="relative z-10 mt-10 grid gap-3">
-                        <article class="rounded-xl border border-white/25 bg-white/10 px-4 py-3 backdrop-blur">
-                            <p class="text-xs uppercase tracking-wide text-blue-100">Insight Hari Ini</p>
-                            <p class="mt-1 text-2xl font-semibold">{{ $trxToday ?? 0 }} transaksi</p>
-                        </article>
-                        <article class="rounded-xl border border-white/25 bg-white/10 px-4 py-3 backdrop-blur">
-                            <p class="text-xs uppercase tracking-wide text-blue-100">Approval Pending</p>
-                            <p class="mt-1 text-2xl font-semibold">{{ $pendingApproval ?? 0 }} dokumen</p>
-                        </article>
-                    </div>
+
                 </aside>
 
                 <div class="p-6 sm:p-8 lg:p-10">
                     <div class="mb-7">
                         <div class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E40AF] text-base font-extrabold text-white shadow-lg shadow-blue-200">M</div>
                         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Sign In</p>
-                        <h2 class="mt-2 font-['Poppins'] text-3xl font-semibold text-slate-800">Masuk ke Dashboard pemilik</h2>
-                        <p class="mt-2 text-sm text-slate-600">Masuk menggunakan akun yang sudah tersedia dari seeder.</p>
+                        <h2 class="mt-2 font-['Poppins'] text-3xl font-semibold text-slate-800">Masuk ke Dashboard Pemilik</h2>
                     </div>
 
                     @if ($errors->any())
@@ -58,7 +48,6 @@
                                 type="email"
                                 name="email"
                                 value="{{ old('email') }}"
-                                placeholder="pemilik@mitrapos.id"
                                 autofocus
                                 autocomplete="email"
                                 required
@@ -70,21 +59,14 @@
                                 class="field mt-1 !h-11 !w-full"
                                 type="password"
                                 name="password"
-                                placeholder="••••••••"
                                 autocomplete="current-password"
                                 required
                             >
                         </label>
 
-                        <div class="flex items-center justify-between gap-3 pt-1">
-                            <label class="flex items-center gap-2 text-sm text-slate-600">
-                                <input type="checkbox" name="remember" class="rounded border-slate-300 text-[#1E40AF] focus:ring-[#3B82F6]">
-                                Ingat saya
-                            </label>
-                            <a href="#" class="text-sm font-medium text-slate-500 hover:text-slate-700">Butuh bantuan?</a>
-                        </div>
 
-                        <button type="submit" class="btn w-full justify-center rounded-lg border-[#1E40AF] bg-[#1E40AF] py-2.5 text-white hover:bg-[#3B82F6]">Masuk Dashboard</button>
+
+                        <button type="submit" class="btn w-full justify-center rounded-lg border-[#1E40AF] bg-[#1E40AF] py-2.5 text-white hover:bg-[#3B82F6]">Masuk</button>
                     </form>
 
                 </div>

@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
         $transactions = Transaksi::query()
             ->with(['user:id,nama', 'detail_transaksi:id,transaksi_id,jumlah,harga'])
+            ->where('metode_pembayaran', '!=', 'Internal')
             ->orderByDesc('tanggal')
             ->orderByDesc('id')
             ->get();
@@ -55,7 +56,7 @@ class DashboardController extends Controller
         $latestTransactions = $transactions->take(5)->map(function (Transaksi $trx): array {
             return [
                 'invoice'  => $trx->kode,
-                'date'     => (string) $trx->tanggal,
+                'date'     => $trx->tanggal->format('Y-m-d H:i'),
                 'cashier'  => $trx->user->nama ?? '-',
                 'items'    => (int) $trx->detail_transaksi->sum('jumlah'),
                 'total'    => (float) $trx->total_harga,

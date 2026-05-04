@@ -5,7 +5,6 @@
         <div class="section-head">
             <div>
                 <h1>Manajemen Produk</h1>
-                <p>Data produk mengikuti field master: nama, SKU, kategori, harga, stok, tipe, dan status.</p>
             </div>
             <a class="btn btn-primary" href="{{ route('produk.create') }}">Tambah Produk</a>
         </div>
