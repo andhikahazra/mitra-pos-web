@@ -8,6 +8,25 @@
         </div>
     </div>
 
+    {{-- Summary Cards Assets --}}
+    <div class="kpi-strip mb-4">
+        <article class="kpi-card" style="border-left: 4px solid #6366f1;">
+            <p class="kpi-label">Total Modal Aset (Stok)</p>
+            <h3 style="color: #1e1b4b;">Rp {{ number_format($summary['total_modal'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend info">Uang yang mengendap di stok barang</p>
+        </article>
+        <article class="kpi-card" style="border-left: 4px solid #10b981;">
+            <p class="kpi-label">Total Nilai Jual Aset</p>
+            <h3 style="color: #064e3b;">Rp {{ number_format($summary['total_aset'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend positive">Potensi uang jika semua terjual</p>
+        </article>
+        <article class="kpi-card" style="border-left: 4px solid #f59e0b;">
+            <p class="kpi-label">Potensi Margin (Laba Kotor)</p>
+            <h3 style="color: #78350f;">Rp {{ number_format($summary['total_aset'] - $summary['total_modal'], 0, ',', '.') }}</h3>
+            <p class="kpi-trend warning">Selisih nilai jual vs modal</p>
+        </article>
+    </div>
+
     <article class="panel-card">
         <form class="toolbar !flex-row !flex-wrap gap-3" id="stokMonitoringForm" method="GET" action="{{ route('stok-batch.index') }}">
             <div class="relative flex-1 min-w-[300px]">

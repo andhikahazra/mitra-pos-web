@@ -36,7 +36,7 @@
     <article class="panel-card mb-6">
         <div class="panel-head">
             <div>
-                <h2 class="m-0 font-bold text-lg">Rincian Batch Aktif (FIFO)</h2>
+                <h2 class="m-0 font-bold text-lg">Rincian Batch Aktif</h2>
                 <p class="text-xs text-slate-500">Daftar stok berdasarkan tanggal masuk dan harga beli.</p>
             </div>
             <span class="tag green">Available</span>

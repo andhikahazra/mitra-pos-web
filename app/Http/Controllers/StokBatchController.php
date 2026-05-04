@@ -33,7 +33,15 @@ class StokBatchController extends Controller
             return view('stok-batch._table', compact('products'));
         }
 
-        return view('stok-batch.index', compact('products', 'search'));
+        // Summary Global
+        $summary = [
+            'total_modal' => (float) StokBatch::where('qty_sisa', '>', 0)->sum(\DB::raw('qty_sisa * harga_beli')),
+            'total_aset'  => (float) StokBatch::where('qty_sisa', '>', 0)
+                ->join('produk', 'stok_batch.produk_id', '=', 'produk.id')
+                ->sum(\DB::raw('stok_batch.qty_sisa * produk.harga')),
+        ];
+
+        return view('stok-batch.index', compact('products', 'search', 'summary'));
     }
 
     public function show(Produk $produk): View
