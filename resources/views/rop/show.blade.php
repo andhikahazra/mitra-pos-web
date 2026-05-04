@@ -12,6 +12,10 @@
                 </div>
                 <h1>Detail Analisis ROP</h1>
                 <p>Analisis perhitungan stok produk: <strong>{{ $produk->nama }}</strong></p>
+                <div class="mt-2 flex items-center gap-2">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Waktu Kalkulasi:</span>
+                    <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">{{ $calculatedAt }}</span>
+                </div>
             </div>
         </div>
 
@@ -79,7 +83,7 @@
 
                 <article class="panel-card">
                     <div class="toolbar !mb-6">
-                        <h2 class="text-sm font-bold">Bukti Data Penjualan (30 Hari)</h2>
+                        <h2 class="text-sm font-bold">Bukti Data Penjualan ({{ $periode }} Hari)</h2>
                         @if($isSample)
                             <span class="status-pill warning !text-[9px]">Simulasi</span>
                         @endif
@@ -107,7 +111,7 @@
                         </div>
                         <div class="text-right">
                             <p class="text-slate-500 uppercase font-bold tracking-tighter">Rata-rata (d)</p>
-                            <p class="text-lg font-bold text-indigo-600">{{ number_format($sum/30, 2) }}</p>
+                            <p class="text-lg font-bold text-indigo-600">{{ number_format($sum/$periode, 2) }}</p>
                         </div>
                     </div>
                 </article>

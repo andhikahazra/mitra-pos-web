@@ -101,7 +101,8 @@ class RopService
                 'lead_time' => round($leadTime, 2),
                 'safety_stock' => $safetyStock,
                 'reorder_point' => $reorderPoint,
-                'periode' => $periodeHari
+                'periode' => $periodeHari,
+                'updated_at' => now(),
             ]
         );
     }

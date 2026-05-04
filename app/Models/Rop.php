@@ -13,7 +13,8 @@ class Rop extends Model
 
     protected $table = 'rop';
 
-    public $timestamps = false;
+    public $timestamps = true;
+    const CREATED_AT = null;
 
     protected $fillable = [
         'produk_id',
@@ -23,6 +24,7 @@ class Rop extends Model
         'safety_stock',
         'reorder_point',
         'periode',
+        'updated_at',
     ];
 
     protected function casts(): array

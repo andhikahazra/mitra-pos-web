@@ -89,8 +89,11 @@ class RopController extends Controller
             $status = 'aman';
         }
 
-        // Ambil data penjualan harian 30 hari terakhir untuk "Audit"
-        $startDate = now()->subDays(30)->format('Y-m-d');
+        // Ambil periode dari database, jika tidak ada default ke 30
+        $periode = $produk->rop->periode ?? 30;
+
+        // Ambil data penjualan harian selama periode tersebut
+        $startDate = now()->subDays($periode)->format('Y-m-d');
         $salesHistory = LogStok::where('produk_id', $produk->id)
             ->where('tipe', 'Keluar')
             ->whereHas('transaksi', function ($q) use ($startDate) {
@@ -105,10 +108,10 @@ class RopController extends Controller
                 return $day->sum('jumlah');
             });
 
-        // Pastikan ada data 30 hari
+        // Pastikan ada data sesuai periode
         $dailyData = [];
         $hasRealData = false;
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < $periode; $i++) {
             $date = now()->subDays($i)->format('Y-m-d');
             $qty = $salesHistory[$date] ?? 0;
             if ($qty > 0) $hasRealData = true;
@@ -140,7 +143,9 @@ class RopController extends Controller
             'sqrtLT'          => sqrt($leadTime),
             'zScore'          => 1.65, 
             'dailyData'       => array_reverse($dailyData),
-            'isSample'        => $isSample
+            'isSample'        => $isSample,
+            'periode'         => $periode,
+            'calculatedAt'    => $produk->rop->updated_at ? $produk->rop->updated_at->translatedFormat('l, d F Y H:i') : '-'
         ]);
     }
 }
