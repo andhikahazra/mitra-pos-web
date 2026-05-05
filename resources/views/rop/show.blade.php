@@ -179,7 +179,6 @@
                                 <div class="flex gap-2 pb-2">
                                     @foreach($dailyData as $date => $qty)
                                         @php 
-                                            $sum += $qty;
                                             $diff = ($qty ?? 0) - $mean;
                                             $sqDiff = round(pow($diff, 2), 2);
                                         @endphp
