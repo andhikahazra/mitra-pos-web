@@ -38,6 +38,7 @@ class RopController extends Controller
                 'rataPenjualan' => (float) ($product->rop->rata_penjualan ?? 0),
                 'rop'         => $ropValue,
                 'status'      => $status,
+                'calculatedAt' => $product->rop->waktu_penghitungan ? $product->rop->waktu_penghitungan->translatedFormat('d M Y, H:i') : '-'
             ];
         });
 
@@ -90,7 +91,7 @@ class RopController extends Controller
         }
 
         // Tentukan titik referensi waktu (Waktu Kalkulasi), jika belum pernah dihitung pakai 'now'
-        $calculationTime = $produk->rop->updated_at ?? now();
+        $calculationTime = $produk->rop->waktu_penghitungan ?? now();
         $periode = $produk->rop->periode ?? 30;
 
         // Ambil data penjualan harian selama periode tersebut (berdasarkan waktu kalkulasi)
@@ -133,7 +134,7 @@ class RopController extends Controller
             'dailyData'       => $dailyData,
             'isSample'        => false, // Simulasi dimatikan untuk integritas data
             'periode'         => $periode,
-            'calculatedAt'    => $produk->rop->updated_at ? $produk->rop->updated_at->translatedFormat('l, d F Y H:i') : '-'
+            'calculatedAt'    => $produk->rop->waktu_penghitungan ? $produk->rop->waktu_penghitungan->translatedFormat('l, d F Y H:i') : '-'
         ]);
     }
 }

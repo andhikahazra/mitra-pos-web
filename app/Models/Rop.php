@@ -15,6 +15,7 @@ class Rop extends Model
 
     public $timestamps = true;
     const CREATED_AT = null;
+    const UPDATED_AT = 'waktu_penghitungan';
 
     protected $fillable = [
         'produk_id',
@@ -24,7 +25,7 @@ class Rop extends Model
         'safety_stock',
         'reorder_point',
         'periode',
-        'updated_at',
+        'waktu_penghitungan',
     ];
 
     protected function casts(): array
