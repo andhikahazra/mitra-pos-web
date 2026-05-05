@@ -10,7 +10,7 @@
     </div>
 
     {{-- Ringkasan Modal --}}
-    <div class="kpi-strip mb-6">
+    <div class="kpi-strip mb-6 !grid-cols-2">
         <div class="kpi-card">
             <span class="kpi-label">Total Uang Modal Keseluruhan</span>
             <div class="flex items-baseline gap-1">

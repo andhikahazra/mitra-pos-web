@@ -9,7 +9,7 @@
     </div>
 
     {{-- Summary Cards Assets --}}
-    <div class="kpi-strip mb-4">
+    <div class="kpi-strip mb-4 !grid-cols-3">
         <article class="kpi-card" style="border-left: 4px solid #6366f1;">
             <p class="kpi-label">Total Modal Aset (Stok)</p>
             <h3 style="color: #1e1b4b;">Rp {{ number_format($summary['total_modal'], 0, ',', '.') }}</h3>
