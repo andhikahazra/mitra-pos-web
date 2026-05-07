@@ -31,7 +31,7 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
     Route::put('/barang-masuk/{barangMasuk}/status', [BarangMasukController::class, 'updateStatus'])->name('barang-masuk.update-status');
 
     // Supplier
-    Route::resource('supplier', SupplierController::class);
+    Route::resource('supplier', SupplierController::class)->except(['destroy']);
 
     // Log & Batch Stok
     Route::get('/log-stok', [LogStokController::class, 'index'])->name('log-stok.index');

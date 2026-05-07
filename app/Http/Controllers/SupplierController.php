@@ -72,15 +72,4 @@ class SupplierController extends Controller
         return redirect()->route('supplier.index')->with('success', 'Supplier berhasil diperbarui.');
     }
 
-    public function destroy(Supplier $supplier): RedirectResponse
-    {
-        // Cek jika supplier memiliki riwayat barang masuk
-        if ($supplier->barangMasuk()->exists()) {
-            return redirect()->route('supplier.index')->with('error', 'Supplier tidak dapat dihapus karena memiliki riwayat barang masuk.');
-        }
-
-        $supplier->delete();
-
-        return redirect()->route('supplier.index')->with('success', 'Supplier berhasil dihapus.');
-    }
 }
