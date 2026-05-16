@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\IncomingGoodsController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,4 +41,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Supplier API
     Route::get('/suppliers', [SupplierController::class, 'index']);
+
+    // Customer API
+    Route::get('/customers/history', [CustomerController::class, 'history']);
 });

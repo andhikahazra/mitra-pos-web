@@ -23,6 +23,7 @@ class Transaksi extends Model
         'tanggal',
         'user_id',
         'nama_pelanggan',
+        'no_hp_pelanggan',
         'catatan',
         'total_harga',
         'biaya_admin',

@@ -11,6 +11,7 @@ use App\Models\Produk;
 use App\Models\LogStok;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Jobs\SendDigitalReceiptJob;
 
 class TransactionController extends Controller
 {
@@ -18,6 +19,7 @@ class TransactionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_pelanggan' => 'nullable|string|max:255',
+            'no_hp_pelanggan' => 'nullable|string|max:20',
             'metode_pembayaran' => 'required|string',
             'biaya_admin' => 'nullable|numeric|min:0',
             'catatan' => 'nullable|string',
@@ -75,6 +77,7 @@ class TransactionController extends Controller
                     'tanggal' => now(),
                     'user_id' => $request->user()->id,
                     'nama_pelanggan' => $request->nama_pelanggan,
+                    'no_hp_pelanggan' => $request->no_hp_pelanggan,
                     'catatan' => $request->catatan,
                     'total_harga' => 0, // Akan diupdate setelah detail selesai
                     'biaya_admin' => $isInternal ? 0 : ($request->biaya_admin ?? 0),
@@ -166,6 +169,11 @@ class TransactionController extends Controller
                 // Replace the original collection with the grouped array for the response
                 $responseData = $transaksi->toArray();
                 $responseData['detail_transaksi'] = $groupedDetails;
+
+                // Dispatch Job untuk mengirim Nota Digital jika no_hp_pelanggan diisi
+                if (!empty($transaksi->no_hp_pelanggan)) {
+                    SendDigitalReceiptJob::dispatch($transaksi, $transaksi->no_hp_pelanggan);
+                }
 
                 return response()->json([
                     'success' => true,
