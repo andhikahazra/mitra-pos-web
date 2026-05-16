@@ -28,13 +28,8 @@ class CalculateRopCommand extends Command
     {
         $this->info('Memulai kalkulasi ROP dan Safety Stock...');
         
-        try {
-            $ropService->calculateAll();
-            $this->info('Kalkulasi ROP berhasil diselesaikan dan disimpan ke database.');
-            return 0;
-        } catch (\Exception $e) {
-            $this->error('Terjadi kesalahan: ' . $e->getMessage());
-            return 1;
-        }
+        $ropService->calculateAll();
+        $this->info('Kalkulasi ROP berhasil diselesaikan dan disimpan ke database.');
+        return 0;
     }
 }

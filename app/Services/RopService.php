@@ -102,7 +102,6 @@ class RopService
                 'safety_stock' => $safetyStock,
                 'reorder_point' => $reorderPoint,
                 'periode' => $periodeHari,
-                'updated_at' => now(),
             ]
         );
     }
