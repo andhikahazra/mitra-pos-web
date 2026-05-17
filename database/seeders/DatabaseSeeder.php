@@ -138,13 +138,8 @@ class DatabaseSeeder extends Seeder
             ]);
 
             foreach ($products as $prod) {
-                // Modal awal lebih rasional (tighter margin) agar simulasi ROP bervariasi
-                $qty = ($prod->demand_profile === 'high') ? 350 : (($prod->demand_profile === 'med') ? 200 : 120);
-                
-                // Beberapa barang dikurangi modalnya agar sangat kritis di akhir bulan
-                if (in_array($prod->nama, ['Kardus Polos 20x20x20', 'Lakban Bening 5cm Daimaru', 'Karung Plastik 50kg Putih'])) {
-                    $qty = 250;
-                }
+                // Modal awal cukup untuk ~25 hari
+                $qty = ($prod->demand_profile === 'high') ? rand(250, 320) : (($prod->demand_profile === 'med') ? rand(100, 150) : rand(25, 45));
                 
                 // Variasi harga modal sedikit (sekitar 70% dari harga jual)
                 $hargaModal = round(($prod->harga * 0.7) / 100) * 100;
@@ -188,8 +183,8 @@ class DatabaseSeeder extends Seeder
                 $trxSeq = 1;
                 $bmSeq = 1;
 
-                // 1. SIMULASI RESTOCK (Setiap 20 hari sekali untuk produk tertentu agar ROP punya Lead Time)
-                if ($i > 0 && $i % 20 === 0) {
+                // 1. SIMULASI RESTOCK (Hari ke-20 dan ke-40)
+                if ($i > 0 && $i % 20 === 0 && $i < 60) {
                     $bmWaktu = $currentDay->copy()->addHours(10); // Barang datang jam 10 pagi
                     
                     $bmRestock = BarangMasuk::create([
@@ -204,21 +199,35 @@ class DatabaseSeeder extends Seeder
                     ]);
 
                     foreach ($products as $prod) {
-                        // Skip restock di hari ke-40+ untuk beberapa produk agar jatuh ke status "Hampir Habis" atau "Harus Restock"
-                        $skippedProducts = [
-                            'Kardus Polos 20x20x20', 
-                            'Lakban Bening 5cm Daimaru', 
-                            'Karung Plastik 50kg Putih', 
-                            'Bubble Wrap Hitam 1m', 
-                            'Kardus Polos 30x30x30'
-                        ];
-                        if ($i >= 40 && in_array($prod->nama, $skippedProducts)) {
-                            continue;
-                        }
+                        $multiplier = 1.0;
+                        
+                        // Rekayasa pada restock terakhir (hari ke-40) agar status ROP bervariasi di hari ke-60
+                        // Prediksi ROP untuk target stok di hari ke-60
+                        // ROP estimasi: High ~70, Med ~28, Low ~6
+                        $estDemand20Days = ($prod->demand_profile === 'high') ? 240 : (($prod->demand_profile === 'med') ? 100 : 20);
+                        $estRop = ($prod->demand_profile === 'high') ? 75 : (($prod->demand_profile === 'med') ? 30 : 7);
 
-                        // Restock lebih besar karena demand harian dinaikkan
-                        $qtyRestock = ($prod->demand_profile === 'high') ? rand(150, 300) : (($prod->demand_profile === 'med') ? rand(80, 150) : rand(30, 60));
-                        $hargaModal = round(($prod->harga * 0.72) / 100) * 100; // Harga modal sedikit naik (simulasi inflasi, berguna ngetes custom batch termurah)
+                        if ($i === 40) {
+                            $redProducts = ['Kardus Polos 20x20x20', 'Lakban Bening 5cm Daimaru', 'Bubble Wrap Hitam 1m'];
+                            $yellowProducts = ['Kardus Polos 30x30x30', 'Karung Plastik 50kg Putih', 'Kardus Sepatu Pria', 'Lakban Fragile Merah'];
+                            
+                            $targetS60 = 0;
+                            if (in_array($prod->nama, $redProducts)) {
+                                $targetS60 = $estRop - rand(4, 10); // Target merah: 4-10 di bawah ROP
+                            } elseif (in_array($prod->nama, $yellowProducts)) {
+                                $targetS60 = $estRop + rand(2, 6);  // Target kuning: pas di ROP / sedikit di atas
+                            } else {
+                                $targetS60 = $estRop + rand(20, 40); // Target hijau: aman di atas ROP
+                            }
+                            
+                            // Rumus: Stok Sekarang + Restock - Demand = Target
+                            $qtyRestock = $targetS60 + $estDemand20Days - $prod->stok;
+                            if ($qtyRestock < 20) $qtyRestock = 20; // Minimal restock
+                        } else {
+                            $qtyRestock = ($prod->demand_profile === 'high') ? rand(230, 260) : (($prod->demand_profile === 'med') ? rand(90, 110) : rand(20, 30));
+                        }
+                        
+                        $hargaModal = round(($prod->harga * 0.72) / 100) * 100; // Harga modal sedikit naik
 
                         $dbm = DetailBarangMasuk::create([
                             'barang_masuk_id' => $bmRestock->id,
