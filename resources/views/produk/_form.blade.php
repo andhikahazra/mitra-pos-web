@@ -1,8 +1,8 @@
 @php
     $isEdit = isset($produk) && $produk;
     $selectedType = old('tipe_produk', $isEdit ? $produk->tipe_produk : 'stock');
-    $hasDimension = old('has_dimension', $isEdit && $produk->dimensi ? '1' : '0') === '1';
-    $hasPhoto = old('has_photo', $isEdit && $produk->foto->isNotEmpty() ? '1' : '0') === '1';
+    $hasDimension = old('has_dimension', $isEdit && ($produk->panjang !== null || $produk->lebar !== null || $produk->tinggi !== null) ? '1' : '0') === '1';
+    $hasPhoto = old('has_photo', $isEdit && $produk->foto ? '1' : '0') === '1';
 @endphp
 
 <form id="productForm" class="product-form-layout" method="POST" enctype="multipart/form-data" action="{{ $action }}">
@@ -109,19 +109,19 @@
 
         <fieldset class="product-form-grid feature-fieldset {{ $hasDimension ? 'is-enabled' : 'is-disabled' }}" id="productDimensionFields" @disabled(!$hasDimension)>
             <label>Panjang (cm)
-                <input class="field" name="panjang" id="dimensionLength" type="number" min="0" step="0.01" placeholder="0" value="{{ old('panjang', $isEdit && $produk->dimensi ? $produk->dimensi->panjang : '') }}">
+                <input class="field" name="panjang" id="dimensionLength" type="number" min="0" step="0.01" placeholder="0" value="{{ old('panjang', $isEdit ? $produk->panjang : '') }}">
             </label>
 
             <label>Lebar (cm)
-                <input class="field" name="lebar" id="dimensionWidth" type="number" min="0" step="0.01" placeholder="0" value="{{ old('lebar', $isEdit && $produk->dimensi ? $produk->dimensi->lebar : '') }}">
+                <input class="field" name="lebar" id="dimensionWidth" type="number" min="0" step="0.01" placeholder="0" value="{{ old('lebar', $isEdit ? $produk->lebar : '') }}">
             </label>
 
             <label>Tinggi (cm)
-                <input class="field" name="tinggi" id="dimensionHeight" type="number" min="0" step="0.01" placeholder="0" value="{{ old('tinggi', $isEdit && $produk->dimensi ? $produk->dimensi->tinggi : '') }}">
+                <input class="field" name="tinggi" id="dimensionHeight" type="number" min="0" step="0.01" placeholder="0" value="{{ old('tinggi', $isEdit ? $produk->tinggi : '') }}">
             </label>
 
             <label>Volume (cm3)
-                <input class="field" name="volume" id="dimensionVolume" type="number" min="0" step="0.01" placeholder="0" value="{{ old('volume', $isEdit && $produk->dimensi ? $produk->dimensi->volume : '') }}">
+                <input class="field" name="volume" id="dimensionVolume" type="number" min="0" step="0.01" placeholder="0" value="{{ old('volume', $isEdit ? $produk->volume : '') }}">
             </label>
         </fieldset>
     </article>
@@ -134,38 +134,34 @@
             </label>
             <div class="flex items-center gap-2">
                 <span class="toggle-state-badge {{ $hasPhoto ? 'on' : 'off' }}" id="photoToggleState">{{ $hasPhoto ? 'Enabled' : 'Disabled' }}</span>
-                <small class="text-slate-500" id="productPhotoCurrent">{{ $isEdit ? $produk->foto->count() : 0 }} foto tersimpan.</small>
+                <small class="text-slate-500" id="productPhotoCurrent">{{ $isEdit && $produk->foto ? 1 : 0 }} foto tersimpan.</small>
             </div>
         </div>
 
         <fieldset class="feature-fieldset {{ $hasPhoto ? 'is-enabled' : 'is-disabled' }}" id="productPhotoFields" @disabled(!$hasPhoto)>
-            <input class="hidden" name="photos[]" id="productPhotoFile" type="file" accept="image/*" multiple>
+            <input class="hidden" name="foto" id="productPhotoFile" type="file" accept="image/*">
             <div class="product-photo-list" id="productPhotoList">
-                @foreach (($isEdit ? $produk->foto : collect()) as $photo)
+                @if ($isEdit && $produk->foto)
                     <div class="product-photo-item">
                         <div class="product-photo-thumb">
-                            <img src="{{ asset('storage/' . $photo->path) }}" alt="{{ $photo->path }}">
+                            <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->foto }}">
                         </div>
                         <div class="product-photo-meta">
-                            <p class="product-photo-name">{{ basename($photo->path) }}</p>
+                            <p class="product-photo-name">{{ basename($produk->foto) }}</p>
                         </div>
                         <div class="product-photo-actions">
                             <label class="product-photo-primary">
-                                <input type="radio" name="primary_existing_photo" value="{{ $photo->id }}" @checked($photo->is_primary)>
-                                Primary
-                            </label>
-                            <label class="product-photo-primary">
-                                <input type="checkbox" name="remove_photo_ids[]" value="{{ $photo->id }}">
-                                Hapus
+                                <input type="checkbox" name="remove_photo" value="1">
+                                Hapus Foto Saat Ini
                             </label>
                         </div>
                     </div>
-                @endforeach
+                @endif
                 <label class="product-photo-add" for="productPhotoFile">
-                    <span>+ Tambah Foto</span>
+                    <span>{{ $isEdit && $produk->foto ? 'Ganti Foto' : '+ Upload Foto' }}</span>
                 </label>
             </div>
-            <small class="text-slate-500">Pilih foto utama dengan radio dan tambahkan foto baru lewat kotak tambah.</small>
+            <small class="text-slate-500">Pilih berkas foto produk untuk diunggah (maksimal 5 MB).</small>
         </fieldset>
     </article>
 

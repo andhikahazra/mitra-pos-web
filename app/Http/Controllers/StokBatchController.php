@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LogStok;
 use App\Models\Produk;
 use App\Models\StokBatch;
 use Illuminate\Http\Request;
@@ -54,13 +53,8 @@ class StokBatchController extends Controller
             ->orderBy('tanggal_masuk')
             ->get();
 
-        // Ambil log pergerakan terbaru khusus produk ini
-        $stockLogs = LogStok::query()
-            ->where('produk_id', $produk->id)
-            ->with(['transaksi', 'barangMasuk'])
-            ->orderByDesc('id')
-            ->take(10)
-            ->get();
+        // Ambil log pergerakan terbaru khusus produk ini (dinonaktifkan karena tabel log_stok dihapus)
+        $stockLogs = collect();
 
         // Summary data
         $summary = [

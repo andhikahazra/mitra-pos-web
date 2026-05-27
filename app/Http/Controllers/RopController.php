@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
-use App\Models\LogStok;
+use App\Models\DetailTransaksi;
 use Illuminate\Http\Request;
 
 class RopController extends Controller
@@ -98,8 +98,7 @@ class RopController extends Controller
         $startDate = $calculationTime->copy()->subDays($periode - 1)->startOfDay();
         $endDate   = $calculationTime->copy()->endOfDay();
         
-        $salesHistory = LogStok::where('produk_id', $produk->id)
-            ->whereIn('tipe', ['Keluar', 'keluar'])
+        $salesHistory = DetailTransaksi::where('produk_id', $produk->id)
             ->whereHas('transaksi', function ($q) use ($startDate, $endDate) {
                 $q->whereBetween('tanggal', [$startDate, $endDate]);
             })

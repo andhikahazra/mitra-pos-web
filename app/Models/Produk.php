@@ -5,9 +5,6 @@ namespace App\Models;
 use App\Models\DetailBarangMasuk;
 use App\Models\DetailTransaksi;
 use App\Models\Kategori;
-use App\Models\LogStok;
-use App\Models\ProdukDimensi;
-use App\Models\ProdukFoto;
 use App\Models\Rop;
 use App\Models\StokBatch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +29,11 @@ class Produk extends Model
         'stok',
         'tipe_produk',
         'status',
+        'panjang',
+        'lebar',
+        'tinggi',
+        'volume',
+        'foto',
     ];
 
     protected function casts(): array
@@ -39,6 +41,10 @@ class Produk extends Model
         return [
             'harga' => 'decimal:2',
             'status' => 'boolean',
+            'panjang' => 'decimal:2',
+            'lebar' => 'decimal:2',
+            'tinggi' => 'decimal:2',
+            'volume' => 'decimal:2',
         ];
     }
 
@@ -47,15 +53,6 @@ class Produk extends Model
         return $this->belongsTo(Kategori::class, 'kategori_id');
     }
 
-    public function dimensi(): HasOne
-    {
-        return $this->hasOne(ProdukDimensi::class, 'produk_id');
-    }
-
-    public function foto(): HasMany
-    {
-        return $this->hasMany(ProdukFoto::class, 'produk_id');
-    }
 
     public function detailBarangMasuk(): HasMany
     {
@@ -72,10 +69,6 @@ class Produk extends Model
         return $this->hasMany(DetailTransaksi::class, 'produk_id');
     }
 
-    public function logStok(): HasMany
-    {
-        return $this->hasMany(LogStok::class, 'produk_id');
-    }
 
     public function rop(): HasOne
     {

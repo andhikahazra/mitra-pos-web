@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\DetailTransaksi;
-use App\Models\LogStok;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,8 +49,5 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi::class, 'transaksi_id');
     }
 
-    public function logStok(): HasMany
-    {
-        return $this->hasMany(LogStok::class, 'transaksi_id');
-    }
+
 }

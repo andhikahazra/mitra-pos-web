@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LogStokController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RopController;
 use App\Http\Controllers\SettingsController;
@@ -34,8 +33,7 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
     Route::resource('supplier', SupplierController::class)->except(['destroy']);
 
     // Log & Batch Stok
-    Route::get('/log-stok', [LogStokController::class, 'index'])->name('log-stok.index');
-    Route::get('/log-stok/{logStok}', [LogStokController::class, 'show'])->name('log-stok.show');
+
     Route::get('/stok-batch', [StokBatchController::class, 'index'])->name('stok-batch.index');
     Route::get('/stok-batch/{produk}', [StokBatchController::class, 'show'])->name('stok-batch.show');
 

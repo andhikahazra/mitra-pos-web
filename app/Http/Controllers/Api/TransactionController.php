@@ -8,7 +8,6 @@ use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
 use App\Models\StokBatch;
 use App\Models\Produk;
-use App\Models\LogStok;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\SendDigitalReceiptJob;
@@ -136,15 +135,6 @@ class TransactionController extends Controller
                     // Update Stok Produk
                     $produk->stok -= $jumlahDiminta;
                     $produk->save();
-
-                    // Log Stok
-                    LogStok::create([
-                        'produk_id' => $produk->id,
-                        'tipe' => 'Keluar',
-                        'jumlah' => $jumlahDiminta,
-                        'keterangan' => ($isInternal ? 'Pemakaian Sendiri: ' : 'Penjualan: ') . $kodeTrx,
-                        'transaksi_id' => $transaksi->id,
-                    ]);
                 }
 
                 // Update Total Harga di Header (Murni Harga Barang)

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\DetailBarangMasuk;
-use App\Models\LogStok;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,10 +58,6 @@ class BarangMasuk extends Model
         return $this->hasMany(DetailBarangMasuk::class, 'barang_masuk_id');
     }
 
-    public function logStok(): HasMany
-    {
-        return $this->hasMany(LogStok::class, 'barang_masuk_id');
-    }
 
     public function isDisetujui(): bool
     {

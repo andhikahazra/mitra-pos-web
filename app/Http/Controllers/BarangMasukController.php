@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangMasuk;
-use App\Models\LogStok;
 use App\Models\Produk;
 use App\Models\StokBatch;
 use Illuminate\Http\Request;
@@ -125,15 +124,6 @@ class BarangMasukController extends Controller
                         'qty_sisa' => $item->jumlah,
                         'harga_beli' => $item->harga,
                         'tanggal_masuk' => $incoming->tanggal_terima ?? now(),
-                    ]);
-
-                    // 3. Catat Log Stok
-                    LogStok::create([
-                        'produk_id' => $produk->id,
-                        'barang_masuk_id' => $incoming->id,
-                        'tipe' => 'masuk',
-                        'jumlah' => $item->jumlah,
-                        'keterangan' => "Penambahan stok dari Barang Masuk #{$incoming->kode}",
                     ]);
                 }
             }

@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Produk::with(['kategori', 'foto', 'dimensi'])->where('status', true);
+        $query = Produk::with(['kategori'])->where('status', true);
 
         // Search by name or SKU
         if ($request->has('search')) {
@@ -43,7 +43,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Produk::with(['kategori', 'foto', 'dimensi'])->find($id);
+        $product = Produk::with(['kategori'])->find($id);
 
         if (!$product) {
             return response()->json([

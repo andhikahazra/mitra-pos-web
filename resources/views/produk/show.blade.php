@@ -35,12 +35,12 @@
 
             <article class="panel-card p-4">
                 <h2 class="m-0 text-base font-semibold text-slate-800">Dimensi</h2>
-                @if ($produk->dimensi)
+                @if ($produk->panjang !== null || $produk->lebar !== null || $produk->tinggi !== null)
                     <ul class="metric-list mt-3">
-                        <li><span>Panjang</span><strong>{{ $produk->dimensi->panjang }}</strong></li>
-                        <li><span>Lebar</span><strong>{{ $produk->dimensi->lebar }}</strong></li>
-                        <li><span>Tinggi</span><strong>{{ $produk->dimensi->tinggi }}</strong></li>
-                        <li><span>Volume</span><strong>{{ $produk->dimensi->volume }}</strong></li>
+                        <li><span>Panjang</span><strong>{{ $produk->panjang }} cm</strong></li>
+                        <li><span>Lebar</span><strong>{{ $produk->lebar }} cm</strong></li>
+                        <li><span>Tinggi</span><strong>{{ $produk->tinggi }} cm</strong></li>
+                        <li><span>Volume</span><strong>{{ $produk->volume }} cm³</strong></li>
                     </ul>
                 @else
                     <p class="mt-3 text-sm text-slate-500">Produk ini tidak memiliki data dimensi.</p>
@@ -50,27 +50,21 @@
 
         <article class="panel-card p-4">
             <h2 class="m-0 text-base font-semibold text-slate-800">Foto Produk</h2>
-            @if ($produk->foto->isEmpty())
+            @if (!$produk->foto)
                 <p class="mt-3 text-sm text-slate-500">Belum ada foto produk.</p>
             @else
                 <div class="product-photo-list mt-4">
-                    @foreach ($produk->foto as $photo)
-                        <div class="product-photo-item">
-                            <div class="product-photo-thumb">
-                                <img src="{{ asset('storage/' . $photo->path) }}" alt="{{ $photo->path }}">
-                            </div>
-                            <div class="product-photo-meta">
-                                <p class="product-photo-name">{{ basename($photo->path) }}</p>
-                            </div>
-                            <div class="product-photo-actions">
-                                @if ($photo->is_primary)
-                                    <span class="status-pill success">Primary</span>
-                                @else
-                                    <span class="status-pill info">Foto</span>
-                                @endif
-                            </div>
+                    <div class="product-photo-item">
+                        <div class="product-photo-thumb">
+                            <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->foto }}">
                         </div>
-                    @endforeach
+                        <div class="product-photo-meta">
+                            <p class="product-photo-name">{{ basename($produk->foto) }}</p>
+                        </div>
+                        <div class="product-photo-actions">
+                            <span class="status-pill success">Primary</span>
+                        </div>
+                    </div>
                 </div>
             @endif
         </article>

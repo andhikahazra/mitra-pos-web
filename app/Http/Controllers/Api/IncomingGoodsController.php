@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\BarangMasuk;
 use App\Models\DetailBarangMasuk;
 use App\Models\Produk;
-use App\Models\LogStok;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -187,15 +186,6 @@ class IncomingGoodsController extends Controller
                 $produk = Produk::find($item->produk_id);
                 $produk->stok += $item->jumlah;
                 $produk->save();
-
-                // Catat log stok
-                LogStok::create([
-                    'produk_id' => $item->produk_id,
-                    'tipe' => 'Masuk',
-                    'jumlah' => $item->jumlah,
-                    'keterangan' => 'Barang Masuk: ' . $barangMasuk->kode,
-                    'barang_masuk_id' => $barangMasuk->id,
-                ]);
             }
 
             DB::commit();
