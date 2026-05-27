@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitra POS - Diagram DFD 100% Akurat &amp; Sinkron Database</title>
+    <!-- Modern Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            color: #212529;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            color: #6c757d;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 900px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            background-color: #f1f3f5;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-tab {
+            background-color: transparent;
+            color: #495057;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-tab:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #212529;
+        }
+
+        .btn-tab.active {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            padding: 30px;
+            overflow: auto;
+            max-width: 95%;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download {
+            background-color: #000000;
+            color: white;
+            border: 1px solid #000000;
+            padding: 14px 28px;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 40px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-download:hover {
+            background-color: #212529;
+            border-color: #212529;
+            transform: translateY(-1px);
+        }
+
+        svg {
+            display: block;
+            background-color: #ffffff;
+        }
+
+        .dfd-section {
+            display: none;
+        }
+
+        .dfd-section.active {
+            display: block;
+        }
+
+        /* Premium DFD Vector Styling & Academic Halo Masking */
+        .entity {
+            fill: #ffffff;
+            stroke: #000000;
+            stroke-width: 1.6;
+        }
+
+        .process {
+            fill: #ffffff;
+            stroke: #000000;
+            stroke-width: 1.6;
+        }
+
+        .store-line {
+            stroke: #000000;
+            stroke-width: 1.8;
+        }
+
+        .flow-line {
+            stroke: #000000;
+            stroke-width: 1.2;
+            fill: none;
+            stroke-linejoin: round;
+        }
+
+        .text-title {
+            font-family: 'Arial', sans-serif;
+            font-size: 13px;
+            fill: #000000;
+        }
+
+        .text-bold {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            fill: #000000;
+        }
+
+        .text-flow {
+            font-family: 'Arial', sans-serif;
+            font-size: 11px;
+            fill: #000000;
+            stroke: #ffffff;
+            stroke-width: 4px;
+            stroke-linejoin: round;
+            paint-order: stroke fill;
+        }
+
+        .arrow {
+            fill: #000000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📊 Diagram DFD Sesuai Layout &amp; Sinkron Proyek Nyata</h1>
+    <p>
+        Halaman ini menampilkan diagram alir data (DFD) yang telah disesuaikan secara presisi dengan <strong>proyek
+            nyata Mitra POS Anda</strong>.
+        Tata letak (layout) asli draw.io Anda tetap dipertahankan 100% utuh, namun notasi <em>data store</em> dan aliran
+        data diselaraskan dengan database aktual
+        (yaitu menggunakan <strong>Stok Batch</strong> sebagai pengganti tabel <em>Log Stok</em> yang telah dihapus).
+    </p>
+
+    <div class="nav-tabs">
+        <button class="btn-tab active" onclick="switchDFD('dfd_context', this)">Diagram Konteks (0)</button>
+        <button class="btn-tab" onclick="switchDFD('dfd0', this)">DFD Level 0 (Diagram Nol)</button>
+        <button class="btn-tab" onclick="switchDFD('dfd1_1', this)">DFD Lvl 1 - Data Master (1.0)</button>
+        <button class="btn-tab" onclick="switchDFD('dfd1_2', this)">DFD Lvl 1 - Transaksi (2.0)</button>
+        <button class="btn-tab" onclick="switchDFD('dfd1_3', this)">DFD Lvl 1 - Barang Masuk (3.0)</button>
+        <button class="btn-tab" onclick="switchDFD('dfd1_4', this)">DFD Lvl 1 - Laporan &amp; ROP (4.0)</button>
+    </div>
+
+    <button class="btn-download" onclick="downloadActiveSVG()">Unduh Berkas DFD Aktif (SVG)</button>
+
+    <!-- CONTAINER -->
+    <div class="container">
+
+        <!-- ==================== DIAGRAM KONTEKS (PROSES 0) ==================== -->
+        <div id="dfd_context" class="dfd-section active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420">
+                <!-- Background -->
+                <rect width="1000" height="420" fill="white" />
+
+                <!-- STYLES -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-bold {
+                        font-family: 'Arial', sans-serif;
+                        font-weight: bold;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- External Entities -->
+                <!-- Karyawan -->
+                <rect x="60" y="160" width="160" height="80" class="entity" />
+                <text x="140" y="205" text-anchor="middle" class="text-title">Karyawan</text>
+
+                <!-- Pemilik -->
+                <rect x="780" y="160" width="160" height="80" class="entity" />
+                <text x="860" y="205" text-anchor="middle" class="text-title">Pemilik</text>
+
+                <!-- Process 0 -->
+                <circle cx="470" cy="200" r="90" class="process" />
+                <text x="470" y="150" text-anchor="middle" class="text-bold">0</text>
+                <text x="470" y="175" text-anchor="middle" class="text-title">Sistem Kasir Dengan</text>
+                <text x="470" y="195" text-anchor="middle" class="text-title">Penentuan Waktu</text>
+                <text x="470" y="215" text-anchor="middle" class="text-title">Pengadaan Barang</text>
+                <text x="470" y="235" text-anchor="middle" class="text-title">Menggunakan Metode</text>
+                <text x="470" y="255" text-anchor="middle" class="text-title">Reorder Point</text>
+
+                <!-- Flows Karyawan -> 0 -->
+                <path d="M220,180 L380,180" class="flow-line" marker-end="url(#arrow)" />
+                <text x="300" y="152" text-anchor="middle" class="text-flow">Data Transaksi Penjualan</text>
+                <text x="300" y="168" text-anchor="middle" class="text-flow">Input Data Barang Masuk</text>
+
+                <!-- Flows 0 -> Karyawan -->
+                <path d="M380,220 L220,220" class="flow-line" marker-end="url(#arrow)" />
+                <text x="300" y="238" text-anchor="middle" class="text-flow">Cetak Struk Transaksi</text>
+                <text x="300" y="254" text-anchor="middle" class="text-flow">Status Input Barang Masuk</text>
+
+                <!-- Flows Pemilik -> 0 -->
+                <path d="M780,220 L560,220" class="flow-line" marker-end="url(#arrow)" />
+                <text x="670" y="238" text-anchor="middle" class="text-flow">Data Master (Produk, Kategori, User,
+                    Supplier)</text>
+                <text x="670" y="254" text-anchor="middle" class="text-flow">Data Pengaturan Toko</text>
+                <text x="670" y="270" text-anchor="middle" class="text-flow">Persetujuan Barang Masuk</text>
+
+                <!-- Flows 0 -> Pemilik -->
+                <path d="M560,180 L780,180" class="flow-line" marker-end="url(#arrow)" />
+                <text x="670" y="122" text-anchor="middle" class="text-flow">Peringatan Visual Dini Pengadaan
+                    (ROP)</text>
+                <text x="670" y="138" text-anchor="middle" class="text-flow">Laporan Transaksi &amp; Arus Barang</text>
+                <text x="670" y="154" text-anchor="middle" class="text-flow">Laporan Keuntungan Kotor</text>
+            </svg>
+        </div>
+
+        <!-- ==================== DFD LEVEL 0 (DIAGRAM NOL) ==================== -->
+        <div id="dfd0" class="dfd-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="920" viewBox="0 0 1000 920">
+                <!-- Background -->
+                <rect width="1000" height="920" fill="white" />
+
+                <!-- STYLES -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-bold {
+                        font-family: 'Arial', sans-serif;
+                        font-weight: bold;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- ==================== EXTERNAL ENTITIES ==================== -->
+                <!-- Karyawan (Top Left) -->
+                <rect x="100" y="100" width="200" height="100" class="entity" />
+                <text x="200" y="155" text-anchor="middle" class="text-title">Karyawan</text>
+
+                <!-- Pemilik (Top Right) -->
+                <rect x="540" y="100" width="200" height="100" class="entity" />
+                <text x="640" y="155" text-anchor="middle" class="text-title">Pemilik</text>
+
+                <!-- ==================== PROCESSES ==================== -->
+                <!-- 3.0 Kelola Barang Masuk -->
+                <circle cx="480" cy="400" r="65" class="process" />
+                <text x="480" y="385" text-anchor="middle" class="text-title">3.0</text>
+                <text x="480" y="405" text-anchor="middle" class="text-title">Kelola Barang</text>
+                <text x="480" y="423" text-anchor="middle" class="text-title">Masuk</text>
+
+                <!-- 1.0 Kelola Data Master -->
+                <circle cx="680" cy="400" r="65" class="process" />
+                <text x="680" y="385" text-anchor="middle" class="text-title">1.0</text>
+                <text x="680" y="405" text-anchor="middle" class="text-title">Kelola</text>
+                <text x="680" y="423" text-anchor="middle" class="text-title">Data Master</text>
+
+                <!-- 2.0 Kelola Transaksi Penjualan -->
+                <circle cx="220" cy="520" r="65" class="process" />
+                <text x="220" y="505" text-anchor="middle" class="text-title">2.0</text>
+                <text x="220" y="525" text-anchor="middle" class="text-title">Kelola Transaksi</text>
+                <text x="220" y="543" text-anchor="middle" class="text-title">Penjualan</text>
+
+                <!-- 4.0 Hasilkan Laporan & Pemantauan -->
+                <circle cx="480" cy="820" r="65" class="process" />
+                <text x="480" y="805" text-anchor="middle" class="text-title">4.0</text>
+                <text x="480" y="825" text-anchor="middle" class="text-title">Hasilkan Laporan</text>
+                <text x="480" y="843" text-anchor="middle" class="text-title">&amp; Pemantauan</text>
+
+                <!-- ==================== DATA STORES ==================== -->
+                <!-- Data Master -->
+                <line x1="570" y1="570" x2="770" y2="570" class="store-line" />
+                <line x1="570" y1="595" x2="770" y2="595" class="store-line" />
+                <text x="670" y="587" text-anchor="middle" class="text-title">Data Master</text>
+
+                <!-- Transaksi (Tabel: transaksi) -->
+                <line x1="80" y1="700" x2="240" y2="700" class="store-line" />
+                <line x1="80" y1="725" x2="240" y2="725" class="store-line" />
+                <text x="160" y="717" text-anchor="middle" class="text-title">Transaksi</text>
+
+                <!-- Stok Batch (Tabel: stok_batch) -->
+                <line x1="300" y1="700" x2="460" y2="700" class="store-line" />
+                <line x1="300" y1="725" x2="460" y2="725" class="store-line" />
+                <text x="380" y="717" text-anchor="middle" class="text-title">Stok Batch</text>
+
+                <!-- ROP (Tabel: rop) -->
+                <line x1="520" y1="700" x2="680" y2="700" class="store-line" />
+                <line x1="520" y1="725" x2="680" y2="725" class="store-line" />
+                <text x="600" y="717" text-anchor="middle" class="text-title">ROP</text>
+
+                <!-- Barang Masuk (Tabel: barang_masuk) -->
+                <line x1="740" y1="700" x2="900" y2="700" class="store-line" />
+                <line x1="740" y1="725" x2="900" y2="725" class="store-line" />
+                <text x="820" y="717" text-anchor="middle" class="text-title">Barang Masuk</text>
+
+
+                <!-- ==================== CONNECTIONS / FLOW LINES ==================== -->
+                <!-- Karyawan -> 3.0 (Input Barang Masuk) -->
+                <path d="M300,130 L440,130 L440,340" class="flow-line" marker-end="url(#arrow)" />
+                <text x="370" y="115" text-anchor="middle" class="text-flow">Input Barang Masuk</text>
+
+                <!-- 3.0 -> Karyawan (Info Status Barang Masuk) -->
+                <path d="M420,360 L420,170 L300,170" class="flow-line" marker-end="url(#arrow)" />
+                <text x="360" y="195" text-anchor="middle" class="text-flow">Info Status</text>
+                <text x="360" y="210" text-anchor="middle" class="text-flow">Barang Masuk</text>
+
+                <!-- Karyawan -> 2.0 (Input Transaksi) -->
+                <path d="M170,200 L170,455" class="flow-line" marker-end="url(#arrow)" />
+                <text x="160" y="320" text-anchor="end" class="text-flow">Input Transaksi</text>
+
+                <!-- 2.0 -> Karyawan (Struk Transaksi) -->
+                <path d="M250,455 L250,200" class="flow-line" marker-end="url(#arrow)" />
+                <text x="260" y="280" text-anchor="start" class="text-flow">Struk</text>
+                <text x="260" y="295" text-anchor="start" class="text-flow">Transaksi</text>
+
+                <!-- Pemilik -> 3.0 (Approval) -->
+                <path d="M590,200 L590,230 L515,230 L515,340" class="flow-line" marker-end="url(#arrow)" />
+                <text x="525" y="285" text-anchor="start" class="text-flow">Approval</text>
+                <text x="525" y="300" text-anchor="start" class="text-flow">(Setuju / Tolak)</text>
+
+                <!-- Pemilik -> 1.0 (Input Data Master) -->
+                <path d="M680,200 L680,335" class="flow-line" marker-end="url(#arrow)" />
+                <text x="690" y="270" text-anchor="start" class="text-flow">Input Data Master</text>
+
+                <!-- Data Master Store -> 1.0 (Info Data) -->
+                <path d="M720,570 L720,460" class="flow-line" marker-end="url(#arrow)" />
+                <text x="730" y="520" text-anchor="start" class="text-flow">Info Data</text>
+
+                <!-- 1.0 -> Data Master Store (Simpan Data) -->
+                <path d="M640,460 L640,570" class="flow-line" marker-end="url(#arrow)" />
+                <text x="630" y="520" text-anchor="end" class="text-flow">Simpan Data</text>
+
+                <!-- Data Master Store -> 3.0 (Baca Data Produk & Supplier) -->
+                <path d="M590,570 L590,500 L440,500 L440,462" class="flow-line" marker-end="url(#arrow)" />
+                <text x="500" y="490" text-anchor="middle" class="text-flow">Baca Data Produk &amp; Supplier</text>
+
+                <!-- Data Master Store -> 2.0 (Baca Data Produk) -->
+                <path d="M570,580 L350,580 L350,520 L285,520" class="flow-line" marker-end="url(#arrow)" />
+                <text x="360" y="565" text-anchor="start" class="text-flow">Baca Data Produk</text>
+
+                <!-- 2.0 -> Stok Batch (Potong Qty Batch) -->
+                <path d="M285,530 L380,530 L380,700" class="flow-line" marker-end="url(#arrow)" />
+                <text x="330" y="515" text-anchor="middle" class="text-flow">Potong Qty Batch</text>
+
+                <!-- 3.0 -> Stok Batch (Buat Batch Barang Baru) -->
+                <path d="M480,465 L480,660 L420,660 L420,700" class="flow-line" marker-end="url(#arrow)" />
+                <text x="485" y="620" text-anchor="start" class="text-flow">Buat Batch Barang Baru</text>
+
+                <!-- 3.0 -> Barang Masuk (Catat Barang Masuk) -->
+                <path d="M545,400 L820,400 L820,700" class="flow-line" marker-end="url(#arrow)" />
+                <text x="710" y="390" text-anchor="middle" class="text-flow">Catat Barang Masuk</text>
+
+                <!-- 2.0 -> Transaksi (Simpan Transaksi) -->
+                <path d="M220,585 L220,650 L160,650 L160,700" class="flow-line" marker-end="url(#arrow)" />
+                <text x="170" y="640" text-anchor="end" class="text-flow">Simpan Transaksi</text>
+
+                <!-- Transaksi -> 4.0 (Data Penjualan) -->
+                <path d="M160,725 L160,820 L415,820" class="flow-line" marker-end="url(#arrow)" />
+                <text x="165" y="810" text-anchor="start" class="text-flow">Data Penjualan</text>
+
+
+
+                <!-- 4.0 -> ROP (Update ROP) -->
+                <path d="M520,770 L520,740 L600,740 L600,725" class="flow-line" marker-end="url(#arrow)" />
+                <text x="560" y="750" text-anchor="middle" class="text-flow">Update ROP</text>
+
+                <!-- Barang Masuk -> 4.0 (Data Barang Masuk) -->
+                <path d="M820,725 L820,820 L545,820" class="flow-line" marker-end="url(#arrow)" />
+                <text x="720" y="810" text-anchor="middle" class="text-flow">Data Barang Masuk</text>
+
+                <!-- Produk Store -> 4.0 (Data Stok Terkini) -->
+                <path d="M760,595 L760,900 L480,900 L480,885" class="flow-line" marker-end="url(#arrow)" />
+                <text x="620" y="892" text-anchor="middle" class="text-flow">Data Stok Terkini</text>
+
+                <!-- 4.0 -> Pemilik (Laporan Transaksi...) -->
+                <path d="M545,820 L880,820 L880,150 L740,150" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(870, 310)">
+                    <text x="0" y="0" text-anchor="end" class="text-flow">Laporan Transaksi</text>
+                    <text x="0" y="18" text-anchor="end" class="text-flow">Arus Barang</text>
+                    <text x="0" y="36" text-anchor="end" class="text-flow">Keuntungan Kotor</text>
+                    <text x="0" y="54" text-anchor="end" class="text-flow">Peringatan ROP</text>
+                </g>
+            </svg>
+        </div>
+
+
+        <!-- ==================== DFD LVL 1 - PROSES 1.0 (DATA MASTER) ==================== -->
+        <div id="dfd1_1" class="dfd-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="920" viewBox="0 0 1000 920">
+                <!-- Background -->
+                <rect width="1000" height="920" fill="white" />
+
+                <!-- Styles -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- Entity -->
+                <!-- Pemilik -->
+                <rect x="420" y="30" width="160" height="70" class="entity" />
+                <text x="500" y="70" text-anchor="middle" class="text-title">Pemilik</text>
+
+                <!-- Processes -->
+                <!-- 1.1 Kelola Kategori -->
+                <circle cx="500" cy="170" r="45" class="process" />
+                <text x="500" y="165" text-anchor="middle" class="text-title">1.1</text>
+                <text x="500" y="180" text-anchor="middle" class="text-title">Kelola Kategori</text>
+
+                <!-- 1.2 Kelola Produk & Dimensi -->
+                <circle cx="500" cy="320" r="45" class="process" />
+                <text x="500" y="310" text-anchor="middle" class="text-title">1.2</text>
+                <text x="500" y="325" text-anchor="middle" class="text-title">Kelola Produk</text>
+                <text x="500" y="338" text-anchor="middle" class="text-title">&amp; Dimensi</text>
+
+                <!-- 1.3 Kelola Supplier -->
+                <circle cx="500" cy="470" r="45" class="process" />
+                <text x="500" y="465" text-anchor="middle" class="text-title">1.3</text>
+                <text x="500" y="480" text-anchor="middle" class="text-title">Kelola Supplier</text>
+
+                <!-- 1.4 Kelola Pengguna -->
+                <circle cx="500" cy="620" r="45" class="process" />
+                <text x="500" y="615" text-anchor="middle" class="text-title">1.4</text>
+                <text x="500" y="630" text-anchor="middle" class="text-title">Kelola Pengguna</text>
+
+                <!-- 1.5 Kelola Pengaturan -->
+                <circle cx="500" cy="770" r="45" class="process" />
+                <text x="500" y="765" text-anchor="middle" class="text-title">1.5</text>
+                <text x="500" y="780" text-anchor="middle" class="text-title">Kelola Pengaturan</text>
+
+                <!-- Data Stores -->
+                <!-- Kategori -->
+                <line x1="400" y1="240" x2="600" y2="240" class="store-line" />
+                <line x1="400" y1="265" x2="600" y2="265" class="store-line" />
+                <text x="500" y="257" text-anchor="middle" class="text-title">Kategori</text>
+
+                <!-- Produk -->
+                <line x1="400" y1="390" x2="600" y2="390" class="store-line" />
+                <line x1="400" y1="415" x2="600" y2="415" class="store-line" />
+                <text x="500" y="407" text-anchor="middle" class="text-title">Produk</text>
+
+                <!-- Supplier -->
+                <line x1="400" y1="540" x2="600" y2="540" class="store-line" />
+                <line x1="400" y1="565" x2="600" y2="565" class="store-line" />
+                <text x="500" y="557" text-anchor="middle" class="text-title">Supplier</text>
+
+                <!-- Pengguna -->
+                <line x1="400" y1="690" x2="600" y2="690" class="store-line" />
+                <line x1="400" y1="715" x2="600" y2="715" class="store-line" />
+                <text x="500" y="707" text-anchor="middle" class="text-title">Pengguna</text>
+
+                <!-- Pengaturan -->
+                <line x1="400" y1="840" x2="600" y2="840" class="store-line" />
+                <line x1="400" y1="865" x2="600" y2="865" class="store-line" />
+                <text x="500" y="857" text-anchor="middle" class="text-title">Pengaturan</text>
+
+                <!-- Connections / Flow Lines -->
+                <!-- Pemilik -> 1.1 (Data Kategori) -->
+                <path d="M500,100 L500,125" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="115" text-anchor="start" class="text-flow">Data Kategori</text>
+
+                <!-- Pemilik -> 1.2 (Data Produk) -->
+                <path d="M450,100 L450,110 L320,110 L320,320 L455,320" class="flow-line" marker-end="url(#arrow)" />
+                <text x="370" y="310" text-anchor="middle" class="text-flow">Data Produk</text>
+
+                <!-- Pemilik -> 1.3 (Data Supplier) -->
+                <path d="M440,100 L440,110 L280,110 L280,470 L455,470" class="flow-line" marker-end="url(#arrow)" />
+                <text x="350" y="460" text-anchor="middle" class="text-flow">Data Supplier</text>
+
+                <!-- Pemilik -> 1.4 (Data Pengguna) -->
+                <path d="M430,100 L430,110 L240,110 L240,620 L455,620" class="flow-line" marker-end="url(#arrow)" />
+                <text x="330" y="610" text-anchor="middle" class="text-flow">Data Pengguna</text>
+
+                <!-- Pemilik -> 1.5 (Data Pengaturan) -->
+                <path d="M420,100 L420,110 L200,110 L200,770 L455,770" class="flow-line" marker-end="url(#arrow)" />
+                <text x="310" y="760" text-anchor="middle" class="text-flow">Data Pengaturan</text>
+
+                <!-- 1.1 -> Kategori (Simpan / Update Kategori) -->
+                <path d="M500,215 L500,240" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="230" text-anchor="start" class="text-flow">Simpan / Update Kategori</text>
+
+                <!-- Kategori -> 1.2 (Verifikasi Kategori) -->
+                <path d="M500,265 L500,275" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="272" text-anchor="start" class="text-flow">Verifikasi Kategori</text>
+
+                <!-- 1.2 -> Produk (Simpan / Update Produk) -->
+                <path d="M500,365 L500,390" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="380" text-anchor="start" class="text-flow">Simpan / Update Produk</text>
+
+                <!-- 1.3 -> Supplier (Simpan / Update Supplier) -->
+                <path d="M500,515 L500,540" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="530" text-anchor="start" class="text-flow">Simpan / Update Supplier</text>
+
+                <!-- 1.4 -> Pengguna (Simpan / Update Pengguna) -->
+                <path d="M500,665 L500,690" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="680" text-anchor="start" class="text-flow">Simpan / Update Pengguna</text>
+
+                <!-- 1.5 -> Pengaturan (Simpan / Update Pengaturan) -->
+                <path d="M500,815 L500,840" class="flow-line" marker-end="url(#arrow)" />
+                <text x="505" y="830" text-anchor="start" class="text-flow">Simpan / Update Pengaturan</text>
+            </svg>
+        </div>
+
+
+        <!-- ==================== DFD LVL 1 - PROSES 2.0 (TRANSAKSI) ==================== -->
+        <div id="dfd1_2" class="dfd-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="950" height="600" viewBox="0 0 950 600">
+                <!-- Background -->
+                <rect width="950" height="600" fill="white" />
+
+                <!-- Styles -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- Entities -->
+                <!-- Karyawan -->
+                <rect x="100" y="240" width="150" height="70" class="entity" />
+                <text x="175" y="280" text-anchor="middle" class="text-title">Karyawan</text>
+
+                <!-- Processes -->
+                <!-- 2.1 Input Item Penjualan -->
+                <circle cx="450" cy="400" r="65" class="process" />
+                <text x="450" y="385" text-anchor="middle" class="text-title">2.1</text>
+                <text x="450" y="405" text-anchor="middle" class="text-title">Input Item</text>
+                <text x="450" y="423" text-anchor="middle" class="text-title">Penjualan</text>
+
+                <!-- 2.2 Hitung & Bayar -->
+                <circle cx="680" cy="300" r="65" class="process" />
+                <text x="680" y="285" text-anchor="middle" class="text-title">2.2</text>
+                <text x="680" y="305" text-anchor="middle" class="text-title">Hitung &amp;</text>
+                <text x="680" y="323" text-anchor="middle" class="text-title">Bayar</text>
+
+                <!-- 2.3 Update Stok Keluar -->
+                <circle cx="680" cy="100" r="65" class="process" />
+                <text x="680" y="85" text-anchor="middle" class="text-title">2.3</text>
+                <text x="680" y="105" text-anchor="middle" class="text-title">Update Stok</text>
+                <text x="680" y="123" text-anchor="middle" class="text-title">Keluar</text>
+
+                <!-- Data Stores -->
+                <!-- Produk -->
+                <line x1="100" y1="390" x2="220" y2="390" class="store-line" />
+                <line x1="100" y1="415" x2="220" y2="415" class="store-line" />
+                <text x="160" y="407" text-anchor="middle" class="text-title">Produk</text>
+
+                <!-- Transaksi -->
+                <line x1="800" y1="440" x2="920" y2="440" class="store-line" />
+                <line x1="800" y1="465" x2="920" y2="465" class="store-line" />
+                <text x="860" y="457" text-anchor="middle" class="text-title">Transaksi</text>
+
+                <!-- Stok Batch -->
+                <line x1="800" y1="120" x2="920" y2="120" class="store-line" />
+                <line x1="800" y1="145" x2="920" y2="145" class="store-line" />
+                <text x="860" y="137" text-anchor="middle" class="text-title">Stok Batch</text>
+
+
+                <!-- ==================== ORTHOGONAL NO-CROSS FLOWS ==================== -->
+                <!-- Karyawan -> 2.1 (Tambah Item) -->
+                <path d="M250,290 L450,290 L450,335" class="flow-line" marker-end="url(#arrow)" />
+                <text x="350" y="280" text-anchor="middle" class="text-flow">Tambah Item</text>
+
+                <!-- Karyawan -> 2.2 (Info Pembayaran) -->
+                <path d="M250,270 L615,270" class="flow-line" marker-end="url(#arrow)" />
+                <text x="350" y="260" text-anchor="middle" class="text-flow">Info Pembayaran</text>
+
+                <!-- Produk Store -> 2.1 (Data Produk) -->
+                <path d="M220,400 L385,400" class="flow-line" marker-end="url(#arrow)" />
+                <text x="300" y="390" text-anchor="middle" class="text-flow">Data Produk</text>
+
+                <!-- 2.1 -> 2.2 (Item Keranjang) -->
+                <path d="M515,400 L680,400 L680,365" class="flow-line" marker-end="url(#arrow)" />
+                <text x="590" y="390" text-anchor="middle" class="text-flow">Item Keranjang</text>
+
+                <!-- 2.2 -> 2.3 (Data Terjual) -->
+                <path d="M745,300 L800,300 L800,120 L745,120" class="flow-line" marker-end="url(#arrow)" />
+                <text x="808" y="210" text-anchor="start" class="text-flow">Data Terjual</text>
+
+                <!-- 2.2 -> Transaksi (Simpan Transaksi) -->
+                <path d="M680,365 L680,450 L800,450" class="flow-line" marker-end="url(#arrow)" />
+                <text x="730" y="440" text-anchor="middle" class="text-flow">Simpan Transaksi</text>
+
+                <!-- 2.3 -> Stok Batch (Potong Qty Batch) -->
+                <path d="M680,35 L680,15 L860,15 L860,120" class="flow-line" marker-end="url(#arrow)" />
+                <text x="770" y="28" text-anchor="middle" class="text-flow">Potong Qty Batch</text>
+
+                <!-- 2.3 -> Karyawan (Struk Transaksi) -->
+                <path d="M615,100 L175,100 L175,240" class="flow-line" marker-end="url(#arrow)" />
+                <text x="350" y="90" text-anchor="middle" class="text-flow">Struk Transaksi</text>
+            </svg>
+        </div>
+
+
+        <!-- ==================== DFD LVL 1 - PROSES 3.0 (BARANG MASUK) ==================== -->
+        <div id="dfd1_3" class="dfd-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="900" height="850" viewBox="0 0 900 850">
+                <!-- Background -->
+                <rect width="900" height="850" fill="white" />
+
+                <!-- Styles -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- Entities -->
+                <!-- Karyawan -->
+                <rect x="300" y="40" width="180" height="70" class="entity" />
+                <text x="390" y="80" text-anchor="middle" class="text-title">Karyawan</text>
+
+                <!-- Pemilik -->
+                <rect x="600" y="445" width="180" height="70" class="entity" />
+                <text x="690" y="485" text-anchor="middle" class="text-title">Pemilik</text>
+
+                <!-- Processes -->
+                <!-- 3.1 Input Barang Masuk -->
+                <circle cx="390" cy="200" r="60" class="process" />
+                <text x="390" y="185" text-anchor="middle" class="text-title">3.1</text>
+                <text x="390" y="205" text-anchor="middle" class="text-title">Input Barang</text>
+                <text x="390" y="223" text-anchor="middle" class="text-title">Masuk</text>
+
+                <!-- 3.2 Review & Approval -->
+                <circle cx="390" cy="480" r="60" class="process" />
+                <text x="390" y="465" text-anchor="middle" class="text-title">3.2</text>
+                <text x="390" y="485" text-anchor="middle" class="text-title">Review &amp;</text>
+                <text x="390" y="503" text-anchor="middle" class="text-title">Approval</text>
+
+                <!-- 3.3 Terapkan Stok Masuk -->
+                <circle cx="390" cy="640" r="60" class="process" />
+                <text x="390" y="625" text-anchor="middle" class="text-title">3.3</text>
+                <text x="390" y="645" text-anchor="middle" class="text-title">Terapkan Stok</text>
+                <text x="390" y="663" text-anchor="middle" class="text-title">Masuk</text>
+
+                <!-- Data Stores -->
+                <!-- Produk -->
+                <line x1="600" y1="170" x2="840" y2="170" class="store-line" />
+                <line x1="600" y1="195" x2="840" y2="195" class="store-line" />
+                <text x="720" y="187" text-anchor="middle" class="text-title">Produk</text>
+
+                <!-- Supplier -->
+                <line x1="600" y1="230" x2="840" y2="230" class="store-line" />
+                <line x1="600" y1="255" x2="840" y2="255" class="store-line" />
+                <text x="720" y="247" text-anchor="middle" class="text-title">Supplier</text>
+
+                <!-- Barang Masuk -->
+                <line x1="290" y1="350" x2="490" y2="350" class="store-line" />
+                <line x1="290" y1="375" x2="490" y2="375" class="store-line" />
+                <text x="390" y="367" text-anchor="middle" class="text-title">Barang Masuk</text>
+
+                <!-- Stok Batch -->
+                <line x1="290" y1="760" x2="490" y2="760" class="store-line" />
+                <line x1="290" y1="785" x2="490" y2="785" class="store-line" />
+                <text x="390" y="777" text-anchor="middle" class="text-title">Stok Batch</text>
+
+
+                <!-- ==================== ORTHOGONAL NO-CROSS FLOWS ==================== -->
+                <!-- Karyawan -> 3.1 (Input Form Barang Masuk) -->
+                <path d="M390,110 L390,140" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(400, 120)">
+                    <text x="0" y="0" text-anchor="start" class="text-flow">Input</text>
+                    <text x="0" y="14" text-anchor="start" class="text-flow">Form</text>
+                    <text x="0" y="28" text-anchor="start" class="text-flow">Barang</text>
+                    <text x="0" y="42" text-anchor="start" class="text-flow">Masuk</text>
+                </g>
+
+                <!-- 3.1 -> Produk Store (Validasi ID Produk) -->
+                <path d="M450,185 L600,185" class="flow-line" marker-end="url(#arrow)" />
+                <text x="525" y="175" text-anchor="middle" class="text-flow">Validasi ID Produk</text>
+
+                <!-- 3.1 -> Supplier Store (Validasi ID Supplier) -->
+                <path d="M450,240 L600,240" class="flow-line" marker-end="url(#arrow)" />
+                <text x="525" y="230" text-anchor="middle" class="text-flow">Validasi ID Supplier</text>
+
+                <!-- 3.1 -> Barang Masuk Store (Simpan Pending) -->
+                <path d="M390,260 L390,350" class="flow-line" marker-end="url(#arrow)" />
+                <text x="400" y="310" text-anchor="start" class="text-flow">Simpan Pending</text>
+
+                <!-- Barang Masuk Store -> 3.2 (Antrian Bukti Barang Masuk) -->
+                <path d="M350,375 L350,422" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(340, 400)">
+                    <text x="0" y="-12" text-anchor="end" class="text-flow">Antrian</text>
+                    <text x="0" y="2" text-anchor="end" class="text-flow">Bukti</text>
+                    <text x="0" y="16" text-anchor="end" class="text-flow">Barang</text>
+                    <text x="0" y="30" text-anchor="end" class="text-flow">Masuk</text>
+                </g>
+
+                <!-- Pemilik -> 3.2 (Aksi Setuju / Tolak) -->
+                <path d="M600,480 L450,480" class="flow-line" marker-end="url(#arrow)" />
+                <text x="525" y="470" text-anchor="middle" class="text-flow">Aksi Setuju / Tolak</text>
+
+                <!-- 3.2 -> Barang Masuk Store (Update Status Akhir) -->
+                <path d="M420,422 L420,375" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(430, 400)">
+                    <text x="0" y="-12" text-anchor="start" class="text-flow">Update</text>
+                    <text x="0" y="2" text-anchor="start" class="text-flow">Status</text>
+                    <text x="0" y="16" text-anchor="start" class="text-flow">Akhir</text>
+                    <text x="0" y="30" text-anchor="start" class="text-flow">(Disetujui)</text>
+                </g>
+
+                <!-- 3.2 -> Karyawan (Status Persetujuan) -->
+                <path d="M330,480 L180,480 L180,75 L300,75" class="flow-line" marker-end="url(#arrow)" />
+                <text x="190" y="250" text-anchor="middle" class="text-flow" transform="rotate(-90 190 250)">Status
+                    Persetujuan</text>
+
+                <!-- 3.2 -> 3.3 (Data Persetujuan) -->
+                <path d="M390,540 L390,580" class="flow-line" marker-end="url(#arrow)" />
+                <text x="400" y="565" text-anchor="start" class="text-flow">Data Persetujuan</text>
+
+                <!-- 3.3 -> Stok Batch (Simpan Batch Baru) -->
+                <path d="M390,700 L390,760" class="flow-line" marker-end="url(#arrow)" />
+                <text x="400" y="735" text-anchor="start" class="text-flow">Simpan Batch Baru</text>
+            </svg>
+        </div>
+
+
+        <!-- ==================== DFD LVL 1 - PROSES 4.0 (LAPORAN & ROP) ==================== -->
+        <div id="dfd1_4" class="dfd-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="900" height="780" viewBox="0 0 900 780">
+                <!-- Background -->
+                <rect width="900" height="780" fill="white" />
+
+                <!-- Styles -->
+                <style>
+                    .entity {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .process {
+                        fill: #ffffff;
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .store-line {
+                        stroke: #000000;
+                        stroke-width: 1.5;
+                    }
+
+                    .flow-line {
+                        stroke: #000000;
+                        stroke-width: 1.2;
+                        fill: none;
+                        stroke-linejoin: round;
+                    }
+
+                    .text-title {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 13px;
+                        fill: #000000;
+                    }
+
+                    .text-flow {
+                        font-family: 'Arial', sans-serif;
+                        font-size: 11px;
+                        fill: #000000;
+                    }
+
+                    .arrow {
+                        fill: #000000;
+                    }
+                </style>
+                <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                        <polygon points="0 0, 8 3, 0 6" class="arrow" />
+                    </marker>
+                </defs>
+
+                <!-- Entities -->
+                <!-- Pemilik -->
+                <rect x="650" y="520" width="180" height="70" class="entity" />
+                <text x="740" y="560" text-anchor="middle" class="text-title">Pemilik</text>
+
+                <!-- Processes -->
+                <!-- 4.1 Hitung & Kalkulasi ROP -->
+                <circle cx="500" cy="130" r="60" class="process" />
+                <text x="500" y="115" text-anchor="middle" class="text-title">4.1</text>
+                <text x="500" y="133" text-anchor="middle" class="text-title">Hitung &amp;</text>
+                <text x="500" y="150" text-anchor="middle" class="text-title">Kalkulasi ROP</text>
+
+                <!-- 4.2 Sajikan Warning Visual -->
+                <circle cx="500" cy="450" r="60" class="process" />
+                <text x="500" y="435" text-anchor="middle" class="text-title">4.2</text>
+                <text x="500" y="453" text-anchor="middle" class="text-title">Sajikan</text>
+                <text x="500" y="470" text-anchor="middle" class="text-title">Warning Visual</text>
+
+                <!-- 4.3 Laporan Keuntungan Kotor... -->
+                <circle cx="500" cy="690" r="60" class="process" />
+                <text x="500" y="668" text-anchor="middle" class="text-title">4.3</text>
+                <text x="500" y="685" text-anchor="middle" class="text-title">Laporan Keuntungan</text>
+                <text x="500" y="701" text-anchor="middle" class="text-title">Kotor &amp; Arus Barang,</text>
+                <text x="500" y="718" text-anchor="middle" class="text-title">Transaksi</text>
+
+                <!-- Data Stores -->
+                <!-- Transaksi -->
+                <line x1="180" y1="80" x2="320" y2="80" class="store-line" />
+                <line x1="180" y1="105" x2="320" y2="105" class="store-line" />
+                <text x="250" y="97" text-anchor="middle" class="text-title">Transaksi</text>
+
+
+
+                <!-- ROP -->
+                <line x1="400" y1="290" x2="540" y2="290" class="store-line" />
+                <line x1="400" y1="315" x2="540" y2="315" class="store-line" />
+                <text x="470" y="307" text-anchor="middle" class="text-title">ROP</text>
+
+                <!-- Produk -->
+                <line x1="180" y1="440" x2="320" y2="440" class="store-line" />
+                <line x1="180" y1="465" x2="320" y2="465" class="store-line" />
+                <text x="250" y="457" text-anchor="middle" class="text-title">Produk</text>
+
+                <!-- Barang Masuk -->
+                <line x1="180" y1="680" x2="320" y2="680" class="store-line" />
+                <line x1="180" y1="705" x2="320" y2="705" class="store-line" />
+                <text x="250" y="697" text-anchor="middle" class="text-title">Barang Masuk</text>
+
+
+                <!-- ==================== ORTHOGONAL NO-CROSS FLOWS ==================== -->
+                <!-- Transaksi -> 4.1 (Rata - Rata Penjualan) -->
+                <path d="M320,90 L440,90" class="flow-line" marker-end="url(#arrow)" />
+                <text x="380" y="80" text-anchor="middle" class="text-flow">Rata - Rata Penjualan</text>
+
+                <!-- Barang Masuk -> 4.1 (Riwayat Lead Time) -->
+                <path d="M180,690 L80,690 L80,70 L500,70" class="flow-line" marker-end="url(#arrow)" />
+                <text x="280" y="60" text-anchor="middle" class="text-flow">Riwayat Lead Time (Barang Masuk)</text>
+
+                <!-- 4.1 -> ROP (Update Nilai ROP...) -->
+                <path d="M500,190 L500,290" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(510, 235)">
+                    <text x="0" y="0" text-anchor="start" class="text-flow">Update Nilai ROP</text>
+                    <text x="0" y="14" text-anchor="start" class="text-flow">&amp; Safety Stock</text>
+                </g>
+
+                <!-- ROP -> 4.2 (Komparasi Stok VS ROP) -->
+                <path d="M500,315 L500,390" class="flow-line" marker-end="url(#arrow)" />
+                <text x="510" y="350" text-anchor="start" class="text-flow">Komparasi Stok VS ROP</text>
+
+                <!-- Produk -> 4.2 (Data Stok Terkini) -->
+                <path d="M320,450 L440,450" class="flow-line" marker-end="url(#arrow)" />
+                <text x="380" y="440" text-anchor="middle" class="text-flow">Data Stok Terkini</text>
+
+                <!-- 4.2 -> Pemilik (Peringatan Dini...) -->
+                <path d="M560,450 L600,450 L600,540 L650,540" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(610, 480)">
+                    <text x="0" y="0" text-anchor="start" class="text-flow">Peringatan</text>
+                    <text x="0" y="14" text-anchor="start" class="text-flow">Dini Di</text>
+                    <text x="0" y="28" text-anchor="start" class="text-flow">Dasbor Web</text>
+                </g>
+
+                <!-- Pemilik -> 4.3 (Permintaan Laporan) -->
+                <path d="M650,570 L610,570 L610,670 L550,670" class="flow-line" marker-end="url(#arrow)" />
+                <g transform="translate(615, 620)">
+                    <text x="0" y="0" text-anchor="start" class="text-flow">Permintaan</text>
+                    <text x="0" y="14" text-anchor="start" class="text-flow">Laporan</text>
+                </g>
+
+                <!-- 4.3 -> Pemilik (Tampilkan Laporan) -->
+                <path d="M560,690 L740,690 L740,590" class="flow-line" marker-end="url(#arrow)" />
+                <text x="745" y="640" text-anchor="start" class="text-flow">Tampilkan Laporan</text>
+
+                <!-- Transaksi Store -> 4.3 (Data Penjualan) -->
+                <path d="M180,90 L100,90 L100,670 L440,670" class="flow-line" marker-end="url(#arrow)" />
+                <text x="90" y="380" text-anchor="middle" class="text-flow" transform="rotate(-90 90 380)">Data
+                    Penjualan</text>
+
+
+
+                <!-- Barang Masuk -> 4.3 (Data Barang) -->
+                <path d="M320,690 L440,690" class="flow-line" marker-end="url(#arrow)" />
+                <text x="380" y="680" text-anchor="middle" class="text-flow">Data Barang</text>
+            </svg>
+        </div>
+
+    </div>
+
+    <script>
+        function switchDFD(dfdId, tabButton) {
+            // Hide all sections
+            var sections = document.querySelectorAll('.dfd-section');
+            sections.forEach(function (sec) {
+                sec.classList.remove('active');
+            });
+            // Show active section
+            document.getElementById(dfdId).classList.add('active');
+
+            // Set tab button active
+            var tabs = document.querySelectorAll('.btn-tab');
+            tabs.forEach(function (tab) {
+                tab.classList.remove('active');
+            });
+            tabButton.classList.add('active');
+        }
+
+        function downloadActiveSVG() {
+            var activeSection = document.querySelector('.dfd-section.active');
+            var svgElement = activeSection.querySelector('svg');
+            var svgString = new XMLSerializer().serializeToString(svgElement);
+            var blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+            var url = URL.createObjectURL(blob);
+            var downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = activeSection.id + "_mitra_pos.svg";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+
+</html>
