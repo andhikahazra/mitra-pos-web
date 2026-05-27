@@ -33,6 +33,7 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
     Route::resource('supplier', SupplierController::class)->except(['destroy']);
 
     // Log & Batch Stok
+    Route::get('/log-stok', [\App\Http\Controllers\LogStokController::class, 'index'])->name('log-stok.index');
 
     Route::get('/stok-batch', [StokBatchController::class, 'index'])->name('stok-batch.index');
     Route::get('/stok-batch/{produk}', [StokBatchController::class, 'show'])->name('stok-batch.show');

@@ -58,6 +58,11 @@
 
         <p class="menu-group-title">Inventori</p>
 
+        <a class="menu-link {{ request()->routeIs('log-stok.*') ? 'active' : '' }}" href="{{ route('log-stok.index') }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            <span>Log Pergerakan Stok</span>
+        </a>
+
         <a class="menu-link {{ request()->routeIs('stok-batch.*') ? 'active' : '' }}" href="{{ route('stok-batch.index') }}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
             <span>Monitoring Batch</span>
