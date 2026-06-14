@@ -4,6 +4,10 @@
     $latestTransactions = $payload['latestTransactions'] ?? [];
     $alerts = $payload['alerts'] ?? [];
     $charts = $payload['charts'] ?? [];
+
+    $activeRange = request()->query('range', 'today');
+    $startDateVal = request()->query('start_date', '');
+    $endDateVal = request()->query('end_date', '');
 @endphp
 
 <section class="feature-section active" id="section-dashboard">
@@ -16,22 +20,27 @@
 
         <div class="hero-filter-panel">
             <div class="hero-range-tabs" role="tablist" aria-label="Filter waktu dashboard">
-                <button type="button" class="hero-range-btn active" data-range="today">Hari Ini</button>
-                <button type="button" class="hero-range-btn" data-range="7d">7 Hari</button>
-                <button type="button" class="hero-range-btn" data-range="1m">1 Bulan</button>
-                <button type="button" class="hero-range-btn" data-range="custom">Custom</button>
+                <button type="button" class="hero-range-btn {{ $activeRange === 'today' ? 'active' : '' }}" data-range="today">Hari Ini</button>
+                <button type="button" class="hero-range-btn {{ $activeRange === '7d' ? 'active' : '' }}" data-range="7d">7 Hari</button>
+                <button type="button" class="hero-range-btn {{ $activeRange === '1m' ? 'active' : '' }}" data-range="1m">1 Bulan</button>
+                <button type="button" class="hero-range-btn {{ $activeRange === 'custom' ? 'active' : '' }}" data-range="custom">Custom</button>
             </div>
 
-            <div class="hero-custom-range hidden" id="heroCustomRange">
-                <input type="date" class="field !h-10" id="heroStartDate" aria-label="Tanggal mulai">
+            <div class="hero-custom-range {{ $activeRange === 'custom' ? '' : 'hidden' }}" id="heroCustomRange">
+                <input type="date" class="field !h-10" id="heroStartDate" aria-label="Tanggal mulai" value="{{ $startDateVal }}">
                 <span class="hero-range-separator">s/d</span>
-                <input type="date" class="field !h-10" id="heroEndDate" aria-label="Tanggal akhir">
+                <input type="date" class="field !h-10" id="heroEndDate" aria-label="Tanggal akhir" value="{{ $endDateVal }}">
                 <button type="button" class="btn btn-ghost !h-10 !px-3" id="heroApplyRange">Terapkan</button>
             </div>
 
             <div class="hero-actions">
-                <p class="hero-filter-label" id="heroFilterLabel">Menampilkan data hari ini</p>
-
+                @if($activeRange === 'custom' && $startDateVal && $endDateVal)
+                    <p class="hero-filter-label" id="heroFilterLabel">Menampilkan data custom {{ $startDateVal }} s/d {{ $endDateVal }}</p>
+                @else
+                    <p class="hero-filter-label" id="heroFilterLabel">
+                        {{ $activeRange === '7d' ? 'Menampilkan data 7 hari terakhir' : ($activeRange === '1m' ? 'Menampilkan data 1 bulan terakhir' : 'Menampilkan data hari ini') }}
+                    </p>
+                @endif
             </div>
         </div>
     </div>
@@ -39,14 +48,54 @@
     {{-- KPI Cards --}}
     <div class="kpi-strip">
         <article class="kpi-card">
-            <p class="kpi-label">Omzet Hari Ini</p>
+            <p class="kpi-label">
+                @if($activeRange === 'today')
+                    Omzet Hari Ini
+                @elseif($activeRange === '7d')
+                    Omzet 7 Hari Terakhir
+                @elseif($activeRange === '1m')
+                    Omzet 30 Hari Terakhir
+                @else
+                    Omzet Kustom
+                @endif
+            </p>
             <h3>Rp {{ number_format($metrics['omzetToday'] ?? 0, 0, ',', '.') }}</h3>
-            <p class="kpi-trend positive" id="kpiOmzetTrend">Data hari ini</p>
+            <p class="kpi-trend positive" id="kpiOmzetTrend">
+                @if($activeRange === 'today')
+                    Data hari ini
+                @elseif($activeRange === '7d')
+                    Data 7 hari terakhir
+                @elseif($activeRange === '1m')
+                    Data 30 hari terakhir
+                @else
+                    Periode: {{ $startDateVal }} s/d {{ $endDateVal }}
+                @endif
+            </p>
         </article>
         <article class="kpi-card">
-            <p class="kpi-label">Transaksi Hari Ini</p>
+            <p class="kpi-label">
+                @if($activeRange === 'today')
+                    Transaksi Hari Ini
+                @elseif($activeRange === '7d')
+                    Transaksi 7 Hari Terakhir
+                @elseif($activeRange === '1m')
+                    Transaksi 30 Hari Terakhir
+                @else
+                    Transaksi Kustom
+                @endif
+            </p>
             <h3>{{ $metrics['trxToday'] ?? 0 }}</h3>
-            <p class="kpi-trend info">Total transaksi hari ini</p>
+            <p class="kpi-trend info">
+                @if($activeRange === 'today')
+                    Total transaksi hari ini
+                @elseif($activeRange === '7d')
+                    Total transaksi 7 hari terakhir
+                @elseif($activeRange === '1m')
+                    Total transaksi 30 hari terakhir
+                @else
+                    Total transaksi periode kustom
+                @endif
+            </p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Produk ROP Kritis</p>
@@ -64,7 +113,15 @@
     <div class="grid gap-3 xl:grid-cols-5">
         <article class="panel-card xl:col-span-3">
             <div class="panel-head">
-                <h2>Tren Penjualan 7 Hari</h2>
+                <h2>
+                    @if($activeRange === '1m')
+                        Tren Penjualan 30 Hari Terakhir
+                    @elseif($activeRange === 'custom')
+                        Tren Penjualan (Kustom)
+                    @else
+                        Tren Penjualan 7 Hari Terakhir
+                    @endif
+                </h2>
                 <span class="tag blue">Omzet Harian</span>
             </div>
             <div class="h-[250px]"><canvas id="salesLineChart"></canvas></div>
@@ -149,6 +206,7 @@
 {{-- Inject chart data untuk JS --}}
 <script>
     window.__DASHBOARD_DATA__ = {
+        range: @json($activeRange),
         charts: @json($charts),
         metrics: @json($metrics),
         latestTransactions: @json($latestTransactions),
