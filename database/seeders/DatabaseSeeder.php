@@ -12,7 +12,6 @@ use App\Models\DetailBarangMasuk;
 use App\Models\StokBatch;
 use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
-use App\Models\LogStok;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
@@ -26,7 +25,6 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('detail_transaksi')->truncate();
         DB::table('transaksi')->truncate();
-        DB::table('log_stok')->truncate();
         DB::table('stok_batch')->truncate();
         DB::table('detail_barang_masuk')->truncate();
         DB::table('barang_masuk')->truncate();
@@ -76,7 +74,7 @@ class DatabaseSeeder extends Seeder
             ['nama' => 'Bubble Wrap Hitam 1m', 'sku' => 'BBL-HTM-1', 'kat' => $katBubble->id, 'hrg' => 3500, 'demand' => 'med'],
             ['nama' => 'Bubble Wrap Putih 1m', 'sku' => 'BBL-PTH-1', 'kat' => $katBubble->id, 'hrg' => 3000, 'demand' => 'med'],
             ['nama' => 'Bubble Wrap Roll 50m', 'sku' => 'BBL-ROL-50', 'kat' => $katBubble->id, 'hrg' => 125000, 'demand' => 'low'],
-            ['nama' => 'Air Bubble Bag 10pcs', 'sku' => 'BBL-BAG-10', 'kat' => $katBubble->id, 'hrg' => 15000, 'demand' => 'low'],
+            ['nama' => 'Air Bubble Bag', 'sku' => 'BBL-BAG-10', 'kat' => $katBubble->id, 'hrg' => 15000, 'demand' => 'low'],
             
             // LAKBAN (High - Med Demand)
             ['nama' => 'Lakban Bening 5cm Daimaru', 'sku' => 'LKB-BNG-5', 'kat' => $katLakban->id, 'hrg' => 10000, 'demand' => 'high'],
@@ -160,15 +158,6 @@ class DatabaseSeeder extends Seeder
                     'tanggal_masuk' => $waktuAwal
                 ]);
 
-                // Catat Log Stok Masuk
-                LogStok::create([
-                    'produk_id' => $prod->id,
-                    'barang_masuk_id' => $bmAwal->id,
-                    'tipe' => 'masuk',
-                    'jumlah' => $qty,
-                    'keterangan' => "Penambahan stok awal dari BM {$bmAwal->kode}"
-                ]);
-
                 $prod->increment('stok', $qty);
             }
 
@@ -242,14 +231,6 @@ class DatabaseSeeder extends Seeder
                             'qty_sisa' => $qtyRestock,
                             'harga_beli' => $hargaModal, // Ini lebih mahal dari awal
                             'tanggal_masuk' => $bmWaktu
-                        ]);
-
-                        LogStok::create([
-                            'produk_id' => $prod->id,
-                            'barang_masuk_id' => $bmRestock->id,
-                            'tipe' => 'masuk',
-                            'jumlah' => $qtyRestock,
-                            'keterangan' => "Restock rutin dari BM {$bmRestock->kode}"
                         ]);
 
                         $prod->increment('stok', $qtyRestock);
@@ -330,14 +311,6 @@ class DatabaseSeeder extends Seeder
                         // Update stok global
                         $prod->decrement('stok', $qtyBeli);
 
-                        // Log Stok Keluar
-                        LogStok::create([
-                            'produk_id' => $prod->id,
-                            'transaksi_id' => $trx->id,
-                            'tipe' => 'keluar',
-                            'jumlah' => $qtyBeli,
-                            'keterangan' => "Penjualan via POS ({$trx->kode})"
-                        ]);
                     }
 
                     if ($totalBelanja > 0) {
@@ -355,6 +328,98 @@ class DatabaseSeeder extends Seeder
 
             $this->command->info('Menjalankan Kalkulasi ROP Otomatis...');
             Artisan::call('rop:calculate');
+            
+            $this->command->info('Menyesuaikan stok semua produk agar ROP bervariasi secara bergantian...');
+            $targetStatuses = [
+                'Air Bubble Bag'            => 'harus restock',
+                'Bubble Wrap Hitam 1m'      => 'hampir habis',
+                'Bubble Wrap Putih 1m'      => 'aman',
+                'Bubble Wrap Roll 50m'      => 'harus restock',
+                'Cutter Besar Kenko'        => 'hampir habis',
+                'Dispenser Lakban Besi'     => 'aman',
+                'Gunting Packing Joyko'     => 'harus restock',
+                'Kardus Die Cut Kecil'      => 'hampir habis',
+                'Kardus Polos 15x10x10'     => 'aman',
+                'Kardus Polos 20x20x20'     => 'harus restock',
+                'Kardus Polos 30x30x30'     => 'hampir habis',
+                'Kardus Sepatu Pria'        => 'aman',
+                'Kardus Sepatu Wanita'      => 'harus restock',
+                'Karung Beras 10kg'         => 'hampir habis',
+                'Karung Plastik 25kg Putih' => 'aman',
+                'Karung Plastik 50kg Putih' => 'harus restock',
+                'Lakban Bening 5cm Daimaru' => 'hampir habis',
+                'Lakban Coklat 5cm Daimaru' => 'aman',
+                'Lakban Fragile Merah'      => 'harus restock',
+                'Lakban Kain Hitam'         => 'hampir habis',
+            ];
+
+            foreach ($targetStatuses as $name => $status) {
+                $p = Produk::with('rop')->where('nama', $name)->first();
+                if ($p && $p->rop) {
+                    $ropValue    = (int) $p->rop->reorder_point;
+                    $safetyStock = (int) $p->rop->safety_stock;
+                    
+                    if ($status === 'harus restock') {
+                        $newStock = max(2, $ropValue - rand(2, 5));
+                    } elseif ($status === 'hampir habis') {
+                        $newStock = $ropValue + max(1, (int) ceil($safetyStock * 0.25));
+                    } else { // aman
+                        $newStock = $ropValue + $safetyStock + rand(15, 30);
+                    }
+                    
+                    $p->update(['stok' => $newStock]);
+                    
+                    // Sinkronisasi dengan batch stok agar data konsisten
+                    StokBatch::where('produk_id', $p->id)->update(['qty_sisa' => 0]);
+                    $latestBatch = StokBatch::where('produk_id', $p->id)->orderBy('id', 'desc')->first();
+                    if ($latestBatch) {
+                        $latestBatch->update(['qty_sisa' => $newStock]);
+                    }
+                }
+            }
+
+            $this->command->info('Membuat 2 dokumen barang masuk yang menunggu ACC...');
+            
+            // Pending BM 1
+            $bmPending1 = BarangMasuk::create([
+                'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                'tanggal_pesan' => Carbon::now(),
+                'tanggal_terima' => null,
+                'supplier_id' => $sup1->id,
+                'user_id' => $karyawan->id,
+                'status' => 'menunggu',
+                'catatan' => 'Restock kardus tambahan'
+            ]);
+            
+            // Detail BM 1
+            DetailBarangMasuk::create([
+                'barang_masuk_id' => $bmPending1->id,
+                'produk_id' => $products[0]->id, // Kardus Polos 20x20x20
+                'jumlah' => 100,
+                'harga' => 1800
+            ]);
+
+            // Increment sequence
+            $bmSeq++;
+
+            // Pending BM 2
+            $bmPending2 = BarangMasuk::create([
+                'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                'tanggal_pesan' => Carbon::now()->subMinutes(30),
+                'tanggal_terima' => null,
+                'supplier_id' => $sup2->id,
+                'user_id' => $karyawan->id,
+                'status' => 'menunggu',
+                'catatan' => 'Restock bubble wrap'
+            ]);
+            
+            // Detail BM 2
+            DetailBarangMasuk::create([
+                'barang_masuk_id' => $bmPending2->id,
+                'produk_id' => $products[6]->id, // Bubble Wrap Hitam 1m
+                'jumlah' => 50,
+                'harga' => 2500
+            ]);
             
             $this->command->info('DatabaseSeeder Berhasil Dieksekusi Secara Sempurna!');
 
