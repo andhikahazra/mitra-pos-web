@@ -18,7 +18,17 @@
             </button>
 
             <button class="profile-pill" id="profileBtn">
-                <span class="profile-initial">OM</span>
+                <span class="profile-initial">
+                    @php
+                        $name = auth()->user()->nama ?? 'Owner MitraPOS';
+                        $words = explode(' ', $name);
+                        $initials = '';
+                        foreach ($words as $word) {
+                            $initials .= strtoupper(substr($word, 0, 1));
+                        }
+                        echo substr($initials, 0, 2);
+                    @endphp
+                </span>
                 <span class="profile-label">{{ auth()->user()->nama ?? 'pemilik MitraPOS' }}</span>
             </button>
             <a href="{{ route('logout') }}" class="utility-link">Logout</a>

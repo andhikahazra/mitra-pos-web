@@ -15,6 +15,7 @@ function bootDashboard() {
     initProductEditorForm();
     initProdukIndexView();
     initNavigation();
+    initGlobalSearch();
 
     const payload = window.__DASHBOARD_DATA__;
     if (payload) {
