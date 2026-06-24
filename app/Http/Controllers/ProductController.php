@@ -28,13 +28,8 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        $lastProduk = Produk::query()->latest('id')->first();
-        $nextId = $lastProduk ? $lastProduk->id + 1 : 1;
-        $suggestedSku = 'PRD-' . str_pad((string)$nextId, 4, '0', STR_PAD_LEFT);
-
         return view('produk.create', [
             'kategori' => Kategori::query()->orderBy('nama')->get(['id', 'nama']),
-            'suggestedSku' => $suggestedSku,
         ]);
     }
 
@@ -61,16 +56,21 @@ class ProductController extends Controller
 
         DB::transaction(function () use ($request): void {
             $kategoriId = $request->kategori_id;
+            $kategoriNama = '';
             
             if ($kategoriId === 'new') {
                 $newKategori = Kategori::query()->create([
                     'nama' => $request->new_kategori
                 ]);
                 $kategoriId = $newKategori->id;
+                $kategoriNama = $request->new_kategori;
+            } else {
+                $kategori = Kategori::query()->find($kategoriId);
+                $kategoriNama = $kategori ? $kategori->nama : '';
             }
 
-            // Generate SKU otomatis jika tidak diisi (untuk produk baru)
-            $sku = $this->generateUniqueSku($request->nama);
+            // Generate SKU otomatis dengan format seeder-like
+            $sku = $this->generateSmartSku($request->nama, $kategoriNama);
 
             // Handle file upload
             $fotoPath = null;
@@ -186,7 +186,7 @@ class ProductController extends Controller
         return $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'sku' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
                 Rule::unique('produk', 'sku')->ignore($ignoreId),
@@ -211,23 +211,155 @@ class ProductController extends Controller
         ]);
     }
 
-    private function generateUniqueSku(string $name): string
+    private function generateSmartSku(string $namaProduk, string $namaKategori): string
     {
-        // Bersihkan nama dan ambil 3 huruf pertama
-        $prefix = strtoupper(substr(preg_replace('/[^a-zA-Z0-9]/', '', $name), 0, 3));
-        if (strlen($prefix) < 3) {
-            $prefix = str_pad($prefix, 3, 'X');
+        // 1. Dapatkan Kode Kategori (3 Huruf)
+        $kat = strtolower(trim($namaKategori));
+        $categoryMappings = [
+            'kardus' => 'KRD',
+            'bubble wrap' => 'BBL',
+            'lakban' => 'LKB',
+            'karung plastik' => 'KRN',
+            'karung' => 'KRN',
+            'alat packing' => 'ALT',
+            'alat' => 'ALT',
+        ];
+
+        if (isset($categoryMappings[$kat])) {
+            $prefix = $categoryMappings[$kat];
+        } else {
+            // Aturan konsonan untuk kategori baru
+            $cleanKat = preg_replace('/[^a-zA-Z0-9]/', '', $namaKategori);
+            if (strlen($cleanKat) < 3) {
+                $prefix = str_pad(strtoupper($cleanKat), 3, 'X');
+            } else {
+                $firstLetter = strtoupper(substr($cleanKat, 0, 1));
+                $rest = substr($cleanKat, 1);
+                preg_match_all('/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0-9]/', $rest, $matches);
+                $consonants = implode('', $matches[0]);
+                $prefix = $firstLetter . strtoupper($consonants);
+                if (strlen($prefix) > 3) {
+                    $prefix = substr($prefix, 0, 3);
+                } elseif (strlen($prefix) < 3) {
+                    // Jika konsonan tidak cukup, ambil 3 huruf pertama dari nama kategori bersih
+                    $prefix = substr(strtoupper($cleanKat), 0, 3);
+                }
+            }
         }
 
-        do {
-            // Suffix acak 4 karakter
-            $suffix = strtoupper(substr(md5(uniqid()), 0, 4));
-            $sku = $prefix . '-' . $suffix;
-            
-            // Cek keunikan di database
-            $exists = Produk::query()->where('sku', $sku)->exists();
-        } while ($exists);
+        // 2. Proses nama produk untuk mengekstrak atribut/suffix
+        // Hapus kata kategori dari nama produk agar tidak duplikat
+        $kategoriWords = explode(' ', strtolower(trim($namaKategori)));
+        $productNameLower = strtolower(trim($namaProduk));
+        foreach ($kategoriWords as $word) {
+            if (strlen($word) > 2) {
+                $productNameLower = str_replace($word, '', $productNameLower);
+            }
+        }
 
-        return $sku;
+        // Bersihkan spasi ganda
+        $productNameClean = preg_replace('/\s+/', ' ', trim($productNameLower));
+        
+        $suffixParts = [];
+
+        // Deteksi dimensi (seperti 20x20x20 atau 15x10x10)
+        if (preg_match('/(\d+x\d+(?:x\d+)?)/i', $namaProduk, $dimMatches)) {
+            $dimensions = str_replace('x', '', strtolower($dimMatches[1]));
+            $suffixParts[] = $dimensions;
+            
+            // Hapus dimensi dari teks agar tidak diproses lagi
+            $dimPattern = '/' . preg_quote($dimMatches[1], '/') . '/i';
+            $productNameClean = preg_replace($dimPattern, '', $productNameClean);
+            $productNameClean = preg_replace('/\s+/', ' ', trim($productNameClean));
+        }
+
+        // Tokenisasi sisa nama produk
+        $tokens = array_filter(explode(' ', $productNameClean));
+        
+        foreach ($tokens as $token) {
+            $token = trim($token);
+            if (empty($token)) {
+                continue;
+            }
+
+            // Kata-kata yang diabaikan (karena kata hubung/preposisi umum)
+            $ignores = ['dan', 'dengan', 'untuk', 'yang', 'atau', 'in', 'of', 'and', 'the'];
+            if (in_array(strtolower($token), $ignores)) {
+                continue;
+            }
+
+            // Deteksi angka dengan unit (misal: 50kg, 1m, 5cm, 50m)
+            if (preg_match('/^(\d+)(?:kg|m|cm|g|pcs|l|ml)?$/i', $token, $numMatches)) {
+                $suffixParts[] = $numMatches[1];
+                continue;
+            }
+
+            // Singkatan atribut/warna khusus
+            $lowerToken = strtolower($token);
+            $specialMappings = [
+                'pria' => 'P',
+                'wanita' => 'W',
+                'kain' => 'KIN',
+                'hitam' => 'HTM',
+                'putih' => 'PTH',
+                'bening' => 'BNG',
+                'coklat' => 'CKL',
+                'fragile' => 'FRG',
+                'sepatu' => 'SPT',
+                'gunting' => 'GNT',
+                'cutter' => 'CTR',
+                'dispenser' => 'DSP',
+                'roll' => 'ROL',
+                'bag' => 'BAG',
+                'die' => 'DC',
+                'cut' => '',
+                'besar' => 'BSR',
+                'kecil' => 'KCL',
+                'sedang' => 'SDG',
+                'polos' => 'PLS',
+            ];
+
+            if (isset($specialMappings[$lowerToken])) {
+                if ($specialMappings[$lowerToken] !== '') {
+                    $suffixParts[] = $specialMappings[$lowerToken];
+                }
+            } else {
+                // Aturan konsonan untuk kata umum
+                $cleanToken = preg_replace('/[^a-zA-Z0-9]/', '', $token);
+                if (strlen($cleanToken) > 0) {
+                    if (strlen($cleanToken) <= 3) {
+                        $abbr = strtoupper($cleanToken);
+                    } else {
+                        $first = strtoupper(substr($cleanToken, 0, 1));
+                        $rest = substr($cleanToken, 1);
+                        preg_match_all('/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0-9]/', $rest, $matches);
+                        $consonants = implode('', $matches[0]);
+                        $abbr = $first . strtoupper($consonants);
+                        if (strlen($abbr) > 3) {
+                            $abbr = substr($abbr, 0, 3);
+                        }
+                    }
+                    $suffixParts[] = $abbr;
+                }
+            }
+        }
+
+        $suffixParts = array_filter($suffixParts);
+
+        if (!empty($suffixParts)) {
+            $baseSku = $prefix . '-' . implode('-', $suffixParts);
+        } else {
+            $baseSku = $prefix . '-PRD';
+        }
+
+        // Pastikan unik
+        $sku = $baseSku;
+        $counter = 1;
+        while (Produk::query()->where('sku', $sku)->exists()) {
+            $sku = $baseSku . '-' . $counter;
+            $counter++;
+        }
+
+        return strtoupper($sku);
     }
 }

@@ -23,7 +23,7 @@
             </label>
 
             <label>SKU (Stock Keeping Unit)
-                <input class="field font-mono" name="sku" id="productSku" placeholder="Contoh: PRD-0001..." value="{{ old('sku', $isEdit ? $produk->sku : ($suggestedSku ?? '')) }}" required>
+                <input class="field font-mono bg-slate-50 cursor-not-allowed" name="sku" id="productSku" value="{{ $isEdit ? $produk->sku : '[Otomatis setelah disimpan]' }}" readonly>
             </label>
 
 
