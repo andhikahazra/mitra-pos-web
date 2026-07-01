@@ -8,12 +8,18 @@
                 <h1 class="text-2xl font-black text-slate-800 tracking-tight">Detail Laporan Reorder Point</h1>
                 <p class="text-[11px] text-slate-500 mt-1 uppercase font-bold tracking-widest">Produk: <span class="text-indigo-600">{{ $produk->nama }}</span></p>
             </div>
-            <div>
-                <a href="{{ route('rop.index') }}" class="group inline-flex items-center px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-md text-xs font-bold hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transition-all duration-200 shadow-sm">
+            <div class="flex flex-col gap-2 items-end">
+                <a href="{{ route('rop.index') }}" class="group inline-flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 rounded-md text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200 shadow-sm w-full md:w-auto justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200" fill="none" viewbox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Kembali ke Daftar
+                </a>
+                <a href="{{ route('rop.presentation', $produk) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-bold transition-all duration-200 shadow-sm w-full md:w-auto justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    Detail Perhitungan Akademik
                 </a>
             </div>
         </div>
@@ -294,8 +300,18 @@
                                             $firstSqDiffVal = number_format(pow($firstQtyVal - $mean, 2), 2);
                                             
                                             $sqDiffsArrVal = [];
-                                            foreach($dailyData as $qtyVal) {
-                                                $sqDiffsArrVal[] = number_format(pow(($qtyVal ?? 0) - $mean, 2), 2);
+                                            $sqDiffsVerticalHtml = '';
+                                            $dayIndex = 1;
+                                            foreach($dailyData as $dateVal => $qtyVal) {
+                                                $dateObjVal = \Carbon\Carbon::parse($dateVal);
+                                                $sqVal = number_format(pow(($qtyVal ?? 0) - $mean, 2), 2);
+                                                $sqDiffsArrVal[] = $sqVal;
+                                                
+                                                $sqDiffsVerticalHtml .= "<div class='flex justify-between font-mono text-xs border-b border-slate-100 dark:border-slate-800/40 py-1.5'>";
+                                                $sqDiffsVerticalHtml .= "<span class='text-slate-500 dark:text-slate-400'>Hari {$dayIndex} (" . $dateObjVal->translatedFormat('d M') . ")</span>";
+                                                $sqDiffsVerticalHtml .= "<span class='text-slate-700 dark:text-slate-300'>({$qtyVal} - " . number_format($rataPenjualan, 2) . ")&sup2; = <strong class='text-indigo-600 dark:text-indigo-400'>{$sqVal}</strong></span>";
+                                                $sqDiffsVerticalHtml .= "</div>";
+                                                $dayIndex++;
                                             }
                                             $sqDiffsListVal = implode(" + ", $sqDiffsArrVal);
                                         @endphp
@@ -307,22 +323,23 @@
                                             data-firstdiff="{{ $firstDiffVal }}"
                                             data-firstsqdiff="{{ $firstSqDiffVal }}"
                                             data-sqdiffs-list="{{ $sqDiffsListVal }}"
+                                            data-sqdiffs-vertical-html="{{ $sqDiffsVerticalHtml }}"
                                             data-result="{{ number_format($sumSqDiff, 2) }}"
                                             title="Klik untuk melihat penjelasan detail">
                                             <td class="px-4 py-2 border-b border-slate-100 font-bold text-slate-700">3. Selisih Kuadrat</td>
                                             <td class="px-4 py-2 border-b border-slate-100 text-slate-500 italic">
                                                 Total dari 30 kotak harian (&Sigma;(x<sub>i</sub>-d)&sup2;)<br>
-                                                <div class="mt-2 p-2 bg-slate-50 rounded border border-slate-100">
-                                                    <p class="text-[9px] font-bold text-slate-600 mb-1 tracking-tight underline">Contoh Hitung (Hari 1):</p>
-                                                    <p class="text-[9px] font-mono text-indigo-600">
+                                                <div class="mt-2 p-2 bg-slate-50 dark:bg-slate-950/20 border border-slate-100 dark:border-slate-800/60 rounded">
+                                                    <p class="text-[9px] font-bold text-slate-600 dark:text-slate-400 mb-1 tracking-tight underline">Contoh Hitung (Hari 1):</p>
+                                                    <p class="text-[9px] font-mono text-indigo-600 dark:text-indigo-400">
                                                         (x<sub>1</sub> - d)&sup2; = 
                                                         ({{ $firstQtyVal }} - {{ number_format($rataPenjualan, 2) }})&sup2; = 
                                                         {{ $firstSqDiffVal }}
                                                     </p>
                                                 </div>
-                                                <span class="text-[8px] font-mono text-slate-400 block mt-2 leading-relaxed">
-                                                    ({{ $sqDiffsListVal }}) = {{ number_format($sumSqDiff, 2) }}
-                                                </span>
+                                                <button type="button" class="mt-2 text-[10px] text-indigo-600 dark:text-indigo-400 font-bold hover:underline flex items-center gap-1">
+                                                    👁️ Lihat rincian selisih kuadrat 30 hari
+                                                </button>
                                             </td>
                                             <td class="px-4 py-2 border-b border-slate-100 text-right font-mono font-bold">{{ number_format($sumSqDiff, 2) }}</td>
                                         </tr>
@@ -503,6 +520,14 @@
                         <div class="flex justify-between">
                             <span class="text-xs text-slate-600 font-medium">Standar Deviasi (&sigma;)</span>
                             <span class="text-xs font-bold text-slate-900">{{ number_format($standarDeviasi, 2) }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs text-slate-600 font-medium">Lead Time (L)</span>
+                            <span class="text-xs font-bold text-slate-900">{{ $leadTime }} Hari</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xs text-slate-600 font-medium">Akar Lead Time (&radic;L)</span>
+                            <span class="text-xs font-bold text-slate-900">&radic;{{ $leadTime }} = {{ number_format($sqrtLT, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-xs text-slate-600 font-medium">Periode Analisis</span>
@@ -873,33 +898,33 @@
                     const firstqty = this.dataset.firstqty;
                     const firstdiff = this.dataset.firstdiff;
                     const firstsqdiff = this.dataset.firstsqdiff;
-                    const sqdiffs_list = this.dataset.sqdiffsList;
+                    const verticalHtml = this.dataset.sqdiffsVerticalHtml;
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4">
+                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
                                 <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 mt-1">Jumlah Selisih Kuadrat (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</h3>
-                                <p class="text-xs text-slate-500 mt-1">Mengurangi penjualan tiap hari dengan rata-rata, mengkuadratkan hasilnya, lalu menjumlahkan seluruh nilai kuadrat tersebut dari Hari 1 s/d Hari 30.</p>
+                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Jumlah Selisih Kuadrat (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Mengurangi penjualan tiap hari dengan rata-rata, mengkuadratkan hasilnya, lalu menjumlahkan seluruh nilai kuadrat tersebut dari Hari 1 s/d Hari 30.</p>
                             </div>
                             
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                            <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
                                 <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold">Persamaan / Formula</p>
-                                <p class="text-lg font-mono font-bold text-slate-800 mt-1">&Sigma;(x<sub>i</sub> - d)<sup>2</sup></p>
-                                <div class="mt-2 p-3 bg-white rounded border border-slate-100 text-xs">
-                                    <p class="font-bold text-slate-600 mb-1">Contoh Hari Pertama (x<sub>1</sub> = ${firstqty}):</p>
-                                    <p class="font-mono text-indigo-600">(x<sub>1</sub> - d)<sup>2</sup> = (${firstqty} - ${mean})<sup>2</sup> = (${firstdiff})<sup>2</sup> = ${firstsqdiff}</p>
+                                <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">&Sigma;(x<sub>i</sub> - d)<sup>2</sup></p>
+                                <div class="mt-2 p-3 bg-white dark:bg-slate-900/60 rounded-xl border border-slate-100 dark:border-slate-800/60 text-xs">
+                                    <p class="font-bold text-slate-600 dark:text-slate-400 mb-1">Contoh Hari Pertama (x<sub>1</sub> = ${firstqty}):</p>
+                                    <p class="font-mono text-indigo-600 dark:text-indigo-400">(x<sub>1</sub> - d)<sup>2</sup> = (${firstqty} - ${mean})<sup>2</sup> = (${firstdiff})<sup>2</sup> = ${firstsqdiff}</p>
                                 </div>
                             </div>
                             
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold">Akumulasi seluruh Hari (${periode} Hari)</p>
-                                <div class="max-h-24 overflow-y-auto font-mono text-[9px] text-slate-500 bg-white border border-slate-100 rounded p-2 leading-relaxed custom-scroll">
-                                    (${sqdiffs_list})
+                            <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold mb-2">Akumulasi Rincian Perhitungan Harian (${periode} Hari)</p>
+                                <div class="max-h-48 overflow-y-auto pr-2 space-y-1.5 custom-scroll">
+                                    ${verticalHtml}
                                 </div>
                             </div>
                             
-                            <div class="bg-[#1E40AF] text-white rounded-xl p-4 text-center">
+                            <div class="bg-[#1E40AF] text-white rounded-xl p-4 text-center shadow-md">
                                 <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Jumlah Selisih Kuadrat</p>
                                 <p class="text-3xl font-black mt-1">${result}</p>
                             </div>
