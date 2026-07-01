@@ -77,7 +77,7 @@
             <label>Harga Jual (Rp)
                 <div class="relative">
                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">Rp</span>
-                    <input class="field pl-10" name="harga" id="productPrice" type="number" min="0" placeholder="0" value="{{ old('harga', $isEdit ? $produk->harga : 0) }}" required>
+                    <input class="field pl-10" name="harga" id="productPrice" type="number" min="0" placeholder="0" value="{{ old('harga', $isEdit ? $produk->harga : '') }}" required>
                 </div>
             </label>
 
