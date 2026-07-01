@@ -76,8 +76,20 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {{-- Calculation Logic Section --}}
             <div class="lg:col-span-2 space-y-6">
-                {{-- Calculation Audit Trail --}}
-                <div class="bg-white border border-slate-200 rounded overflow-hidden mb-8 shadow-sm">
+                {{-- Switch Tampilan --}}
+                <div class="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl w-fit border border-slate-200/50 dark:border-slate-800/80 mb-2">
+                    <button type="button" class="rop-tab-btn active px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer" data-target="rop-academic">
+                        Metode Akademik & Audit Trail
+                    </button>
+                    <button type="button" class="rop-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" data-target="rop-simple">
+                        Langkah Praktis Step-by-Step
+                    </button>
+                </div>
+
+                {{-- Container 1: Calculation Audit Trail (Academic) --}}
+                <div id="rop-academic" class="rop-tab-content space-y-6">
+                    {{-- Calculation Audit Trail --}}
+                    <div class="bg-white border border-slate-200 rounded overflow-hidden mb-8 shadow-sm">
                     <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
                         <h2 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Rincian Perhitungan (Audit Trail)</h2>
                         <span class="text-[9px] text-slate-400 font-medium italic">Sumber: Ariyanti dkk. (2025)</span>
@@ -354,6 +366,125 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+                {{-- Container 2: Langkah Praktis Step-by-Step (Simple Detailed) --}}
+                <div id="rop-simple" class="rop-tab-content space-y-6 hidden">
+                    {{-- Langkah 1: Kebutuhan Selama Pengiriman (Lead Time Demand) --}}
+                    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm p-6 dark:bg-slate-900/60 dark:border-slate-800">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm">1</div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wide">Langkah 1: Kebutuhan Selama Pengiriman</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Menghitung stok yang terjual saat menunggu barang datang.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Rata-rata Penjualan Harian</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">{{ number_format($rataPenjualan, 2) }} <span class="text-xs font-semibold text-slate-400">Unit / Hari</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Waktu Tunggu (Lead Time)</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">{{ $leadTime }} <span class="text-xs font-semibold text-slate-400">Hari</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-indigo-400 block mb-1">Kebutuhan Stok</span>
+                                <span class="text-base font-extrabold text-indigo-600 dark:text-indigo-400">{{ number_format($usageLT, 2) }} <span class="text-xs font-semibold text-indigo-400">Unit</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 space-y-2">
+                            <p>
+                                💡 **Cara Menghitung**: Rata-rata Penjualan Harian dikalikan dengan Waktu Tunggu Supplier.
+                            </p>
+                            <p class="font-mono bg-slate-50 dark:bg-slate-950/20 p-2.5 rounded border border-slate-100 dark:border-slate-800/60 w-fit">
+                                {{ number_format($rataPenjualan, 2) }} unit &times; {{ $leadTime }} hari = <strong class="text-slate-800 dark:text-slate-200">{{ number_format($usageLT, 2) }} unit</strong>
+                            </p>
+                            <p>
+                                Arti operasionalnya, saat Anda memesan barang ke supplier, dibutuhkan waktu **{{ $leadTime }} hari** hingga barang tersebut sampai ke gudang Anda. Selama masa penantian tersebut, pelanggan diprediksi akan membeli sebanyak **{{ number_format($usageLT, 2) }} unit** produk ini.
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- Langkah 2: Stok Cadangan Pengaman (Safety Stock) --}}
+                    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm p-6 dark:bg-slate-900/60 dark:border-slate-800">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="h-8 w-8 rounded-full bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-sm">2</div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wide">Langkah 2: Stok Cadangan Pengaman</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Cadangan ekstra untuk mengantisipasi ketidakpastian.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-slate-50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Toleransi Kehabisan Stok (Z)</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">95% <span class="text-xs font-semibold text-slate-400">(Skor Z: {{ $zScore }})</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Fluktuasi Harian (Std Deviasi)</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">&plusmn; {{ number_format($standarDeviasi, 2) }} <span class="text-xs font-semibold text-slate-400">Unit / Hari</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-amber-500 block mb-1">Stok Cadangan (Safety Stock)</span>
+                                <span class="text-base font-extrabold text-amber-600 dark:text-amber-400">{{ number_format($safetyStock, 2) }} <span class="text-xs font-semibold text-amber-400">Unit</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 space-y-2">
+                            <p>
+                                💡 **Cara Menghitung**: Faktor Layanan (Z) &times; Fluktuasi Harian (&sigma;) &times; Akar Waktu Tunggu (&radic;L).
+                            </p>
+                            <p class="font-mono bg-slate-50 dark:bg-slate-950/20 p-2.5 rounded border border-slate-100 dark:border-slate-800/60 w-fit">
+                                {{ $zScore }} (Z) &times; {{ number_format($standarDeviasi, 2) }} (&sigma;) &times; {{ number_format($sqrtLT, 2) }} (&radic;L) = <strong class="text-slate-800 dark:text-slate-200">{{ number_format($safetyStock, 2) }} unit</strong>
+                            </p>
+                            <p>
+                                Stok pengaman ini bertindak sebagai **"ban serep"**. Stok ini tidak boleh dijual dalam kondisi normal dan hanya disentuh apabila penjualan tiba-tiba melonjak drastis di atas rata-rata atau supplier terlambat mengirimkan barang. Dengan cadangan sebesar **{{ number_format($safetyStock, 2) }} unit**, Anda meminimalkan risiko toko kehabisan stok produk ini hingga **95%**.
+                            </p>
+                        </div>
+                    </div>
+
+                    {{-- Langkah 3: Titik Pemesanan Kembali (Reorder Point) --}}
+                    <div class="bg-indigo-50/20 border border-indigo-100 dark:border-indigo-900/40 rounded-xl overflow-hidden shadow-sm p-6 dark:bg-indigo-950/8">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 flex items-center justify-center font-bold text-sm">3</div>
+                            <div>
+                                <h3 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 uppercase tracking-wide">Langkah 3: Titik Pemesanan Kembali (ROP)</h3>
+                                <p class="text-xs text-indigo-500 dark:text-indigo-400">Batas minimum stok untuk melakukan order baru.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-white dark:bg-slate-900/60 p-4 rounded-xl border border-indigo-100/50 dark:border-indigo-900/20">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Kebutuhan Lead Time</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">{{ number_format($usageLT, 2) }} <span class="text-xs font-semibold text-slate-400">Unit</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Stok Cadangan (SS)</span>
+                                <span class="text-base font-extrabold text-slate-700 dark:text-slate-200">{{ number_format($safetyStock, 2) }} <span class="text-xs font-semibold text-slate-400">Unit</span></span>
+                            </div>
+                            <div class="border-t md:border-t-0 md:border-l border-indigo-100 dark:border-indigo-900/40 pt-3 md:pt-0 md:pl-4">
+                                <span class="text-[10px] uppercase font-bold text-indigo-500 block mb-1">Titik ROP Akhir</span>
+                                <span class="text-2xl font-black text-indigo-600 dark:text-indigo-300">{{ $rop }} <span class="text-xs font-semibold text-indigo-400">Unit</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 space-y-2">
+                            <p>
+                                💡 **Cara Menghitung**: Kebutuhan Selama Pengiriman (Langkah 1) ditambah Stok Cadangan Pengaman (Langkah 2).
+                            </p>
+                            <p class="font-mono bg-white dark:bg-slate-900/60 p-2.5 rounded border border-indigo-100/50 dark:border-indigo-900/20 w-fit">
+                                {{ number_format($usageLT, 2) }} (Langkah 1) + {{ number_format($safetyStock, 2) }} (Langkah 2) = <strong class="text-indigo-600 dark:text-indigo-300">{{ $rop }} unit</strong> (dibulatkan)
+                            </p>
+                            <p class="text-slate-700 dark:text-slate-300 font-medium">
+                                📣 **Rekomendasi Tindakan**:
+                                Ketika stok fisik produk **"{{ $produk->nama }}"** di gudang atau aplikasi Anda menyusut hingga **{{ $rop }} unit**, Anda harus segera membuat pesanan pembelian baru kepada supplier agar stok baru tiba tepat sebelum stok cadangan pengaman (safety stock) Anda habis terpakai.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {{-- Technical Parameters Section --}}
@@ -410,6 +541,35 @@
         const modalBody = document.getElementById('calcModalBody');
         const closeBtn = document.getElementById('closeCalcModal');
         const okBtn = document.getElementById('btnOkCalc');
+
+        // Tab switching logic
+        const tabButtons = document.querySelectorAll('.rop-tab-btn');
+        const tabContents = document.querySelectorAll('.rop-tab-content');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.dataset.target;
+
+                // Toggle active class on buttons
+                tabButtons.forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('text-slate-500', 'hover:text-slate-700', 'dark:text-slate-400', 'dark:hover:text-slate-200');
+                });
+                this.classList.add('active');
+                this.classList.remove('text-slate-500', 'hover:text-slate-700', 'dark:text-slate-400', 'dark:hover:text-slate-200');
+
+                // Toggle hidden class on contents
+                tabContents.forEach(content => {
+                    if (content.id === target) {
+                        content.classList.remove('hidden');
+                        content.classList.add('animate-fade-in');
+                    } else {
+                        content.classList.add('hidden');
+                        content.classList.remove('animate-fade-in');
+                    }
+                });
+            });
+        });
 
         function openModal(title, html) {
             modalTitle.textContent = title;
@@ -834,5 +994,19 @@
     .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    .rop-tab-btn {
+        transition: all 0.2s ease-in-out;
+    }
+    .rop-tab-btn.active {
+        background-color: #ffffff;
+        color: #1e293b;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+    .dark .rop-tab-btn.active {
+        background-color: #0f172a;
+        color: #f8fafc;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    }
 </style>
 @endpush
