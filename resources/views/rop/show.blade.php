@@ -70,11 +70,17 @@
             </div>
 
             {{-- Lead Time --}}
-            <div class="bg-white p-5 border border-slate-200 rounded shadow-sm">
-                <p class="text-[10px] font-bold text-slate-400 uppercase mb-2 tracking-wider">Lead Time Supplier</p>
-                <div class="flex items-baseline gap-1">
-                    <span class="text-2xl font-black text-slate-800">{{ $leadTime }}</span>
-                    <span class="text-xs text-slate-500 font-bold uppercase">Hari</span>
+            <div class="bg-white p-5 border border-slate-200 rounded shadow-sm cursor-pointer hover:border-indigo-300 dark:hover:border-indigo-900 transition-all duration-150 leadtime-history-trigger"
+                 data-leadtime-history="{{ json_encode($leadTimeHistory) }}"
+                 data-leadtime-average="{{ $leadTime }}"
+                 title="Klik untuk melihat riwayat penerimaan barang masuk">
+                <p class="text-[10px] font-bold text-slate-400 uppercase mb-2 tracking-wider">Lead Time Supplier (L)</p>
+                <div class="flex items-baseline justify-between">
+                    <div>
+                        <span class="text-2xl font-black text-slate-800 dark:text-slate-100">{{ $leadTime }}</span>
+                        <span class="text-xs text-slate-500 font-bold uppercase">Hari</span>
+                    </div>
+                    <span class="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold underline">Lihat Rincian</span>
                 </div>
             </div>
         </div>
@@ -521,13 +527,19 @@
                             <span class="text-xs text-slate-600 font-medium">Standar Deviasi (&sigma;)</span>
                             <span class="text-xs font-bold text-slate-900">{{ number_format($standarDeviasi, 2) }}</span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 leadtime-history-trigger"
+                             data-leadtime-history="{{ json_encode($leadTimeHistory) }}"
+                             data-leadtime-average="{{ $leadTime }}"
+                             title="Klik untuk melihat riwayat penerimaan barang masuk">
                             <span class="text-xs text-slate-600 font-medium">Lead Time (L)</span>
-                            <span class="text-xs font-bold text-slate-900">{{ $leadTime }} Hari</span>
+                            <span class="text-xs font-bold text-slate-900 dark:text-slate-100 underline">{{ $leadTime }} Hari</span>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 leadtime-history-trigger"
+                             data-leadtime-history="{{ json_encode($leadTimeHistory) }}"
+                             data-leadtime-average="{{ $leadTime }}"
+                             title="Klik untuk melihat riwayat penerimaan barang masuk">
                             <span class="text-xs text-slate-600 font-medium">Akar Lead Time (&radic;L)</span>
-                            <span class="text-xs font-bold text-slate-900">&radic;{{ $leadTime }} = {{ number_format($sqrtLT, 2) }}</span>
+                            <span class="text-xs font-bold text-slate-900 dark:text-slate-100 underline">&radic;{{ $leadTime }} = {{ number_format($sqrtLT, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-xs text-slate-600 font-medium">Periode Analisis</span>
@@ -996,6 +1008,81 @@
                         </div>
                     `;
                 }
+
+                openModal(title, html);
+            });
+        });
+
+        // Lead Time History Trigger Listener
+        document.querySelectorAll('.leadtime-history-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const historyData = JSON.parse(this.dataset.leadtimeHistory || '[]');
+                const average = this.dataset.leadtimeAverage;
+                const title = "Rincian Waktu Tunggu (Lead Time)";
+                
+                let rowsHtml = "";
+                if (historyData.length === 0) {
+                    rowsHtml = `
+                        <tr>
+                            <td colspan="5" class="px-4 py-4 text-center text-slate-400 dark:text-slate-500 italic text-xs">
+                                Tidak ada riwayat barang masuk dengan tanggal pesan & terima lengkap. Sistem menggunakan nilai default (1.00 Hari).
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    historyData.forEach((record, index) => {
+                        rowsHtml += `
+                            <tr class="border-b border-slate-100 dark:border-slate-800/40 text-xs">
+                                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">${index + 1}</td>
+                                <td class="px-4 py-3 font-mono font-bold text-slate-700 dark:text-slate-300">${record.kode || '-'}</td>
+                                <td class="px-4 py-3 text-slate-600 dark:text-slate-400">${record.tanggal_pesan}</td>
+                                <td class="px-4 py-3 text-slate-600 dark:text-slate-400">${record.tanggal_terima}</td>
+                                <td class="px-4 py-3 text-right font-mono font-bold text-indigo-600 dark:text-indigo-400">${record.selisih} Hari</td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                const explanation = historyData.length === 0 ? "" : `
+                    <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        <p class="font-bold text-indigo-800 dark:text-indigo-400 mb-1">💡 Cara Kalkulasi Rata-rata:</p>
+                        <p>
+                            Total Hari (${historyData.reduce((acc, r) => acc + r.selisih, 0)} Hari) &divide; Total Transaksi (${historyData.length} Transaksi) = <strong class="text-indigo-600 dark:text-indigo-400">${average} Hari</strong>
+                        </p>
+                    </div>
+                `;
+
+                const html = `
+                    <div class="space-y-4 text-left">
+                        <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+                            <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold mb-2">Riwayat Penerimaan Barang Masuk</p>
+                            <div class="max-h-60 overflow-y-auto pr-1 custom-scroll">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b border-slate-200 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                                            <th class="px-4 py-2 w-1/12">No</th>
+                                            <th class="px-4 py-2 w-1/3">Kode</th>
+                                            <th class="px-4 py-2">Pesan</th>
+                                            <th class="px-4 py-2">Terima</th>
+                                            <th class="px-4 py-2 text-right">Selisih</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-50 dark:divide-slate-800/40">
+                                        ${rowsHtml}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        ${explanation}
+
+                        <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
+                            <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Rata-rata Lead Time (L)</p>
+                            <p class="text-3xl font-black mt-1">${average} Hari</p>
+                        </div>
+                    </div>
+                `;
 
                 openModal(title, html);
             });

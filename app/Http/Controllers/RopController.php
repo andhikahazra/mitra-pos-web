@@ -124,6 +124,32 @@ class RopController extends Controller
             $dailyData[$date] = $salesHistory[$date] ?? 0;
         }
 
+        $leadTimeHistory = \Illuminate\Support\Facades\DB::table('detail_barang_masuk')
+            ->join('barang_masuk', 'detail_barang_masuk.barang_masuk_id', '=', 'barang_masuk.id')
+            ->where('detail_barang_masuk.produk_id', $produk->id)
+            ->whereNotNull('barang_masuk.tanggal_pesan')
+            ->whereNotNull('barang_masuk.tanggal_terima')
+            ->select([
+                'barang_masuk.kode',
+                'barang_masuk.tanggal_pesan',
+                'barang_masuk.tanggal_terima'
+            ])
+            ->get()
+            ->map(function ($record) {
+                $pesan = \Carbon\Carbon::parse($record->tanggal_pesan)->startOfDay();
+                $terima = \Carbon\Carbon::parse($record->tanggal_terima)->startOfDay();
+                $diffDays = abs($terima->diffInDays($pesan, false));
+                if ($diffDays == 0) {
+                    $diffDays = 1;
+                }
+                return [
+                    'kode' => $record->kode,
+                    'tanggal_pesan' => \Carbon\Carbon::parse($record->tanggal_pesan)->translatedFormat('d M Y'),
+                    'tanggal_terima' => \Carbon\Carbon::parse($record->tanggal_terima)->translatedFormat('d M Y'),
+                    'selisih' => $diffDays
+                ];
+            });
+
         return view('rop.show', [
             'produk'          => $produk,
             'stock'           => $stock,
@@ -139,7 +165,8 @@ class RopController extends Controller
             'dailyData'       => $dailyData,
             'isSample'        => false, // Simulasi dimatikan untuk integritas data
             'periode'         => $periode,
-            'calculatedAt'    => $produk->rop?->waktu_penghitungan?->translatedFormat('l, d F Y H:i') ?? '-'
+            'calculatedAt'    => $produk->rop?->waktu_penghitungan?->translatedFormat('l, d F Y H:i') ?? '-',
+            'leadTimeHistory' => $leadTimeHistory
         ]);
     }
 
@@ -186,6 +213,32 @@ class RopController extends Controller
             $dailyData[$date] = $salesHistory[$date] ?? 0;
         }
 
+        $leadTimeHistory = \Illuminate\Support\Facades\DB::table('detail_barang_masuk')
+            ->join('barang_masuk', 'detail_barang_masuk.barang_masuk_id', '=', 'barang_masuk.id')
+            ->where('detail_barang_masuk.produk_id', $produk->id)
+            ->whereNotNull('barang_masuk.tanggal_pesan')
+            ->whereNotNull('barang_masuk.tanggal_terima')
+            ->select([
+                'barang_masuk.kode',
+                'barang_masuk.tanggal_pesan',
+                'barang_masuk.tanggal_terima'
+            ])
+            ->get()
+            ->map(function ($record) {
+                $pesan = \Carbon\Carbon::parse($record->tanggal_pesan)->startOfDay();
+                $terima = \Carbon\Carbon::parse($record->tanggal_terima)->startOfDay();
+                $diffDays = abs($terima->diffInDays($pesan, false));
+                if ($diffDays == 0) {
+                    $diffDays = 1;
+                }
+                return [
+                    'kode' => $record->kode,
+                    'tanggal_pesan' => \Carbon\Carbon::parse($record->tanggal_pesan)->translatedFormat('d M Y'),
+                    'tanggal_terima' => \Carbon\Carbon::parse($record->tanggal_terima)->translatedFormat('d M Y'),
+                    'selisih' => $diffDays
+                ];
+            });
+
         return view('rop.presentation', [
             'produk'          => $produk,
             'stock'           => $stock,
@@ -200,7 +253,8 @@ class RopController extends Controller
             'zScore'          => 1.65, 
             'dailyData'       => $dailyData,
             'periode'         => $periode,
-            'calculatedAt'    => $produk->rop?->waktu_penghitungan?->translatedFormat('l, d F Y H:i') ?? '-'
+            'calculatedAt'    => $produk->rop?->waktu_penghitungan?->translatedFormat('l, d F Y H:i') ?? '-',
+            'leadTimeHistory' => $leadTimeHistory
         ]);
     }
 }
