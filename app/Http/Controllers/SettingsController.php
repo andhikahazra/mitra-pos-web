@@ -37,11 +37,11 @@ class SettingsController extends Controller
             // Validasi Bank Slot 1
             'bank_name_1' => 'nullable|string|max:100',
             'bank_no_1' => 'nullable|string|regex:/^[0-9]+$/|max:50',
-            'bank_Pemilik_1' => 'nullable|string|max:100',
+            'bank_pemilik_1' => 'nullable|string|max:100',
             // Validasi Bank Slot 2
             'bank_name_2' => 'nullable|string|max:100',
             'bank_no_2' => 'nullable|string|regex:/^[0-9]+$/|max:50',
-            'bank_Pemilik_2' => 'nullable|string|max:100',
+            'bank_pemilik_2' => 'nullable|string|max:100',
         ]);
 
         $data = $request->only(['nama_toko', 'no_hp', 'biaya_admin_qris', 'footer_nota']);
@@ -65,14 +65,14 @@ class SettingsController extends Controller
             $rekening[] = [
                 'bank' => $request->bank_name_1,
                 'no' => $request->bank_no_1,
-                'nama' => $request->bank_Pemilik_1,
+                'nama' => $request->bank_pemilik_1,
             ];
         }
         if ($request->filled('bank_name_2')) {
             $rekening[] = [
                 'bank' => $request->bank_name_2,
                 'no' => $request->bank_no_2,
-                'nama' => $request->bank_Pemilik_2,
+                'nama' => $request->bank_pemilik_2,
             ];
         }
         $data['rekening_bank'] = $rekening;
