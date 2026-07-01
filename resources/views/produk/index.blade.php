@@ -10,10 +10,15 @@
         </div>
 
         <article class="panel-card">
-            <div class="toolbar">
-                <input class="field" id="productSearch" type="text" placeholder="Cari nama/SKU/kategori/tipe...">
-                <span class="table-info" id="productMeta">Total {{ $produk->count() }} produk</span>
-            </div>
+            <form action="{{ route('produk.index') }}" method="GET" class="toolbar" style="width: 100%;">
+                <div style="display: flex; gap: 8px; flex: 1; align-items: center;">
+                    <input class="field" name="search" id="productSearch" type="text" placeholder="Cari nama/SKU/kategori... (Tekan Enter)" value="{{ request('search') }}" style="flex: 1;">
+                    @if(request('search'))
+                        <a href="{{ route('produk.index') }}" class="btn btn-ghost" style="height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #cbd5e1; padding: 0 16px; margin: 0; background: white; white-space: nowrap;">Reset</a>
+                    @endif
+                </div>
+                <span class="table-info" id="productMeta">Total {{ $produk->total() }} produk</span>
+            </form>
             
             <div class="table-wrap" id="productTableWrap">
                 <table>

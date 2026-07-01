@@ -14,12 +14,24 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $produk = Produk::query()
-            ->with(['kategori:id,nama'])
-            ->orderBy('nama', 'asc')
-            ->paginate(10);
+        $query = Produk::query()->with(['kategori:id,nama']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%")
+                  ->orWhereHas('kategori', function($k) use ($search) {
+                      $k->where('nama', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $produk = $query->orderBy('nama', 'asc')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('produk.index', [
             'produk' => $produk,

@@ -35,8 +35,7 @@ class BarangMasukController extends Controller
             $query->whereYear('tanggal_pesan', $request->year);
         }
 
-        $incomingGoods = $query->orderByDesc('tanggal_pesan')
-            ->orderByDesc('id')
+        $incomingGoods = $query->orderByDesc('id')
             ->get();
 
         // Hitung Modal Keseluruhan (Hanya yang Disetujui)

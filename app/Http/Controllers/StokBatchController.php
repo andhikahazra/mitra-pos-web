@@ -50,7 +50,8 @@ class StokBatchController extends Controller
             ->where('produk_id', $produk->id)
             ->where('qty_sisa', '>', 0)
             ->with(['detailBarangMasuk.barangMasuk'])
-            ->orderBy('tanggal_masuk')
+            ->orderBy('tanggal_masuk', 'asc')
+            ->orderBy('id', 'asc')
             ->get();
 
         // Ambil log pergerakan terbaru khusus produk ini (dinonaktifkan karena tabel log_stok dihapus)
