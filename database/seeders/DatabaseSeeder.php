@@ -124,18 +124,20 @@ class DatabaseSeeder extends Seeder
             // ========================================================
             $waktuAwal = $startDate->copy()->addHours(8); // Jam 8 pagi
             
-            $bmAwal = BarangMasuk::create([
-                'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
-                'tanggal_pesan' => $waktuAwal->copy()->subDays(3),
-                'tanggal_terima' => $waktuAwal,
-                'supplier_id' => $sup1->id,
-                'user_id' => $owner->id,
-                'status' => 'Disetujui',
-                'disetujui_oleh' => $owner->id,
-                'catatan' => 'Modal awal toko'
-            ]);
-
             foreach ($products as $prod) {
+                $initialLT = rand(2, 4);
+                $bmAwal = BarangMasuk::create([
+                    'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                    'tanggal_pesan' => $waktuAwal->copy()->subDays($initialLT),
+                    'tanggal_terima' => $waktuAwal,
+                    'supplier_id' => $sup1->id,
+                    'user_id' => $owner->id,
+                    'status' => 'Disetujui',
+                    'disetujui_oleh' => $owner->id,
+                    'catatan' => 'Modal awal ' . $prod->nama
+                ]);
+                $bmSeq++;
+
                 // Modal awal cukup untuk ~25 hari
                 $qty = ($prod->demand_profile === 'high') ? rand(250, 320) : (($prod->demand_profile === 'med') ? rand(100, 150) : rand(25, 45));
                 
@@ -176,17 +178,6 @@ class DatabaseSeeder extends Seeder
                 if ($i > 0 && $i % 20 === 0 && $i < 60) {
                     $bmWaktu = $currentDay->copy()->addHours(10); // Barang datang jam 10 pagi
                     
-                    $bmRestock = BarangMasuk::create([
-                        'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
-                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(2, 4)), // Lead time 2-4 hari
-                        'tanggal_terima' => $bmWaktu,
-                        'supplier_id' => $sup2->id,
-                        'user_id' => $owner->id,
-                        'status' => 'Disetujui',
-                        'disetujui_oleh' => $owner->id,
-                        'catatan' => 'Restock rutin bulanan'
-                    ]);
-
                     foreach ($products as $prod) {
                         $multiplier = 1.0;
                         
@@ -217,6 +208,19 @@ class DatabaseSeeder extends Seeder
                         }
                         
                         $hargaModal = round(($prod->harga * 0.72) / 100) * 100; // Harga modal sedikit naik
+
+                        $ltDays = rand(1, 5); // Waktu tunggu bervariasi secara realistis (1-5 hari)
+                        $bmRestock = BarangMasuk::create([
+                            'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                            'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
+                            'tanggal_terima' => $bmWaktu,
+                            'supplier_id' => ($prod->id % 2 === 0) ? $sup1->id : $sup2->id,
+                            'user_id' => $owner->id,
+                            'status' => 'Disetujui',
+                            'disetujui_oleh' => $owner->id,
+                            'catatan' => 'Restock rutin ' . $prod->nama
+                        ]);
+                        $bmSeq++;
 
                         $dbm = DetailBarangMasuk::create([
                             'barang_masuk_id' => $bmRestock->id,
