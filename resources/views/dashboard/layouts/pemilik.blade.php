@@ -76,6 +76,17 @@
             </div>
         </div>
 
+        <div class="modal" id="imagePreviewModal" aria-hidden="true" style="background-color: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px);">
+            <div class="relative max-w-5xl mx-auto flex flex-col items-center justify-center p-4" id="imagePreviewModalCard">
+                <button type="button" id="closeImagePreviewModal" class="absolute -top-12 right-4 text-white hover:text-slate-300 focus:outline-none" style="font-size: 2.5rem; line-height: 1;">
+                    &times;
+                </button>
+                <div class="overflow-hidden rounded-2xl bg-white/5 p-2 shadow-2xl ring-1 ring-white/10">
+                    <img id="imagePreviewModalTarget" src="" alt="Preview Foto" class="max-h-[75vh] max-w-full rounded-xl object-contain">
+                </div>
+            </div>
+        </div>
+
         @yield('dashboard-modals')
 
         <style>

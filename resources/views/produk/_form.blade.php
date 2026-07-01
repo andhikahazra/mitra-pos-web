@@ -142,8 +142,8 @@
             <input class="hidden" name="foto" id="productPhotoFile" type="file" accept="image/*">
             <div class="product-photo-list" id="productPhotoList">
                 @if ($isEdit && $produk->foto)
-                    <div class="product-photo-item">
-                        <div class="product-photo-thumb">
+                    <div class="product-photo-item transition-opacity duration-300" id="existingPhotoItem">
+                        <div class="product-photo-thumb cursor-zoom-in transition-all duration-300 hover:scale-[1.03]" data-zoomable>
                             <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->foto }}">
                         </div>
                         <div class="product-photo-meta">
@@ -151,7 +151,7 @@
                         </div>
                         <div class="product-photo-actions">
                             <label class="product-photo-primary">
-                                <input type="checkbox" name="remove_photo" value="1">
+                                <input type="checkbox" name="remove_photo" id="removePhotoCheckbox" value="1">
                                 Hapus Foto Saat Ini
                             </label>
                         </div>
