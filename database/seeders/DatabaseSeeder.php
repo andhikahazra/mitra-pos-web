@@ -105,11 +105,15 @@ class DatabaseSeeder extends Seeder
 
         $products = [];
         foreach ($productsData as $pd) {
+            $harga = $pd['hrg'];
+            if ($pd['kat'] === $katKardus->id) {
+                $harga = rand(20, 44) * 500;
+            }
             $p = Produk::create([
                 'nama' => $pd['nama'],
                 'sku' => $pd['sku'],
                 'kategori_id' => $pd['kat'],
-                'harga' => $pd['hrg'],
+                'harga' => $harga,
                 'stok' => 0,
                 'tipe_produk' => 'stock', // Tampilkan semua di ROP
                 'status' => true,
