@@ -18,17 +18,20 @@
         </div>
 
         <div class="product-form-grid">
-            <label>Nama Produk
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Nama Produk</label>
                 <input class="field" name="nama" id="productName" placeholder="Contoh: Sabun Mandi Lifebuoy..." value="{{ old('nama', $isEdit ? $produk->nama : '') }}" required>
-            </label>
+            </div>
 
-            <label>SKU (Stock Keeping Unit)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">SKU (Stock Keeping Unit)</label>
                 <input class="field font-mono bg-slate-50 cursor-not-allowed" name="sku" id="productSku" value="{{ $isEdit ? $produk->sku : '[Otomatis setelah disimpan]' }}" readonly>
-            </label>
+            </div>
 
 
 
-            <label>Kategori
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Kategori</label>
                 <select class="field" name="kategori_id" id="productCategory" onchange="toggleNewCategory(this.value)" required>
                     <option value="">Pilih kategori...</option>
                     @foreach ($kategori as $item)
@@ -36,18 +39,20 @@
                     @endforeach
                     <option value="new" @selected(old('kategori_id') === 'new')>-- Tambah Kategori Baru --</option>
                 </select>
-            </label>
+            </div>
 
-            <label id="newKategoriWrapper" style="display: {{ old('kategori_id') === 'new' ? 'block' : 'none' }}">Nama Kategori Baru
+            <div class="flex flex-col gap-2" id="newKategoriWrapper" style="display: {{ old('kategori_id') === 'new' ? 'block' : 'none' }}">
+                <label class="text-sm font-medium text-slate-700">Nama Kategori Baru</label>
                 <input class="field" name="new_kategori" id="newKategoriName" placeholder="Masukkan nama kategori baru..." value="{{ old('new_kategori') }}">
-            </label>
+            </div>
 
-            <label>Tipe Produk
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Tipe Produk</label>
                 <select class="field" name="tipe_produk" id="productType" required>
                     <option value="stock" @selected($selectedType === 'stock')>Stock</option>
                     <option value="non-stock" @selected($selectedType === 'non-stock')>Non Stock</option>
                 </select>
-            </label>
+            </div>
         </div>
     </article>
 
@@ -74,27 +79,30 @@
         </div>
 
         <div class="product-form-grid">
-            <label>Harga Jual (Rp)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Harga Jual (Rp)</label>
                 <div class="relative">
                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">Rp</span>
-                    <input class="field pl-10" name="harga" id="productPrice" type="number" min="0" placeholder="0" value="{{ old('harga', $isEdit ? $produk->harga : '') }}" required>
+                    <input class="field pl-10" name="harga" id="productPrice" type="text" placeholder="0" value="{{ old('harga', $isEdit ? number_format($produk->harga, 0, ',', '.') : '') }}" required>
                 </div>
-            </label>
+            </div>
 
-            <label>Stok Tersedia
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Stok Tersedia</label>
                 <div class="relative">
-                    <input class="field bg-slate-50 cursor-not-allowed" name="stok_disabled" id="productStock" type="number" value="{{ old('stok', $isEdit ? $produk->stok : 0) }}" disabled readonly>
+                    <input class="field bg-slate-50 cursor-not-allowed" name="stok_disabled" id="productStock" type="text" value="{{ old('stok', $isEdit ? number_format($produk->stok, 0, ',', '.') : 0) }}" disabled readonly>
                     <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Locked</span>
                 </div>
                 <p class="text-[10px] text-slate-400 mt-1 leading-tight">Dikelola otomatis via dokumen Barang Masuk & Penjualan.</p>
-            </label>
+            </div>
 
-            <label>Status Produk
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Status Produk</label>
                 <select class="field" name="status" id="productStatus" required>
                     <option value="1" @selected((string) old('status', $isEdit ? (int) $produk->status : '1') === '1')>Aktif</option>
                     <option value="0" @selected((string) old('status', $isEdit ? (int) $produk->status : '1') === '0')>Nonaktif</option>
                 </select>
-            </label>
+            </div>
         </div>
     </article>
 
@@ -108,21 +116,25 @@
         </div>
 
         <fieldset class="product-form-grid feature-fieldset {{ $hasDimension ? 'is-enabled' : 'is-disabled' }}" id="productDimensionFields" @disabled(!$hasDimension)>
-            <label>Panjang (cm)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Panjang (cm)</label>
                 <input class="field" name="panjang" id="dimensionLength" type="number" min="0" step="0.01" placeholder="0" value="{{ old('panjang', $isEdit ? $produk->panjang : '') }}">
-            </label>
+            </div>
 
-            <label>Lebar (cm)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Lebar (cm)</label>
                 <input class="field" name="lebar" id="dimensionWidth" type="number" min="0" step="0.01" placeholder="0" value="{{ old('lebar', $isEdit ? $produk->lebar : '') }}">
-            </label>
+            </div>
 
-            <label>Tinggi (cm)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Tinggi (cm)</label>
                 <input class="field" name="tinggi" id="dimensionHeight" type="number" min="0" step="0.01" placeholder="0" value="{{ old('tinggi', $isEdit ? $produk->tinggi : '') }}">
-            </label>
+            </div>
 
-            <label>Volume (cm3)
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-700">Volume (cm3)</label>
                 <input class="field" name="volume" id="dimensionVolume" type="number" min="0" step="0.01" placeholder="0" value="{{ old('volume', $isEdit ? $produk->volume : '') }}">
-            </label>
+            </div>
         </fieldset>
     </article>
 

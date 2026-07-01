@@ -184,6 +184,32 @@ export function initProductEditorForm() {
         });
     }
 
+    // Format price input dynamically
+    const priceInput = document.getElementById('productPrice');
+    if (priceInput) {
+        const formatRupiah = (value) => {
+            if (!value) return '';
+            let clean = value.replace(/\D/g, '');
+            if (clean.length > 1 && clean.startsWith('0')) {
+                clean = clean.replace(/^0+/, '');
+            }
+            return clean.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        };
+
+        if (priceInput.value) {
+            priceInput.value = formatRupiah(priceInput.value);
+        }
+
+        priceInput.addEventListener('input', function () {
+            this.value = formatRupiah(this.value);
+        });
+
+        form.addEventListener('submit', function () {
+            const cleanVal = priceInput.value.replace(/\D/g, '');
+            priceInput.value = cleanVal;
+        });
+    }
+
     applyDimensionState();
     applyPhotoState();
     applyTypeState();

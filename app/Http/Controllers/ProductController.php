@@ -183,6 +183,11 @@ class ProductController extends Controller
 
     private function validatePayload(Request $request, ?int $ignoreId = null): array
     {
+        if ($request->has('harga') && is_string($request->harga)) {
+            $hargaClean = preg_replace('/[^0-9]/', '', $request->harga);
+            $request->merge(['harga' => $hargaClean]);
+        }
+
         return $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'sku' => [
