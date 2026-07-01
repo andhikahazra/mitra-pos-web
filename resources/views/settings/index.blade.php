@@ -34,7 +34,7 @@
                         </div>
                         <div class="field-group">
                             <label>No. HP Toko</label>
-                            <input type="text" name="no_hp" class="field setting-input" value="{{ old('no_hp', $setting->no_hp) }}" disabled>
+                            <input type="tel" name="no_hp" id="shopPhone" class="field setting-input" value="{{ old('no_hp', $setting->no_hp) }}" disabled>
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
 
                     <div class="field-group">
                         <label>Biaya Admin QRIS (Rp)</label>
-                        <input type="number" name="biaya_admin_qris" class="field setting-input" value="{{ old('biaya_admin_qris', round($setting->biaya_admin_qris)) }}" required disabled>
+                        <input type="text" name="biaya_admin_qris" id="shopAdminFee" class="field setting-input" value="{{ old('biaya_admin_qris', $setting->biaya_admin_qris ? number_format($setting->biaya_admin_qris, 0, ',', '.') : '') }}" required disabled>
                     </div>
                 </div>
             </article>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="field-group" style="margin-bottom: 10px;">
                             <label>No. Rekening</label>
-                            <input type="text" name="bank_no_1" class="field setting-input" value="{{ old('bank_no_1', $setting->rekening_bank[0]['no'] ?? '') }}" disabled>
+                            <input type="text" name="bank_no_1" id="bankNo1" class="field setting-input" value="{{ old('bank_no_1', $setting->rekening_bank[0]['no'] ?? '') }}" disabled>
                         </div>
                         <div class="field-group">
                             <label>Nama Pemilik Rekening</label>
@@ -115,7 +115,7 @@
                         </div>
                         <div class="field-group" style="margin-bottom: 10px;">
                             <label>No. Rekening</label>
-                            <input type="text" name="bank_no_2" class="field setting-input" value="{{ old('bank_no_2', $setting->rekening_bank[1]['no'] ?? '') }}" disabled>
+                            <input type="text" name="bank_no_2" id="bankNo2" class="field setting-input" value="{{ old('bank_no_2', $setting->rekening_bank[1]['no'] ?? '') }}" disabled>
                         </div>
                         <div class="field-group">
                             <label>Nama Pemilik Rekening</label>
@@ -139,6 +139,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnCancel = document.getElementById('btn-cancel');
     const actionButtons = document.getElementById('action-buttons');
     const inputs = document.querySelectorAll('.setting-input');
+    const adminFeeInput = document.getElementById('shopAdminFee');
+    const shopPhoneInput = document.getElementById('shopPhone');
+    const form = document.getElementById('settings-form');
+
+    // Format helper functions
+    function formatRupiah(value) {
+        if (!value) return '';
+        const clean = value.toString().replace(/\D/g, '');
+        return new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0
+        }).format(clean);
+    }
+
+    if (adminFeeInput) {
+        adminFeeInput.addEventListener('input', function() {
+            const rawVal = this.value.replace(/\D/g, '');
+            this.value = formatRupiah(rawVal);
+        });
+    }
+
+    if (shopPhoneInput) {
+        shopPhoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    const bankNo1Input = document.getElementById('bankNo1');
+    const bankNo2Input = document.getElementById('bankNo2');
+
+    if (bankNo1Input) {
+        bankNo1Input.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    if (bankNo2Input) {
+        bankNo2Input.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function() {
+            if (adminFeeInput) {
+                adminFeeInput.value = adminFeeInput.value.replace(/\D/g, '');
+            }
+        });
+    }
 
     btnEdit.addEventListener('click', function() {
         // Enable all inputs

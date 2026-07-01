@@ -17,9 +17,14 @@ class SettingsController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
+        if ($request->has('biaya_admin_qris')) {
+            $biayaClean = str_replace('.', '', $request->biaya_admin_qris);
+            $request->merge(['biaya_admin_qris' => $biayaClean]);
+        }
+
         $request->validate([
             'nama_toko' => 'required|string|max:255',
-            'no_hp' => 'nullable|string|max:20',
+            'no_hp' => 'nullable|string|regex:/^[0-9]+$/|max:20',
             'biaya_admin_qris' => 'required|numeric|min:0',
             'footer_nota' => 'nullable|string',
             // Validasi Alamat (Pecahan)
@@ -31,11 +36,11 @@ class SettingsController extends Controller
             'deskripsi_keterangan' => 'nullable|string',
             // Validasi Bank Slot 1
             'bank_name_1' => 'nullable|string|max:100',
-            'bank_no_1' => 'nullable|string|max:50',
+            'bank_no_1' => 'nullable|string|regex:/^[0-9]+$/|max:50',
             'bank_Pemilik_1' => 'nullable|string|max:100',
             // Validasi Bank Slot 2
             'bank_name_2' => 'nullable|string|max:100',
-            'bank_no_2' => 'nullable|string|max:50',
+            'bank_no_2' => 'nullable|string|regex:/^[0-9]+$/|max:50',
             'bank_Pemilik_2' => 'nullable|string|max:100',
         ]);
 

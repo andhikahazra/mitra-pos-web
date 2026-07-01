@@ -14,14 +14,14 @@
         <div class="kpi-card">
             <span class="kpi-label">Total Uang Modal Keseluruhan</span>
             <div class="flex items-baseline gap-1">
-                <h3 class="text-slate-900">Rp {{ number_format($totalModalOverall, 0, ',', '.') }}</h3>
+                <h3>Rp {{ number_format($totalModalOverall, 0, ',', '.') }}</h3>
             </div>
             <p class="kpi-trend info mt-1">Total akumulasi modal disetujui</p>
         </div>
         <div class="kpi-card">
             <span class="kpi-label">Modal Bulan Ini ({{ \Carbon\Carbon::create(null, $selectedMonth)->translatedFormat('F') }} {{ $selectedYear }})</span>
             <div class="flex items-baseline gap-1">
-                <h3 class="text-slate-900">Rp {{ number_format($totalModalMonth, 0, ',', '.') }}</h3>
+                <h3>Rp {{ number_format($totalModalMonth, 0, ',', '.') }}</h3>
             </div>
             <p class="kpi-trend warning mt-1">Pengeluaran modal periode dipilih</p>
         </div>

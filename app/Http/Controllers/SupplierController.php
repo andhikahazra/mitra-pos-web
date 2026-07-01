@@ -36,7 +36,7 @@ class SupplierController extends Controller
     {
         $validated = $request->validate([
             'nama'    => ['required', 'string', 'max:255'],
-            'no_telp' => ['nullable', 'string', 'max:20'],
+            'no_telp' => ['nullable', 'string', 'regex:/^[0-9]+$/', 'max:20'],
             'alamat'  => ['nullable', 'string'],
         ]);
 
@@ -63,7 +63,7 @@ class SupplierController extends Controller
     {
         $validated = $request->validate([
             'nama'    => ['required', 'string', 'max:255'],
-            'no_telp' => ['nullable', 'string', 'max:20'],
+            'no_telp' => ['nullable', 'string', 'regex:/^[0-9]+$/', 'max:20'],
             'alamat'  => ['nullable', 'string'],
         ]);
 

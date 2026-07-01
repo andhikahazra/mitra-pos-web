@@ -28,22 +28,22 @@
     <div class="kpi-strip">
         <article class="kpi-card">
             <p class="kpi-label">Total Omset</p>
-            <h3 class="text-slate-900">Rp {{ number_format($totalOmset, 0, ',', '.') }}</h3>
+            <h3>Rp {{ number_format($totalOmset, 0, ',', '.') }}</h3>
             <p class="kpi-trend positive">Total Penjualan Kotor</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Total Modal</p>
-            <h3 class="text-slate-900">Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
+            <h3>Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
             <p class="kpi-trend neutral">HPP (Harga Pokok Penjualan)</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Laba Kotor</p>
-            <h3 class="text-slate-900">Rp {{ number_format($labaKotor, 0, ',', '.') }}</h3>
+            <h3>Rp {{ number_format($labaKotor, 0, ',', '.') }}</h3>
             <p class="kpi-trend success">Keuntungan Penjualan</p>
         </article>
         <article class="kpi-card">
             <p class="kpi-label">Total Transaksi</p>
-            <h3 class="text-slate-900">{{ $totalTransaksi }}</h3>
+            <h3>{{ $totalTransaksi }}</h3>
             <p class="kpi-trend info">Volume Penjualan</p>
         </article>
     </div>
