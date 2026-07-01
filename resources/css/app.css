@@ -80,9 +80,15 @@
 
     @media (min-width: 1024px) {
         .pemilik-sidebar {
-            @apply sticky translate-x-0 w-auto border-r;
-            position: sticky !important;
-            height: 100vh !important;
+            @apply translate-x-0;
+            position: fixed !important;
+            width: 248px !important;
+        }
+        .pemilik-sidebar.collapsed {
+            width: 64px !important;
+        }
+        .main-shell {
+            grid-column: 2 !important;
         }
     }
 
@@ -1128,5 +1134,98 @@
         white-space: normal !important;
     }
 }
+/* ROP Show Page Dark Mode Styling */
+.dark #section-rop-show,
+.dark #calculationDetailModal {
+    /* Headings & Text */
+    h1, h2, h3, .text-slate-800, .text-slate-700, .text-slate-600 {
+        color: rgb(241 245 249) !important; /* text-slate-100 */
+    }
+    .text-slate-500 {
+        color: rgb(148 163 184) !important; /* text-slate-400 */
+    }
+    .text-slate-400 {
+        color: rgb(100 116 139) !important; /* text-slate-500 */
+    }
 
+    /* Cards & Containers */
+    .bg-white {
+        background-color: rgb(15 23 42 / 0.6) !important; /* dark:bg-slate-900/60 */
+        border-color: rgb(30 41 59) !important; /* dark:border-slate-800 */
+    }
+    .bg-slate-50 {
+        background-color: rgb(15 23 42 / 0.8) !important; /* dark:bg-slate-950/80 */
+        border-color: rgb(30 41 59) !important;
+    }
 
+    /* Return Button */
+    a.bg-white {
+        background-color: rgb(15 23 42 / 0.4) !important;
+        border-color: rgb(30 41 59) !important;
+        color: rgb(148 163 184) !important;
+    }
+    a.bg-white:hover {
+        background-color: rgb(30 41 59 / 0.6) !important;
+        color: rgb(129 140 248) !important; /* text-indigo-400 */
+        border-color: rgb(99 102 241 / 0.4) !important;
+    }
+
+    /* Status Badges */
+    .bg-red-100 {
+        background-color: rgb(239 68 68 / 0.1) !important; /* dark:bg-red-500/10 */
+        color: rgb(248 113 113) !important; /* dark:text-red-400 */
+        border-color: rgb(127 29 29 / 0.4) !important; /* dark:border-red-900/40 */
+    }
+    .bg-emerald-100 {
+        background-color: rgb(16 185 129 / 0.1) !important; /* dark:bg-emerald-500/10 */
+        color: rgb(52 211 153) !important; /* dark:text-emerald-400 */
+        border-color: rgb(6 78 59 / 0.4) !important; /* dark:border-emerald-900/40 */
+    }
+
+    /* Audit Trail Rows */
+    .audit-trail-row:hover,
+    .methodology-row:hover {
+        background-color: rgb(30 41 59 / 0.4) !important;
+    }
+    .bg-indigo-50\/20 {
+        background-color: rgb(99 102 241 / 0.08) !important; /* dark:bg-indigo-950/8 */
+    }
+    .bg-indigo-50\/20:hover {
+        background-color: rgb(99 102 241 / 0.15) !important;
+    }
+    .bg-indigo-50\/30 {
+        background-color: rgb(99 102 241 / 0.1) !important;
+    }
+    .border-indigo-100 {
+        border-color: rgb(99 102 241 / 0.2) !important;
+    }
+    .text-indigo-900,
+    .text-indigo-700 {
+        color: rgb(165 180 252) !important; /* text-indigo-300 */
+    }
+    
+    /* Table borders & Dividers */
+    .border-b.border-slate-100,
+    .divide-y.divide-slate-50,
+    .border-slate-100 {
+        border-color: rgb(30 41 59 / 0.6) !important;
+    }
+
+    /* Daily block zero sales */
+    .daily-data-block .py-2[style*="background-color: #f8fafc"] {
+        background-color: rgb(15 23 42 / 0.4) !important;
+        color: rgb(100 116 139) !important;
+        border-color: rgb(30 41 59) !important;
+    }
+    .daily-data-block .py-1[class*="bg-amber-50"] {
+        background-color: rgb(245 158 11 / 0.1) !important;
+        color: rgb(251 191 36) !important;
+        border-color: rgb(217 119 6 / 0.4) !important;
+    }
+    
+    /* Methodology Box Step 3 */
+    .bg-slate-50.rounded.border.border-slate-100 {
+        background-color: rgb(15 23 42 / 0.4) !important;
+        border-color: rgb(30 41 59 / 0.8) !important;
+    }
+}
