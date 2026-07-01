@@ -44,6 +44,7 @@ class IncomingGoodsController extends Controller
             'supplier_id' => 'required|exists:supplier,id',
             'tanggal_terima' => 'required|date',
             'catatan' => 'nullable|string',
+            'foto_struk' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4096',
             'items' => 'required|array|min:1',
             'items.*.produk_id' => 'required|exists:produk,id',
             'items.*.jumlah' => 'required|integer|min:1',
@@ -92,6 +93,11 @@ class IncomingGoodsController extends Controller
                        str_pad($batch, 3, '0', STR_PAD_LEFT) . '-' . 
                        str_pad($sequence, 3, '0', STR_PAD_LEFT);
 
+            $fotoStrukPath = null;
+            if ($request->hasFile('foto_struk')) {
+                $fotoStrukPath = $request->file('foto_struk')->store('struk_barang_masuk', 'public');
+            }
+
             // 2. Buat Header Barang Masuk
             $barangMasuk = BarangMasuk::create([
                 'kode' => $newKode,
@@ -101,6 +107,7 @@ class IncomingGoodsController extends Controller
                 'user_id' => $request->user()->id,
                 'status' => 'Menunggu',
                 'catatan' => $request->catatan,
+                'foto_struk' => $fotoStrukPath,
             ]);
 
             foreach ($request->items as $item) {

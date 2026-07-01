@@ -29,7 +29,7 @@ class ProductController extends Controller
             $query->where('kategori_id', $request->kategori_id);
         }
 
-        $products = $query->latest('id')->paginate($request->get('per_page', 20));
+        $products = $query->latest('id')->paginate($request->get('per_page', 100));
 
         return response()->json([
             'success' => true,
