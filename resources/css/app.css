@@ -70,7 +70,12 @@
     }
 
     .pemilik-sidebar {
-        @apply fixed left-0 top-0 z-50 h-screen w-[280px] -translate-x-full border-r border-slate-200 bg-[#F8F9FA] px-2.5 py-3 transition-transform duration-300 ease-in-out dark:border-slate-800/60 dark:bg-slate-900/90;
+        @apply fixed left-0 top-0 z-50 h-screen w-[280px] -translate-x-full border-r border-slate-200 bg-[#F8F9FA] px-2.5 py-3 transition-transform duration-300 ease-in-out dark:border-slate-800 dark:bg-slate-900;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+    .pemilik-sidebar::-webkit-scrollbar {
+        display: none;
     }
 
     @media (min-width: 1024px) {
@@ -219,7 +224,7 @@
     }
 
     .menu-link.active {
-        @apply bg-blue-50 font-medium text-blue-700 dark:bg-blue-800/10 dark:text-blue-500;
+        @apply bg-blue-50 font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-400;
     }
 
     .brand-text,
@@ -738,15 +743,15 @@
     }
 
     .product-form-card {
-        @apply rounded-2xl border border-slate-200 bg-slate-50/65 p-5;
+        @apply rounded-2xl border border-slate-200 bg-slate-50/65 p-5 dark:border-slate-800 dark:bg-slate-900/40;
     }
 
     .product-form-head h3 {
-        @apply m-0 text-lg font-semibold text-slate-800;
+        @apply m-0 text-lg font-semibold text-slate-800 dark:text-slate-100;
     }
 
     .product-form-head p {
-        @apply mt-1 mb-4 text-sm text-slate-500;
+        @apply mt-1 mb-4 text-sm text-slate-500 dark:text-slate-400;
     }
 
     .product-form-grid {
@@ -754,11 +759,11 @@
     }
 
     .product-form-grid label {
-        @apply grid gap-2 text-sm font-medium text-slate-700;
+        @apply grid gap-2 text-sm font-medium text-slate-700 dark:text-slate-300;
     }
 
     .product-form-toggle {
-        @apply mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-white/80 px-4 py-3;
+        @apply mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-white/80 px-4 py-3 dark:bg-slate-900/60;
     }
 
     .toggle-state-badge {
@@ -766,11 +771,11 @@
     }
 
     .toggle-state-badge.on {
-        @apply border-emerald-200 bg-emerald-50 text-emerald-700;
+        @apply border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800/40 dark:bg-emerald-500/10 dark:text-emerald-400;
     }
 
     .toggle-state-badge.off {
-        @apply border-slate-300 bg-slate-100 text-slate-600;
+        @apply border-slate-300 bg-slate-100 text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400;
     }
 
     .form-grid label {
@@ -782,32 +787,34 @@
     }
 
     .feature-fieldset {
-        @apply m-0 rounded-xl border border-slate-200 bg-white/70 p-3 transition-all duration-200;
+        @apply m-0 rounded-xl border border-slate-200 bg-white/70 p-3 transition-all duration-200 dark:border-slate-800 dark:bg-slate-900/20;
     }
 
     .feature-fieldset.is-enabled {
-        @apply border-blue-200 bg-blue-50/25;
+        @apply border-blue-200 bg-blue-50/25 dark:border-blue-900/40 dark:bg-blue-500/5;
     }
 
     .feature-fieldset.is-disabled {
-        @apply border-dashed border-slate-300 bg-slate-100/80;
+        @apply border-dashed border-slate-300 bg-slate-100/80 dark:border-slate-800/80 dark:bg-slate-900/40;
     }
 
     .feature-fieldset.is-disabled .field,
     .feature-fieldset.is-disabled input,
     .feature-fieldset.is-disabled select,
     .feature-fieldset.is-disabled textarea {
-        @apply bg-slate-100 text-slate-400 border-slate-200;
+        @apply bg-slate-100 text-slate-400 border-slate-200 dark:bg-slate-900/50 dark:text-slate-600 dark:border-slate-800;
     }
 
     .field:disabled,
+    .field[readonly],
     select.field:disabled,
-    input.field:disabled {
-        @apply bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed;
+    input.field:disabled,
+    input.field[readonly] {
+        @apply bg-slate-50 text-slate-400 border-slate-200 cursor-not-allowed dark:bg-slate-900/30 dark:text-slate-500 dark:border-slate-800/80;
     }
 
     .field.is-field-disabled {
-        @apply bg-slate-100 text-slate-400 border-slate-200;
+        @apply bg-slate-50 text-slate-400 border-slate-200 dark:bg-slate-900/30 dark:text-slate-500 dark:border-slate-800/80;
     }
 
     .product-photo-list {
@@ -819,11 +826,11 @@
     }
 
     .product-photo-item {
-        @apply w-[188px] rounded-xl border border-slate-200 bg-white p-3 shadow-sm;
+        @apply w-[188px] rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900;
     }
 
     .product-photo-thumb {
-        @apply h-28 w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100;
+        @apply h-28 w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-950;
     }
 
     .product-photo-thumb img {
@@ -835,7 +842,7 @@
     }
 
     .product-photo-name {
-        @apply mt-2.5 truncate text-sm font-medium text-slate-700;
+        @apply mt-2.5 truncate text-sm font-medium text-slate-700 dark:text-slate-300;
     }
 
     .product-photo-actions {
@@ -843,7 +850,7 @@
     }
 
     .product-photo-primary {
-        @apply inline-flex items-center gap-1 text-sm text-slate-600 select-none;
+        @apply inline-flex items-center gap-1 text-sm text-slate-600 select-none dark:text-slate-400;
     }
 
     .product-photo-remove {
@@ -851,7 +858,7 @@
     }
 
     .product-photo-add {
-        @apply w-[188px] h-[174px] rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-slate-600 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700;
+        @apply w-[188px] h-[174px] rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-slate-600 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-400 dark:hover:border-blue-800 dark:hover:bg-blue-950/25 dark:hover:text-blue-400;
     }
 
     .product-photo-add span {
@@ -859,7 +866,7 @@
     }
 
     .feature-fieldset.is-disabled .product-photo-add {
-        @apply cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400;
+        @apply cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400 dark:border-slate-800/80 dark:bg-slate-900/20 dark:text-slate-600;
     }
 
     .form-actions {

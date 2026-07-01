@@ -25,7 +25,7 @@
 
             <div class="flex flex-col gap-2">
                 <label class="text-sm font-medium text-slate-700">SKU (Stock Keeping Unit)</label>
-                <input class="field font-mono bg-slate-50 cursor-not-allowed" name="sku" id="productSku" value="{{ $isEdit ? $produk->sku : '[Otomatis setelah disimpan]' }}" readonly>
+                <input class="field font-mono" name="sku" id="productSku" value="{{ $isEdit ? $produk->sku : '[Otomatis setelah disimpan]' }}" readonly>
             </div>
 
 
@@ -90,7 +90,7 @@
             <div class="flex flex-col gap-2">
                 <label class="text-sm font-medium text-slate-700">Stok Tersedia</label>
                 <div class="relative">
-                    <input class="field bg-slate-50 cursor-not-allowed" name="stok_disabled" id="productStock" type="text" value="{{ old('stok', $isEdit ? number_format($produk->stok, 0, ',', '.') : 0) }}" disabled readonly>
+                    <input class="field" name="stok_disabled" id="productStock" type="text" value="{{ old('stok', $isEdit ? number_format($produk->stok, 0, ',', '.') : 0) }}" disabled readonly>
                     <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Locked</span>
                 </div>
                 <p class="text-[10px] text-slate-400 mt-1 leading-tight">Dikelola otomatis via dokumen Barang Masuk & Penjualan.</p>
