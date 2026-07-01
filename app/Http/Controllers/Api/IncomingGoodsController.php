@@ -20,7 +20,7 @@ class IncomingGoodsController extends Controller
         $limit = $request->get('limit', 10);
         
         $query = BarangMasuk::with(['supplier', 'user', 'detail.produk'])
-            ->orderBy('tanggal_terima', 'desc');
+            ->orderBy('id', 'desc');
 
         if ($request->has('status')) {
             $query->where('status', $request->status);
