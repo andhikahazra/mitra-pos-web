@@ -72,6 +72,12 @@ class RopController extends Controller
         ]);
     }
 
+    public function calculate(Request $request, \App\Services\RopService $ropService)
+    {
+        $ropService->calculateAll();
+        return redirect()->route('rop.index')->with('success', 'Kalkulasi ROP dan Safety Stock berhasil diperbarui.');
+    }
+
     public function show(Produk $produk)
     {
         $produk->load('rop');

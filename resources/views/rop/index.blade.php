@@ -6,6 +6,10 @@
         <div>
             <h1>Report Reorder Point</h1>
         </div>
+        <form method="POST" action="{{ route('rop.calculate') }}" onsubmit="const btn = this.querySelector('button'); btn.disabled = true; btn.innerText = 'Menghitung...';">
+            @csrf
+            <button type="submit" class="btn btn-primary">Hitung ROP</button>
+        </form>
     </div>
 
     <article class="panel-card">

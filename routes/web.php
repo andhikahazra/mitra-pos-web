@@ -40,6 +40,7 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
 
     // ROP
     Route::get('/rop', [RopController::class, 'index'])->name('rop.index');
+    Route::post('/rop/calculate', [RopController::class, 'calculate'])->name('rop.calculate');
     Route::get('/rop/{produk}', [RopController::class, 'show'])->name('rop.show');
 
     // Transaksi
