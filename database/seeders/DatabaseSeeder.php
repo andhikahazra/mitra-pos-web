@@ -284,12 +284,20 @@ class DatabaseSeeder extends Seeder
 
                 // 2. SIMULASI PENJUALAN (Jam 09:00 - 17:00)
                 $numPelanggan = rand(5, 12); // Ditingkatkan agar ROP lebih besar dan bervariasi
-                
+                $dailyTransactions = [];
+
                 for ($p = 0; $p < $numPelanggan; $p++) {
                     $jamTrans = rand(9, 16);
                     $menitTrans = rand(0, 59);
-                    $trxWaktu = $currentDay->copy()->setHour($jamTrans)->setMinute($menitTrans);
+                    $dailyTransactions[] = $currentDay->copy()->setHour($jamTrans)->setMinute($menitTrans);
+                }
 
+                // Urutkan transaksi harian berdasarkan waktu secara ASC (kronologis)
+                usort($dailyTransactions, function ($a, $b) {
+                    return $a->timestamp <=> $b->timestamp;
+                });
+
+                foreach ($dailyTransactions as $trxWaktu) {
                     $kodeTrx = $generateTrxKode();
                     
                     $trx = Transaksi::create([
