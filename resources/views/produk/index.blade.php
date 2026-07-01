@@ -10,9 +10,9 @@
         </div>
 
         <article class="panel-card">
-            <form action="{{ route('produk.index') }}" method="GET" class="toolbar" style="width: 100%;">
+            <form action="{{ route('produk.index') }}" method="GET" class="toolbar" id="productFilterForm" style="width: 100%;">
                 <div style="display: flex; gap: 8px; flex: 1; align-items: center;">
-                    <input class="field" name="search" id="productSearch" type="text" placeholder="Cari nama/SKU/kategori... (Tekan Enter)" value="{{ request('search') }}" style="flex: 1;">
+                    <input class="field" name="search" id="productSearchInput" type="text" placeholder="Cari nama/SKU/kategori... (Tekan Enter)" value="{{ request('search') }}" style="flex: 1;">
                     @if(request('search'))
                         <a href="{{ route('produk.index') }}" class="btn btn-ghost" style="height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #cbd5e1; padding: 0 16px; margin: 0; background: white; white-space: nowrap;">Reset</a>
                     @endif
@@ -81,7 +81,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('productFilterForm');
-            const searchInput = document.getElementById('productSearch');
+            const searchInput = document.getElementById('productSearchInput');
             const container = document.getElementById('productTableContainer');
             const metaText = document.getElementById('productMeta');
 

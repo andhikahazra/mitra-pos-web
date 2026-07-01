@@ -15,8 +15,11 @@ export function initGlobalSearch() {
         const term = val.trim().toLowerCase();
 
         // 1. Sync to page-specific inputs if they exist
-        const pageSearchInput = document.getElementById('productSearch') || 
-                                document.getElementById('supplierSearchInput');
+        const pageSearchInput = document.getElementById('productSearchInput') || 
+                                document.getElementById('supplierSearchInput') ||
+                                document.getElementById('stokMonitoringSearch') ||
+                                document.getElementById('ropSearchInput') ||
+                                document.getElementById('logStokSearch');
         
         if (pageSearchInput) {
             pageSearchInput.value = val;
