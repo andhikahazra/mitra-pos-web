@@ -160,20 +160,63 @@ class DatabaseSeeder extends Seeder
         DB::beginTransaction();
         try {
             // ========================================================
-            // INJEKSI STOK AWAL (MODAL AWAL) - 1 DOKUMEN BESAR
+            // INJEKSI STOK AWAL (MODAL AWAL) - DOKUMEN PER KATEGORI
             // ========================================================
             $waktuAwal = $startDate->copy()->addHours(8); // Jam 8 pagi
-            $initialLT = rand(2, 4);
 
-            $bmAwal = BarangMasuk::create([
+            $bmAwalKardus = BarangMasuk::create([
                 'kode' => $generateBmKode(),
-                'tanggal_pesan' => $waktuAwal->copy()->subDays($initialLT),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays(rand(2, 4)),
                 'tanggal_terima' => $waktuAwal,
                 'supplier_id' => $sup1->id,
                 'user_id' => $owner->id,
                 'status' => 'Disetujui',
                 'disetujui_oleh' => $owner->id,
-                'catatan' => 'Modal awal seluruh produk'
+                'catatan' => 'Modal awal Kardus'
+            ]);
+
+            $bmAwalBubble = BarangMasuk::create([
+                'kode' => $generateBmKode(),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays(rand(1, 3)),
+                'tanggal_terima' => $waktuAwal,
+                'supplier_id' => $sup1->id,
+                'user_id' => $owner->id,
+                'status' => 'Disetujui',
+                'disetujui_oleh' => $owner->id,
+                'catatan' => 'Modal awal Bubble Wrap'
+            ]);
+
+            $bmAwalLakban = BarangMasuk::create([
+                'kode' => $generateBmKode(),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays(rand(1, 4)),
+                'tanggal_terima' => $waktuAwal,
+                'supplier_id' => $sup2->id,
+                'user_id' => $owner->id,
+                'status' => 'Disetujui',
+                'disetujui_oleh' => $owner->id,
+                'catatan' => 'Modal awal Lakban'
+            ]);
+
+            $bmAwalKarung = BarangMasuk::create([
+                'kode' => $generateBmKode(),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays(rand(2, 5)),
+                'tanggal_terima' => $waktuAwal,
+                'supplier_id' => $sup2->id,
+                'user_id' => $owner->id,
+                'status' => 'Disetujui',
+                'disetujui_oleh' => $owner->id,
+                'catatan' => 'Modal awal Karung'
+            ]);
+
+            $bmAwalAlat = BarangMasuk::create([
+                'kode' => $generateBmKode(),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays(rand(1, 3)),
+                'tanggal_terima' => $waktuAwal,
+                'supplier_id' => $sup2->id,
+                'user_id' => $owner->id,
+                'status' => 'Disetujui',
+                'disetujui_oleh' => $owner->id,
+                'catatan' => 'Modal awal Alat Packing'
             ]);
             
             foreach ($products as $prod) {
@@ -183,8 +226,21 @@ class DatabaseSeeder extends Seeder
                 // Variasi harga modal sedikit (sekitar 70% dari harga jual)
                 $hargaModal = round(($prod->harga * 0.7) / 100) * 100;
 
+                // Tentukan dokumen berdasarkan kategori
+                if ($prod->kategori_id === $katKardus->id) {
+                    $targetBmAwal = $bmAwalKardus;
+                } elseif ($prod->kategori_id === $katBubble->id) {
+                    $targetBmAwal = $bmAwalBubble;
+                } elseif ($prod->kategori_id === $katLakban->id) {
+                    $targetBmAwal = $bmAwalLakban;
+                } elseif ($prod->kategori_id === $katKarung->id) {
+                    $targetBmAwal = $bmAwalKarung;
+                } else {
+                    $targetBmAwal = $bmAwalAlat;
+                }
+
                 $dbm = DetailBarangMasuk::create([
-                    'barang_masuk_id' => $bmAwal->id,
+                    'barang_masuk_id' => $targetBmAwal->id,
                     'produk_id' => $prod->id,
                     'jumlah' => $qty,
                     'harga' => $hargaModal
@@ -211,30 +267,60 @@ class DatabaseSeeder extends Seeder
                 // 1. SIMULASI RESTOCK (Hari ke-20 dan ke-40)
                 if ($i > 0 && $i % 20 === 0 && $i < 60) {
                     $bmWaktu = $currentDay->copy()->addHours(10); // Barang datang jam 10 pagi
-                    $ltDays = rand(1, 5); // Waktu tunggu bervariasi secara realistis (1-5 hari)
 
-                    // Buat dokumen restock Supplier 1
-                    $bmRestock1 = BarangMasuk::create([
+                    $bmRestockKardus = BarangMasuk::create([
                         'kode' => $generateBmKode(),
-                        'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(2, 4)),
                         'tanggal_terima' => $bmWaktu,
                         'supplier_id' => $sup1->id,
                         'user_id' => $owner->id,
                         'status' => 'Disetujui',
                         'disetujui_oleh' => $owner->id,
-                        'catatan' => 'Restock rutin Supplier 1'
+                        'catatan' => 'Restock rutin Kardus'
                     ]);
 
-                    // Buat dokumen restock Supplier 2
-                    $bmRestock2 = BarangMasuk::create([
+                    $bmRestockBubble = BarangMasuk::create([
                         'kode' => $generateBmKode(),
-                        'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(1, 3)),
+                        'tanggal_terima' => $bmWaktu,
+                        'supplier_id' => $sup1->id,
+                        'user_id' => $owner->id,
+                        'status' => 'Disetujui',
+                        'disetujui_oleh' => $owner->id,
+                        'catatan' => 'Restock rutin Bubble Wrap'
+                    ]);
+
+                    $bmRestockLakban = BarangMasuk::create([
+                        'kode' => $generateBmKode(),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(1, 4)),
                         'tanggal_terima' => $bmWaktu,
                         'supplier_id' => $sup2->id,
                         'user_id' => $owner->id,
                         'status' => 'Disetujui',
                         'disetujui_oleh' => $owner->id,
-                        'catatan' => 'Restock rutin Supplier 2'
+                        'catatan' => 'Restock rutin Lakban'
+                    ]);
+
+                    $bmRestockKarung = BarangMasuk::create([
+                        'kode' => $generateBmKode(),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(2, 5)),
+                        'tanggal_terima' => $bmWaktu,
+                        'supplier_id' => $sup2->id,
+                        'user_id' => $owner->id,
+                        'status' => 'Disetujui',
+                        'disetujui_oleh' => $owner->id,
+                        'catatan' => 'Restock rutin Karung'
+                    ]);
+
+                    $bmRestockAlat = BarangMasuk::create([
+                        'kode' => $generateBmKode(),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays(rand(1, 3)),
+                        'tanggal_terima' => $bmWaktu,
+                        'supplier_id' => $sup2->id,
+                        'user_id' => $owner->id,
+                        'status' => 'Disetujui',
+                        'disetujui_oleh' => $owner->id,
+                        'catatan' => 'Restock rutin Alat Packing'
                     ]);
                     
                     foreach ($products as $prod) {
@@ -263,9 +349,18 @@ class DatabaseSeeder extends Seeder
                         
                         $hargaModal = round(($prod->harga * 0.72) / 100) * 100;
 
-                        // Tentukan dokumen berdasarkan supplier_id
-                        $isSup1 = ($prod->id % 2 === 0);
-                        $targetBm = $isSup1 ? $bmRestock1 : $bmRestock2;
+                        // Tentukan dokumen berdasarkan kategori
+                        if ($prod->kategori_id === $katKardus->id) {
+                            $targetBm = $bmRestockKardus;
+                        } elseif ($prod->kategori_id === $katBubble->id) {
+                            $targetBm = $bmRestockBubble;
+                        } elseif ($prod->kategori_id === $katLakban->id) {
+                            $targetBm = $bmRestockLakban;
+                        } elseif ($prod->kategori_id === $katKarung->id) {
+                            $targetBm = $bmRestockKarung;
+                        } else {
+                            $targetBm = $bmRestockAlat;
+                        }
 
                         $dbm = DetailBarangMasuk::create([
                             'barang_masuk_id' => $targetBm->id,
