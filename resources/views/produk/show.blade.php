@@ -56,7 +56,7 @@
                 <div class="product-photo-list mt-4">
                     <div class="product-photo-item">
                         <div class="product-photo-thumb cursor-zoom-in transition-all duration-300 hover:scale-[1.03]" data-zoomable>
-                            <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->foto }}">
+                            <img src="{{ Str::startsWith($produk->foto, ['http://', 'https://']) ? $produk->foto : asset('storage/' . $produk->foto) }}" alt="{{ $produk->foto }}">
                         </div>
                         <div class="product-photo-meta">
                             <p class="product-photo-name">{{ basename($produk->foto) }}</p>

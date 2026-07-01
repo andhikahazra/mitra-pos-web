@@ -102,7 +102,10 @@ class DatabaseSeeder extends Seeder
                 'harga' => $pd['hrg'],
                 'stok' => 0,
                 'tipe_produk' => 'stock', // Tampilkan semua di ROP
-                'status' => true
+                'status' => true,
+                'foto' => ($pd['kat'] === $katKardus->id) 
+                    ? 'https://images.unsplash.com/photo-1656543802898-41c8c46683a7?q=80&w=600' 
+                    : null,
             ]);
             $p->demand_profile = $pd['demand'];
             $products[] = $p;
