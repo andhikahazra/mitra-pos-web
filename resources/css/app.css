@@ -409,7 +409,7 @@
     }
 
     .section-head {
-        @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+        @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6;
     }
 
     .kicker {

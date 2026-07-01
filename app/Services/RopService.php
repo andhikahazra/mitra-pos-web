@@ -102,6 +102,7 @@ class RopService
                 'safety_stock' => $safetyStock,
                 'reorder_point' => $reorderPoint,
                 'periode' => $periodeHari,
+                'waktu_penghitungan' => Carbon::now(),
             ]
         );
     }
