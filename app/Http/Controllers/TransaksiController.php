@@ -35,8 +35,7 @@ class TransaksiController extends Controller
             $query->where('metode_pembayaran', $request->method);
         }
 
-        $transaksi = $query->orderByDesc('tanggal')
-            ->orderByDesc('id')
+        $transaksi = $query->orderByDesc('id')
             ->paginate(20)
             ->withQueryString();
 
