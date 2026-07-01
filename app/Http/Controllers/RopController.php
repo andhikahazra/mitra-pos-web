@@ -17,8 +17,8 @@ class RopController extends Controller
         $products = Produk::with('rop')->get();
 
         $rows = $products->map(function ($product) {
-            $ropValue   = (int) ($product->rop->reorder_point ?? 0);
-            $safetyStock = (int) ($product->rop->safety_stock ?? 0);
+            $ropValue   = (int) ($product->rop?->reorder_point ?? 0);
+            $safetyStock = (int) ($product->rop?->safety_stock ?? 0);
             $stock       = (int) $product->stok;
 
             if ($stock <= $ropValue) {
@@ -34,11 +34,11 @@ class RopController extends Controller
                 'name'        => $product->nama,
                 'stock'       => $stock,
                 'safetyStock' => $safetyStock,
-                'leadTime'    => (float) ($product->rop->lead_time ?? 0),
-                'rataPenjualan' => (float) ($product->rop->rata_penjualan ?? 0),
+                'leadTime'    => (float) ($product->rop?->lead_time ?? 0),
+                'rataPenjualan' => (float) ($product->rop?->rata_penjualan ?? 0),
                 'rop'         => $ropValue,
                 'status'      => $status,
-                'calculatedAt' => $product->rop->waktu_penghitungan ? $product->rop->waktu_penghitungan->translatedFormat('d M Y, H:i') : '-'
+                'calculatedAt' => $product->rop?->waktu_penghitungan?->translatedFormat('d M Y, H:i') ?? '-'
             ];
         });
 
@@ -76,10 +76,10 @@ class RopController extends Controller
     {
         $produk->load('rop');
         
-        $ropValue    = (int) ($produk->rop->reorder_point ?? 0);
-        $safetyStock = (int) ($produk->rop->safety_stock ?? 0);
-        $rataJual    = (float) ($produk->rop->rata_penjualan ?? 0);
-        $leadTime    = (float) ($produk->rop->lead_time ?? 0);
+        $ropValue    = (int) ($produk->rop?->reorder_point ?? 0);
+        $safetyStock = (int) ($produk->rop?->safety_stock ?? 0);
+        $rataJual    = (float) ($produk->rop?->rata_penjualan ?? 0);
+        $leadTime    = (float) ($produk->rop?->lead_time ?? 0);
         $stock       = (int) $produk->stok;
 
         if ($stock <= $ropValue) {
@@ -91,8 +91,8 @@ class RopController extends Controller
         }
 
         // Tentukan titik referensi waktu (Waktu Kalkulasi), jika belum pernah dihitung pakai 'now'
-        $calculationTime = $produk->rop->waktu_penghitungan ?? now();
-        $periode = $produk->rop->periode ?? 30;
+        $calculationTime = $produk->rop?->waktu_penghitungan ?? now();
+        $periode = $produk->rop?->periode ?? 30;
 
         // Ambil data penjualan harian selama periode tersebut (berdasarkan waktu kalkulasi)
         $startDate = $calculationTime->copy()->subDays($periode - 1)->startOfDay();
@@ -124,7 +124,7 @@ class RopController extends Controller
             'safetyStock'     => $safetyStock,
             'rataPenjualan'   => $rataJual,
             'leadTime'        => $leadTime,
-            'standarDeviasi'  => (float) ($produk->rop->standar_deviasi ?? 0),
+            'standarDeviasi'  => (float) ($produk->rop?->standar_deviasi ?? 0),
             'rop'             => $ropValue,
             'status'          => $status,
             'usageLT'         => $rataJual * $leadTime,
@@ -133,7 +133,7 @@ class RopController extends Controller
             'dailyData'       => $dailyData,
             'isSample'        => false, // Simulasi dimatikan untuk integritas data
             'periode'         => $periode,
-            'calculatedAt'    => $produk->rop->waktu_penghitungan ? $produk->rop->waktu_penghitungan->translatedFormat('l, d F Y H:i') : '-'
+            'calculatedAt'    => $produk->rop?->waktu_penghitungan?->translatedFormat('l, d F Y H:i') ?? '-'
         ]);
     }
 }
