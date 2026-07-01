@@ -132,7 +132,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium text-slate-700">Volume (cm3)</label>
+                <label class="text-sm font-medium text-slate-700">Volume (kg)</label>
                 <input class="field" name="volume" id="dimensionVolume" type="number" min="0" step="0.01" placeholder="0" value="{{ old('volume', $isEdit ? $produk->volume : '') }}">
             </div>
         </fieldset>

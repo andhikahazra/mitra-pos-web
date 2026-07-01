@@ -60,34 +60,44 @@ class DatabaseSeeder extends Seeder
         $sup1 = Supplier::create(['nama' => 'PT Kemasan Nusantara', 'no_telp' => '081234567890', 'alamat' => 'Kawasan Industri Cikarang']);
         $sup2 = Supplier::create(['nama' => 'CV Mitra Plastik', 'no_telp' => '081298765432', 'alamat' => 'Kopo, Bandung']);
 
-        // 4. 20 Produk Varian
+        // 4. Produk Varian
         $productsData = [
-            // KARDUS (High - Med Demand)
-            ['nama' => 'Kardus Polos 20x20x20', 'sku' => 'KRD-202020', 'kat' => $katKardus->id, 'hrg' => 2500, 'demand' => 'high'],
-            ['nama' => 'Kardus Polos 30x30x30', 'sku' => 'KRD-303030', 'kat' => $katKardus->id, 'hrg' => 4500, 'demand' => 'high'],
-            ['nama' => 'Kardus Polos 15x10x10', 'sku' => 'KRD-151010', 'kat' => $katKardus->id, 'hrg' => 1500, 'demand' => 'med'],
-            ['nama' => 'Kardus Sepatu Pria', 'sku' => 'KRD-SPT-P', 'kat' => $katKardus->id, 'hrg' => 3000, 'demand' => 'med'],
-            ['nama' => 'Kardus Sepatu Wanita', 'sku' => 'KRD-SPT-W', 'kat' => $katKardus->id, 'hrg' => 2800, 'demand' => 'med'],
-            ['nama' => 'Kardus Die Cut Kecil', 'sku' => 'KRD-DC-S', 'kat' => $katKardus->id, 'hrg' => 2000, 'demand' => 'low'],
+            // DUS ROKOK (Kategori Kardus)
+            ['nama' => 'Gudang Garam Surya 16', 'sku' => 'GGM-SRY-16', 'kat' => $katKardus->id, 'hrg' => 4500, 'demand' => 'high', 'p' => 46.0, 'l' => 43.0, 't' => 40.0, 'vol' => 13.19],
+            ['nama' => 'Gudang Garam Surya 12', 'sku' => 'GGM-SRY-12', 'kat' => $katKardus->id, 'hrg' => 4500, 'demand' => 'high', 'p' => 52.0, 'l' => 37.5, 't' => 40.0, 'vol' => 13.00],
+            ['nama' => 'Gudang Garam International', 'sku' => 'GGM-INT-12', 'kat' => $katKardus->id, 'hrg' => 4000, 'demand' => 'high', 'p' => 52.5, 'l' => 38.0, 't' => 36.0, 'vol' => 11.97],
+            ['nama' => 'Gudang Garam Signature', 'sku' => 'GGM-SIG-12', 'kat' => $katKardus->id, 'hrg' => 4000, 'demand' => 'med', 'p' => 52.5, 'l' => 38.0, 't' => 38.0, 'vol' => 12.64],
+            ['nama' => 'Djarum Super 12', 'sku' => 'DJM-SUP-12', 'kat' => $katKardus->id, 'hrg' => 3500, 'demand' => 'med', 'p' => 40.0, 'l' => 39.0, 't' => 53.0, 'vol' => 13.78],
+            ['nama' => 'Djarum Super Mild 16', 'sku' => 'DJM-MLD-16', 'kat' => $katKardus->id, 'hrg' => 3800, 'demand' => 'med', 'p' => 50.0, 'l' => 40.0, 't' => 54.0, 'vol' => 18.00],
+            ['nama' => 'Djarum Super Mild 20', 'sku' => 'DJM-MLD-20', 'kat' => $katKardus->id, 'hrg' => 4000, 'demand' => 'med', 'p' => 44.0, 'l' => 40.0, 't' => 53.0, 'vol' => 15.55],
+            ['nama' => 'Djarum 76', 'sku' => 'DJM-760-12', 'kat' => $katKardus->id, 'hrg' => 3000, 'demand' => 'med', 'p' => 45.0, 'l' => 38.0, 't' => 45.0, 'vol' => 12.83],
+            ['nama' => 'Sampoerna A Mild', 'sku' => 'SAM-MLD-16', 'kat' => $katKardus->id, 'hrg' => 4200, 'demand' => 'med', 'p' => 56.0, 'l' => 36.5, 't' => 49.0, 'vol' => 16.69],
+            ['nama' => 'Dji Sam Soe (HM Sampoerna)', 'sku' => 'SAM-DSS-12', 'kat' => $katKardus->id, 'hrg' => 4500, 'demand' => 'low', 'p' => 55.0, 'l' => 36.5, 't' => 50.0, 'vol' => 16.73],
+            ['nama' => 'Sampoerna U Bold', 'sku' => 'SAM-UBL-16', 'kat' => $katKardus->id, 'hrg' => 4000, 'demand' => 'low', 'p' => 56.0, 'l' => 40.0, 't' => 40.0, 'vol' => 14.93],
+            ['nama' => 'Marlboro Red', 'sku' => 'MAR-RED-20', 'kat' => $katKardus->id, 'hrg' => 5000, 'demand' => 'low', 'p' => 45.5, 'l' => 24.5, 't' => 57.0, 'vol' => 10.59],
+            ['nama' => 'Marlboro Gold', 'sku' => 'MAR-GLD-20', 'kat' => $katKardus->id, 'hrg' => 5000, 'demand' => 'low', 'p' => 45.5, 'l' => 24.5, 't' => 57.0, 'vol' => 10.59],
+            ['nama' => 'LA Lights 16', 'sku' => 'LAL-LGT-16', 'kat' => $katKardus->id, 'hrg' => 3800, 'demand' => 'low', 'p' => 52.0, 'l' => 38.0, 't' => 38.0, 'vol' => 12.51],
             
-            // BUBBLE WRAP (Med - Low Demand)
+            // BUBBLE WRAP
             ['nama' => 'Bubble Wrap Hitam 1m', 'sku' => 'BBL-HTM-1', 'kat' => $katBubble->id, 'hrg' => 3500, 'demand' => 'med'],
             ['nama' => 'Bubble Wrap Putih 1m', 'sku' => 'BBL-PTH-1', 'kat' => $katBubble->id, 'hrg' => 3000, 'demand' => 'med'],
             ['nama' => 'Bubble Wrap Roll 50m', 'sku' => 'BBL-ROL-50', 'kat' => $katBubble->id, 'hrg' => 125000, 'demand' => 'low'],
             ['nama' => 'Air Bubble Bag', 'sku' => 'BBL-BAG-10', 'kat' => $katBubble->id, 'hrg' => 15000, 'demand' => 'low'],
             
-            // LAKBAN (High - Med Demand)
-            ['nama' => 'Lakban Bening 5cm Daimaru', 'sku' => 'LKB-BNG-5', 'kat' => $katLakban->id, 'hrg' => 10000, 'demand' => 'high'],
-            ['nama' => 'Lakban Coklat 5cm Daimaru', 'sku' => 'LKB-CKL-5', 'kat' => $katLakban->id, 'hrg' => 10000, 'demand' => 'high'],
-            ['nama' => 'Lakban Fragile Merah', 'sku' => 'LKB-FRG-M', 'kat' => $katLakban->id, 'hrg' => 12000, 'demand' => 'med'],
-            ['nama' => 'Lakban Kain Hitam', 'sku' => 'LKB-KIN-H', 'kat' => $katLakban->id, 'hrg' => 15000, 'demand' => 'low'],
+            // LAKBAN
+            ['nama' => 'Daimaru Bening 2" 90 Yard', 'sku' => 'LKB-DM-BNG', 'kat' => $katLakban->id, 'hrg' => 10000, 'demand' => 'high'],
+            ['nama' => 'Daimaru Cokelat 2" 90 Yard', 'sku' => 'LKB-DM-COK', 'kat' => $katLakban->id, 'hrg' => 10000, 'demand' => 'high'],
+            ['nama' => 'Daimaru Fragile Merah 2" 100 Yard', 'sku' => 'LKB-DM-FRG', 'kat' => $katLakban->id, 'hrg' => 12000, 'demand' => 'med'],
+            ['nama' => 'Nachi Tape Bening 2" 72 Yard', 'sku' => 'LKB-NC-BNG', 'kat' => $katLakban->id, 'hrg' => 8500, 'demand' => 'med'],
+            ['nama' => 'Nachi Tape Cokelat 2" 72 Yard', 'sku' => 'LKB-NC-COK', 'kat' => $katLakban->id, 'hrg' => 8500, 'demand' => 'med'],
+            ['nama' => 'Joyko Cloth Tape Hitam 2" 12m', 'sku' => 'LKB-JY-CLT', 'kat' => $katLakban->id, 'hrg' => 15000, 'demand' => 'low'],
             
-            // KARUNG PLASTIK (Med Demand)
+            // KARUNG PLASTIK
             ['nama' => 'Karung Plastik 50kg Putih', 'sku' => 'KRN-50-P', 'kat' => $katKarung->id, 'hrg' => 3000, 'demand' => 'med'],
             ['nama' => 'Karung Plastik 25kg Putih', 'sku' => 'KRN-25-P', 'kat' => $katKarung->id, 'hrg' => 2000, 'demand' => 'med'],
             ['nama' => 'Karung Beras 10kg', 'sku' => 'KRN-10-B', 'kat' => $katKarung->id, 'hrg' => 1500, 'demand' => 'low'],
             
-            // ALAT PACKING (Low Demand)
+            // ALAT PACKING
             ['nama' => 'Gunting Packing Joyko', 'sku' => 'ALT-GNT-J', 'kat' => $katAlat->id, 'hrg' => 12000, 'demand' => 'low'],
             ['nama' => 'Cutter Besar Kenko', 'sku' => 'ALT-CTR-K', 'kat' => $katAlat->id, 'hrg' => 15000, 'demand' => 'low'],
             ['nama' => 'Dispenser Lakban Besi', 'sku' => 'ALT-DSP-L', 'kat' => $katAlat->id, 'hrg' => 35000, 'demand' => 'low'],
@@ -103,6 +113,10 @@ class DatabaseSeeder extends Seeder
                 'stok' => 0,
                 'tipe_produk' => 'stock', // Tampilkan semua di ROP
                 'status' => true,
+                'panjang' => $pd['p'] ?? null,
+                'lebar' => $pd['l'] ?? null,
+                'tinggi' => $pd['t'] ?? null,
+                'volume' => $pd['vol'] ?? null,
                 'foto' => ($pd['kat'] === $katKardus->id) 
                     ? 'https://images.unsplash.com/photo-1656543802898-41c8c46683a7?q=80&w=600' 
                     : null,
@@ -116,31 +130,49 @@ class DatabaseSeeder extends Seeder
         $startDate = Carbon::now()->subDays(60)->startOfDay();
         
         $bmBatch = 1;
-        $bmSeq = 1;
+        $bmSeq = 0;
+        $generateBmKode = function () use (&$bmBatch, &$bmSeq) {
+            if ($bmSeq >= 999) {
+                $bmBatch++;
+                $bmSeq = 1;
+            } else {
+                $bmSeq++;
+            }
+            return 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq, 3, '0', STR_PAD_LEFT);
+        };
+
         $trxBatch = 1;
-        $trxSeq = 1;
+        $trxSeq = 0;
+        $generateTrxKode = function () use (&$trxBatch, &$trxSeq) {
+            if ($trxSeq >= 999) {
+                $trxBatch++;
+                $trxSeq = 1;
+            } else {
+                $trxSeq++;
+            }
+            return 'TKMP-' . str_pad($trxBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($trxSeq, 3, '0', STR_PAD_LEFT);
+        };
 
         DB::beginTransaction();
         try {
             // ========================================================
-            // INJEKSI STOK AWAL MAKSIMAL 150-200
+            // INJEKSI STOK AWAL (MODAL AWAL) - 1 DOKUMEN BESAR
             // ========================================================
             $waktuAwal = $startDate->copy()->addHours(8); // Jam 8 pagi
+            $initialLT = rand(2, 4);
+
+            $bmAwal = BarangMasuk::create([
+                'kode' => $generateBmKode(),
+                'tanggal_pesan' => $waktuAwal->copy()->subDays($initialLT),
+                'tanggal_terima' => $waktuAwal,
+                'supplier_id' => $sup1->id,
+                'user_id' => $owner->id,
+                'status' => 'Disetujui',
+                'disetujui_oleh' => $owner->id,
+                'catatan' => 'Modal awal seluruh produk'
+            ]);
             
             foreach ($products as $prod) {
-                $initialLT = rand(2, 4);
-                $bmAwal = BarangMasuk::create([
-                    'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
-                    'tanggal_pesan' => $waktuAwal->copy()->subDays($initialLT),
-                    'tanggal_terima' => $waktuAwal,
-                    'supplier_id' => $sup1->id,
-                    'user_id' => $owner->id,
-                    'status' => 'Disetujui',
-                    'disetujui_oleh' => $owner->id,
-                    'catatan' => 'Modal awal ' . $prod->nama
-                ]);
-                $bmSeq++;
-
                 // Modal awal cukup untuk ~25 hari
                 $qty = ($prod->demand_profile === 'high') ? rand(250, 320) : (($prod->demand_profile === 'med') ? rand(100, 150) : rand(25, 45));
                 
@@ -171,62 +203,68 @@ class DatabaseSeeder extends Seeder
             // ========================================================
             for ($i = 0; $i <= 60; $i++) {
                 $currentDay = $startDate->copy()->addDays($i);
-                
-                // Refresh batch count each day
-                $trxBatch = 1;
-                $trxSeq = 1;
-                $bmSeq = 1;
 
                 // 1. SIMULASI RESTOCK (Hari ke-20 dan ke-40)
                 if ($i > 0 && $i % 20 === 0 && $i < 60) {
                     $bmWaktu = $currentDay->copy()->addHours(10); // Barang datang jam 10 pagi
+                    $ltDays = rand(1, 5); // Waktu tunggu bervariasi secara realistis (1-5 hari)
+
+                    // Buat dokumen restock Supplier 1
+                    $bmRestock1 = BarangMasuk::create([
+                        'kode' => $generateBmKode(),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
+                        'tanggal_terima' => $bmWaktu,
+                        'supplier_id' => $sup1->id,
+                        'user_id' => $owner->id,
+                        'status' => 'Disetujui',
+                        'disetujui_oleh' => $owner->id,
+                        'catatan' => 'Restock rutin Supplier 1'
+                    ]);
+
+                    // Buat dokumen restock Supplier 2
+                    $bmRestock2 = BarangMasuk::create([
+                        'kode' => $generateBmKode(),
+                        'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
+                        'tanggal_terima' => $bmWaktu,
+                        'supplier_id' => $sup2->id,
+                        'user_id' => $owner->id,
+                        'status' => 'Disetujui',
+                        'disetujui_oleh' => $owner->id,
+                        'catatan' => 'Restock rutin Supplier 2'
+                    ]);
                     
                     foreach ($products as $prod) {
-                        $multiplier = 1.0;
-                        
                         // Rekayasa pada restock terakhir (hari ke-40) agar status ROP bervariasi di hari ke-60
-                        // Prediksi ROP untuk target stok di hari ke-60
-                        // ROP estimasi: High ~70, Med ~28, Low ~6
                         $estDemand20Days = ($prod->demand_profile === 'high') ? 240 : (($prod->demand_profile === 'med') ? 100 : 20);
                         $estRop = ($prod->demand_profile === 'high') ? 75 : (($prod->demand_profile === 'med') ? 30 : 7);
 
                         if ($i === 40) {
-                            $redProducts = ['Kardus Polos 20x20x20', 'Lakban Bening 5cm Daimaru', 'Bubble Wrap Hitam 1m'];
-                            $yellowProducts = ['Kardus Polos 30x30x30', 'Karung Plastik 50kg Putih', 'Kardus Sepatu Pria', 'Lakban Fragile Merah'];
+                            $redProducts = ['Gudang Garam Surya 16', 'Daimaru Bening 2" 90 Yard', 'Bubble Wrap Hitam 1m'];
+                            $yellowProducts = ['Gudang Garam Surya 12', 'Karung Plastik 50kg Putih', 'Djarum Super Mild 16', 'Daimaru Fragile Merah 2" 100 Yard'];
                             
                             $targetS60 = 0;
                             if (in_array($prod->nama, $redProducts)) {
-                                $targetS60 = $estRop - rand(4, 10); // Target merah: 4-10 di bawah ROP
+                                $targetS60 = $estRop - rand(4, 10);
                             } elseif (in_array($prod->nama, $yellowProducts)) {
-                                $targetS60 = $estRop + rand(2, 6);  // Target kuning: pas di ROP / sedikit di atas
+                                $targetS60 = $estRop + rand(2, 6);
                             } else {
-                                $targetS60 = $estRop + rand(20, 40); // Target hijau: aman di atas ROP
+                                $targetS60 = $estRop + rand(20, 40);
                             }
                             
-                            // Rumus: Stok Sekarang + Restock - Demand = Target
                             $qtyRestock = $targetS60 + $estDemand20Days - $prod->stok;
-                            if ($qtyRestock < 20) $qtyRestock = 20; // Minimal restock
+                            if ($qtyRestock < 20) $qtyRestock = 20;
                         } else {
                             $qtyRestock = ($prod->demand_profile === 'high') ? rand(230, 260) : (($prod->demand_profile === 'med') ? rand(90, 110) : rand(20, 30));
                         }
                         
-                        $hargaModal = round(($prod->harga * 0.72) / 100) * 100; // Harga modal sedikit naik
+                        $hargaModal = round(($prod->harga * 0.72) / 100) * 100;
 
-                        $ltDays = rand(1, 5); // Waktu tunggu bervariasi secara realistis (1-5 hari)
-                        $bmRestock = BarangMasuk::create([
-                            'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
-                            'tanggal_pesan' => $bmWaktu->copy()->subDays($ltDays),
-                            'tanggal_terima' => $bmWaktu,
-                            'supplier_id' => ($prod->id % 2 === 0) ? $sup1->id : $sup2->id,
-                            'user_id' => $owner->id,
-                            'status' => 'Disetujui',
-                            'disetujui_oleh' => $owner->id,
-                            'catatan' => 'Restock rutin ' . $prod->nama
-                        ]);
-                        $bmSeq++;
+                        // Tentukan dokumen berdasarkan supplier_id
+                        $isSup1 = ($prod->id % 2 === 0);
+                        $targetBm = $isSup1 ? $bmRestock1 : $bmRestock2;
 
                         $dbm = DetailBarangMasuk::create([
-                            'barang_masuk_id' => $bmRestock->id,
+                            'barang_masuk_id' => $targetBm->id,
                             'produk_id' => $prod->id,
                             'jumlah' => $qtyRestock,
                             'harga' => $hargaModal
@@ -236,13 +274,12 @@ class DatabaseSeeder extends Seeder
                             'produk_id' => $prod->id,
                             'detail_barang_masuk_id' => $dbm->id,
                             'qty_sisa' => $qtyRestock,
-                            'harga_beli' => $hargaModal, // Ini lebih mahal dari awal
+                            'harga_beli' => $hargaModal,
                             'tanggal_masuk' => $bmWaktu
                         ]);
 
                         $prod->increment('stok', $qtyRestock);
                     }
-                    $bmBatch++;
                 }
 
                 // 2. SIMULASI PENJUALAN (Jam 09:00 - 17:00)
@@ -253,7 +290,7 @@ class DatabaseSeeder extends Seeder
                     $menitTrans = rand(0, 59);
                     $trxWaktu = $currentDay->copy()->setHour($jamTrans)->setMinute($menitTrans);
 
-                    $kodeTrx = 'TKMP-' . str_pad($trxBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($trxSeq++, 3, '0', STR_PAD_LEFT);
+                    $kodeTrx = $generateTrxKode();
                     
                     $trx = Transaksi::create([
                         'kode' => $kodeTrx,
@@ -326,9 +363,6 @@ class DatabaseSeeder extends Seeder
                         $trx->delete(); // Hapus transaksi kosong
                     }
                 }
-                
-                // Di akhir hari, ganti hari = increment batch transaksi
-                $trxBatch++;
             }
 
             DB::commit();
@@ -338,26 +372,45 @@ class DatabaseSeeder extends Seeder
             
             $this->command->info('Menyesuaikan stok semua produk agar ROP bervariasi secara bergantian...');
             $targetStatuses = [
-                'Air Bubble Bag'            => 'harus restock',
-                'Bubble Wrap Hitam 1m'      => 'hampir habis',
-                'Bubble Wrap Putih 1m'      => 'aman',
-                'Bubble Wrap Roll 50m'      => 'harus restock',
-                'Cutter Besar Kenko'        => 'hampir habis',
-                'Dispenser Lakban Besi'     => 'aman',
-                'Gunting Packing Joyko'     => 'harus restock',
-                'Kardus Die Cut Kecil'      => 'hampir habis',
-                'Kardus Polos 15x10x10'     => 'aman',
-                'Kardus Polos 20x20x20'     => 'harus restock',
-                'Kardus Polos 30x30x30'     => 'hampir habis',
-                'Kardus Sepatu Pria'        => 'aman',
-                'Kardus Sepatu Wanita'      => 'harus restock',
-                'Karung Beras 10kg'         => 'hampir habis',
-                'Karung Plastik 25kg Putih' => 'aman',
-                'Karung Plastik 50kg Putih' => 'harus restock',
-                'Lakban Bening 5cm Daimaru' => 'hampir habis',
-                'Lakban Coklat 5cm Daimaru' => 'aman',
-                'Lakban Fragile Merah'      => 'harus restock',
-                'Lakban Kain Hitam'         => 'hampir habis',
+                // Dus Rokok (14 items)
+                'Gudang Garam Surya 16'         => 'harus restock',
+                'Gudang Garam Surya 12'         => 'hampir habis',
+                'Gudang Garam International'    => 'aman',
+                'Gudang Garam Signature'        => 'aman',
+                'Djarum Super 12'               => 'harus restock',
+                'Djarum Super Mild 16'          => 'hampir habis',
+                'Djarum Super Mild 20'          => 'aman',
+                'Djarum 76'                     => 'harus restock',
+                'Sampoerna A Mild'              => 'hampir habis',
+                'Dji Sam Soe (HM Sampoerna)'    => 'aman',
+                'Sampoerna U Bold'              => 'harus restock',
+                'Marlboro Red'                  => 'hampir habis',
+                'Marlboro Gold'                 => 'aman',
+                'LA Lights 16'                  => 'aman',
+
+                // Lakban (6 items)
+                'Daimaru Bening 2" 90 Yard'     => 'hampir habis',
+                'Daimaru Cokelat 2" 90 Yard'    => 'aman',
+                'Daimaru Fragile Merah 2" 100 Yard' => 'harus restock',
+                'Nachi Tape Bening 2" 72 Yard'  => 'aman',
+                'Nachi Tape Cokelat 2" 72 Yard' => 'hampir habis',
+                'Joyko Cloth Tape Hitam 2" 12m' => 'aman',
+
+                // Bubble Wrap (4 items)
+                'Air Bubble Bag'                => 'harus restock',
+                'Bubble Wrap Hitam 1m'          => 'hampir habis',
+                'Bubble Wrap Putih 1m'          => 'aman',
+                'Bubble Wrap Roll 50m'          => 'harus restock',
+
+                // Karung (3 items)
+                'Karung Beras 10kg'             => 'hampir habis',
+                'Karung Plastik 25kg Putih'     => 'aman',
+                'Karung Plastik 50kg Putih'     => 'harus restock',
+
+                // Alat (3 items)
+                'Gunting Packing Joyko'         => 'harus restock',
+                'Cutter Besar Kenko'            => 'hampir habis',
+                'Dispenser Lakban Besi'         => 'aman',
             ];
 
             foreach ($targetStatuses as $name => $status) {
@@ -389,7 +442,7 @@ class DatabaseSeeder extends Seeder
             
             // Pending BM 1
             $bmPending1 = BarangMasuk::create([
-                'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                'kode' => $generateBmKode(),
                 'tanggal_pesan' => Carbon::now(),
                 'tanggal_terima' => null,
                 'supplier_id' => $sup1->id,
@@ -401,17 +454,14 @@ class DatabaseSeeder extends Seeder
             // Detail BM 1
             DetailBarangMasuk::create([
                 'barang_masuk_id' => $bmPending1->id,
-                'produk_id' => $products[0]->id, // Kardus Polos 20x20x20
+                'produk_id' => Produk::where('nama', 'Gudang Garam Surya 16')->first()->id,
                 'jumlah' => 100,
                 'harga' => 1800
             ]);
 
-            // Increment sequence
-            $bmSeq++;
-
             // Pending BM 2
             $bmPending2 = BarangMasuk::create([
-                'kode' => 'BM-' . str_pad($bmBatch, 3, '0', STR_PAD_LEFT) . '-' . str_pad($bmSeq++, 3, '0', STR_PAD_LEFT),
+                'kode' => $generateBmKode(),
                 'tanggal_pesan' => Carbon::now()->subMinutes(30),
                 'tanggal_terima' => null,
                 'supplier_id' => $sup2->id,
@@ -423,7 +473,7 @@ class DatabaseSeeder extends Seeder
             // Detail BM 2
             DetailBarangMasuk::create([
                 'barang_masuk_id' => $bmPending2->id,
-                'produk_id' => $products[6]->id, // Bubble Wrap Hitam 1m
+                'produk_id' => Produk::where('nama', 'Bubble Wrap Hitam 1m')->first()->id,
                 'jumlah' => 50,
                 'harga' => 2500
             ]);

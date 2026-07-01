@@ -40,7 +40,7 @@
                         <li><span>Panjang</span><strong>{{ $produk->panjang }} cm</strong></li>
                         <li><span>Lebar</span><strong>{{ $produk->lebar }} cm</strong></li>
                         <li><span>Tinggi</span><strong>{{ $produk->tinggi }} cm</strong></li>
-                        <li><span>Volume</span><strong>{{ $produk->volume }} cm³</strong></li>
+                        <li><span>Volume</span><strong>{{ $produk->volume }} kg</strong></li>
                     </ul>
                 @else
                     <p class="mt-3 text-sm text-slate-500">Produk ini tidak memiliki data dimensi.</p>

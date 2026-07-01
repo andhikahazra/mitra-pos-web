@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $produk = Produk::query()
             ->with(['kategori:id,nama'])
-            ->orderByDesc('id')
+            ->orderBy('nama', 'asc')
             ->paginate(10);
 
         return view('produk.index', [
