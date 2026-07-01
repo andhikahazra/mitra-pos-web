@@ -117,6 +117,27 @@
                 debounceTimer = setTimeout(performFilter, 300);
             });
 
+            container.addEventListener('click', function(e) {
+                const link = e.target.closest('.pagination a');
+                if (link) {
+                    e.preventDefault();
+                    const targetUrl = link.getAttribute('href');
+
+                    window.history.pushState(null, '', targetUrl);
+
+                    fetch(targetUrl, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        container.innerHTML = doc.getElementById('productTableContainer').innerHTML;
+                    })
+                    .catch(error => console.error('Error fetching paginated product data:', error));
+                }
+            });
+
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 clearTimeout(debounceTimer);
