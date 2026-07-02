@@ -33,6 +33,12 @@ class ProductController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        if ($request->ajax()) {
+            return view('produk._table', [
+                'produk' => $produk,
+            ]);
+        }
+
         return view('produk.index', [
             'produk' => $produk,
         ]);
