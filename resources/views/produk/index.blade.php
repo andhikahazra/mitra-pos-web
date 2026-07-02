@@ -64,32 +64,7 @@
                 debounceTimer = setTimeout(performFilter, 300);
             });
 
-            container.addEventListener('click', function(e) {
-                const link = e.target.closest('a');
-                if (link && link.closest('.pagination')) {
-                    e.preventDefault();
-                    const targetUrl = link.getAttribute('href');
 
-                    window.history.pushState(null, '', targetUrl);
-
-                    const fetchUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'ajax=1';
-
-                    fetch(fetchUrl, {
-                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                    })
-                    .then(response => response.text())
-                    .then(html => {
-                        container.innerHTML = html;
-                        
-                        // Update total count meta
-                        const tableWrap = container.querySelector('#productTableWrap');
-                        if (tableWrap && tableWrap.dataset.total) {
-                            metaText.textContent = `Total ${tableWrap.dataset.total} produk`;
-                        }
-                    })
-                    .catch(error => console.error('Error fetching paginated product data:', error));
-                }
-            });
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
