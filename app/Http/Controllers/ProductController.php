@@ -33,7 +33,7 @@ class ProductController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        if ($request->ajax()) {
+        if ($request->ajax() || $request->has('ajax')) {
             return view('produk._table', [
                 'produk' => $produk,
             ]);

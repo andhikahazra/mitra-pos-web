@@ -41,7 +41,9 @@
 
                 window.history.pushState(null, '', targetUrl);
 
-                fetch(targetUrl, {
+                const fetchUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'ajax=1';
+
+                fetch(fetchUrl, {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 })
                 .then(response => response.text())
@@ -70,7 +72,9 @@
 
                     window.history.pushState(null, '', targetUrl);
 
-                    fetch(targetUrl, {
+                    const fetchUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'ajax=1';
+
+                    fetch(fetchUrl, {
                         headers: { 'X-Requested-With': 'XMLHttpRequest' }
                     })
                     .then(response => response.text())
