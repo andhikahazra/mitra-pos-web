@@ -19,27 +19,38 @@ class DashboardController extends Controller
         // 1. Tentukan rentang tanggal untuk periode aktif dan sebelumnya
         $now = Carbon::now();
         
-        if ($period === '7d') {
+        if ($period === 'yesterday') {
+            $startDate = $now->copy()->subDay()->startOfDay();
+            $endDate = $now->copy()->subDay()->endOfDay();
+            
+            $prevStartDate = $now->copy()->subDays(2)->startOfDay();
+            $prevEndDate = $now->copy()->subDays(2)->endOfDay();
+            $chartDays = 6;
+            $chartEndOffset = 1;
+        } elseif ($period === 'week') {
             $startDate = $now->copy()->subDays(6)->startOfDay();
             $endDate = $now->copy()->endOfDay();
             
             $prevStartDate = $now->copy()->subDays(13)->startOfDay();
             $prevEndDate = $now->copy()->subDays(7)->endOfDay();
             $chartDays = 6;
-        } elseif ($period === '30d') {
+            $chartEndOffset = 0;
+        } elseif ($period === 'month') {
             $startDate = $now->copy()->subDays(29)->startOfDay();
             $endDate = $now->copy()->endOfDay();
             
             $prevStartDate = $now->copy()->subDays(59)->startOfDay();
             $prevEndDate = $now->copy()->subDays(30)->endOfDay();
             $chartDays = 29;
+            $chartEndOffset = 0;
         } else { // default: today
             $startDate = $now->copy()->startOfDay();
             $endDate = $now->copy()->endOfDay();
             
             $prevStartDate = $now->copy()->subDay()->startOfDay();
             $prevEndDate = $now->copy()->subDay()->endOfDay();
-            $chartDays = 6; // Tetap tampilkan chart 7 hari terakhir demi estetika visual chart
+            $chartDays = 6;
+            $chartEndOffset = 0;
         }
 
         // 2. Query data riil periode aktif
@@ -112,7 +123,7 @@ class DashboardController extends Controller
         // 5. Data grafik penjualan harian berdasarkan periode
         $performanceData = [];
         for ($i = $chartDays; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i);
+            $date = Carbon::now()->subDays($i + $chartEndOffset);
             $dateString = $date->toDateString();
             
             $dailyRevenue = (double) Transaksi::whereDate('tanggal', $dateString)
@@ -122,7 +133,7 @@ class DashboardController extends Controller
                 ->value('total') ?? 0.0;
                 
             $performanceData[] = [
-                'label' => ($period === '30d') ? $date->format('d M') : $date->format('D'),
+                'label' => ($period === 'month') ? $date->format('d M') : $date->format('D'),
                 'value' => $dailyRevenue,
                 'date' => $dateString,
             ];
