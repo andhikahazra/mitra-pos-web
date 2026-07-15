@@ -98,7 +98,7 @@
 
         <style>
             @media (max-width: 1023px) {
-                #appRoot, #appRoot .main-shell, #appRoot .pemilik-topbar {
+                #appRoot, #appRoot .main-shell {
                     display: flex !important;
                     flex-direction: column !important;
                     width: 100vw !important;
@@ -109,6 +109,12 @@
                     position: relative !important;
                     overflow-x: hidden !important;
                     grid-template-columns: 1fr !important;
+                }
+                #appRoot .pemilik-topbar {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    position: relative !important;
+                    overflow: visible !important;
                 }
                 #appRoot .content-shell {
                     display: block !important;
