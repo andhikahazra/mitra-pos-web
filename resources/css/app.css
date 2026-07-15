@@ -786,7 +786,7 @@
     }
 
     .product-form-card {
-        @apply rounded-2xl border border-slate-200 bg-slate-50/65 p-5 dark:border-zinc-800 dark:bg-zinc-900/40;
+        @apply bg-white dark:bg-zinc-950;
     }
 
     .product-form-head h3 {
