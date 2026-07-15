@@ -73,7 +73,44 @@
                 debounceTimer = setTimeout(performFilter, 300);
             });
 
-
+            // Handle pagination clicks via AJAX
+            container.addEventListener('click', function(e) {
+                const pageLink = e.target.closest('.pagination a');
+                if (pageLink) {
+                    e.preventDefault();
+                    const url = pageLink.getAttribute('href');
+                    if (url) {
+                        const targetUrl = new URL(url);
+                        // Merge current filter into the pagination URL if not present
+                        const formData = new URLSearchParams(new FormData(form));
+                        for (const [key, value] of formData.entries()) {
+                            if (value && !targetUrl.searchParams.has(key)) {
+                                targetUrl.searchParams.set(key, value);
+                            }
+                        }
+                        
+                        const pathWithSearch = targetUrl.pathname + targetUrl.search;
+                        window.history.pushState(null, '', pathWithSearch);
+                        
+                        const fetchUrl = pathWithSearch + (pathWithSearch.includes('?') ? '&' : '?') + 'ajax=1';
+                        
+                        fetch(fetchUrl, {
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            container.innerHTML = html;
+                            
+                            // Update total count meta
+                            const tableWrap = container.querySelector('#productTableWrap');
+                            if (tableWrap && tableWrap.dataset.total) {
+                                metaText.textContent = `Total ${tableWrap.dataset.total} produk`;
+                            }
+                        })
+                        .catch(error => console.error('Error fetching paginated data:', error));
+                    }
+                }
+            });
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();

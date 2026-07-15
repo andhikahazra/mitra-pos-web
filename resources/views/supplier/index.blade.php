@@ -65,6 +65,36 @@
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(performFilter, 300);
         });
+
+        // Handle pagination clicks via AJAX
+        container.addEventListener('click', function(e) {
+            const pageLink = e.target.closest('.pagination a');
+            if (pageLink) {
+                e.preventDefault();
+                const url = pageLink.getAttribute('href');
+                if (url) {
+                    const targetUrl = new URL(url);
+                    const formData = new URLSearchParams(new FormData(form));
+                    for (const [key, value] of formData.entries()) {
+                        if (value && !targetUrl.searchParams.has(key)) {
+                            targetUrl.searchParams.set(key, value);
+                        }
+                    }
+                    
+                    const pathWithSearch = targetUrl.pathname + targetUrl.search;
+                    window.history.pushState(null, '', pathWithSearch);
+                    
+                    fetch(pathWithSearch, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                    .then(response => response.text())
+                    .then(html => {
+                        container.innerHTML = html;
+                    })
+                    .catch(error => console.error('Error fetching paginated data:', error));
+                }
+            }
+        });
     });
 </script>
 @endsection
