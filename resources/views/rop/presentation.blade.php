@@ -6,7 +6,7 @@
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950/45 dark:text-blue-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2 inline-block border border-blue-100 dark:border-blue-900/40">Mode Presentasi Alur Perhitungan</span>
-                <h1 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Detail Perhitungan ROP (Akademik & Terperinci)</h1>
+                <h1>Detail Perhitungan ROP (Akademik & Terperinci)</h1>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Produk: <strong class="text-blue-600 dark:text-blue-400">{{ $produk->nama }}</strong></p>
             </div>
             <div>

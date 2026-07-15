@@ -5,7 +5,7 @@
         {{-- Page Header --}}
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-black text-slate-800 tracking-tight">Detail Laporan Reorder Point</h1>
+                <h1>Detail Laporan Reorder Point</h1>
                 <p class="text-[11px] text-slate-500 mt-1 uppercase font-bold tracking-widest">Produk: <span class="text-blue-600">{{ $produk->nama }}</span></p>
             </div>
             <div class="flex flex-col gap-2 items-end">

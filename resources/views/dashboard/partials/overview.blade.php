@@ -11,31 +11,34 @@
 @endphp
 
 <section class="feature-section active" id="section-dashboard">
-    {{-- Hero Section --}}
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <h1 class="text-xl font-semibold text-slate-900 dark:text-zinc-100">Dashboard</h1>
-
-        <div class="flex items-center gap-2">
-            <div class="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-zinc-900">
-                <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === 'today' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="today">Hari ini</button>
-                <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === '7d' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="7d">7 hari</button>
-                <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === '1m' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="1m">30 hari</button>
-            </div>
+    <div class="section-head">
+        <div>
+            <h1>Dashboard</h1>
+        </div>
+        <div class="flex items-center gap-0.5 p-0.5 rounded-lg bg-slate-100 dark:bg-zinc-900">
+            <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === 'today' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="today">Hari ini</button>
+            <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === '7d' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="7d">7 hari</button>
+            <button type="button" class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {{ $activeRange === '1m' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 shadow-sm' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300' }}" data-range="1m">30 hari</button>
         </div>
     </div>
 
     {{-- KPI Cards --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        @php
+            $periodLabel = match($activeRange) {
+                'today' => 'Hari ini',
+                '7d' => '7 hari terakhir',
+                '1m' => '30 hari terakhir',
+                default => 'Custom',
+            };
+            $criticalRop = $metrics['criticalRop'] ?? 0;
+            $pendingIncoming = $metrics['pendingIncoming'] ?? 0;
+        @endphp
+
         <article class="kpi-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="kpi-label">Omzet</p>
-                <span class="text-xs text-slate-400 dark:text-zinc-500">
-                    @if($activeRange === 'today') Hari ini
-                    @elseif($activeRange === '7d') 7 hari
-                    @elseif($activeRange === '1m') 30 hari
-                    @else Custom
-                    @endif
-                </span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500">{{ $periodLabel }}</span>
             </div>
             <h3 class="text-xl font-semibold text-slate-900 dark:text-zinc-100">Rp {{ number_format($metrics['omzetToday'] ?? 0, 0, ',', '.') }}</h3>
         </article>
@@ -43,13 +46,7 @@
         <article class="kpi-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="kpi-label">Transaksi</p>
-                <span class="text-xs text-slate-400 dark:text-zinc-500">
-                    @if($activeRange === 'today') Hari ini
-                    @elseif($activeRange === '7d') 7 hari
-                    @elseif($activeRange === '1m') 30 hari
-                    @else Custom
-                    @endif
-                </span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500">{{ $periodLabel }}</span>
             </div>
             <h3 class="text-xl font-semibold text-slate-900 dark:text-zinc-100">{{ $metrics['trxToday'] ?? 0 }}</h3>
         </article>
@@ -57,23 +54,23 @@
         <article class="kpi-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="kpi-label">Stok Kritis</p>
-                @if(($metrics['criticalRop'] ?? 0) > 0)
-                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                @endif
+                <span class="inline-flex items-center gap-1.5 text-xs {{ $criticalRop > 0 ? 'text-amber-600 dark:text-amber-400 font-medium' : 'text-slate-400 dark:text-zinc-500' }}">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $criticalRop > 0 ? 'bg-amber-500' : 'bg-slate-300 dark:bg-zinc-600' }}"></span>
+                    {{ $criticalRop > 0 ? 'Perlu restok' : 'Normal' }}
+                </span>
             </div>
-            <h3 class="text-xl font-semibold {{ ($metrics['criticalRop'] ?? 0) > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-zinc-100' }}">{{ $metrics['criticalRop'] ?? 0 }}</h3>
-            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1">Perlu restok</p>
+            <h3 class="text-xl font-semibold {{ $criticalRop > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-zinc-100' }}">{{ $criticalRop }}</h3>
         </article>
 
         <article class="kpi-card">
             <div class="flex items-center justify-between mb-2">
                 <p class="kpi-label">Pending ACC</p>
-                @if(($metrics['pendingIncoming'] ?? 0) > 0)
-                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                @endif
+                <span class="inline-flex items-center gap-1.5 text-xs {{ $pendingIncoming > 0 ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-400 dark:text-zinc-500' }}">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $pendingIncoming > 0 ? 'bg-blue-500' : 'bg-slate-300 dark:bg-zinc-600' }}"></span>
+                    {{ $pendingIncoming > 0 ? 'Perlu ACC' : 'Selesai' }}
+                </span>
             </div>
-            <h3 class="text-xl font-semibold {{ ($metrics['pendingIncoming'] ?? 0) > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-zinc-100' }}">{{ $metrics['pendingIncoming'] ?? 0 }}</h3>
-            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1">Barang masuk</p>
+            <h3 class="text-xl font-semibold {{ $pendingIncoming > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-900 dark:text-zinc-100' }}">{{ $pendingIncoming }}</h3>
         </article>
     </div>
 
@@ -142,16 +139,48 @@
         <article class="panel-card lg:col-span-2">
             <div class="panel-head">
                 <h2 class="text-sm font-medium text-slate-700 dark:text-zinc-200">Alert</h2>
+                @if($alerts)
+                    <span class="text-xs text-slate-400 dark:text-zinc-500">{{ count($alerts) }} notifikasi</span>
+                @endif
             </div>
-            <div class="grid gap-2">
+            <div class="p-4 space-y-2">
                 @forelse($alerts as $alert)
-                    <article class="alert-row {{ $alert['level'] ?? 'neutral' }}">
-                        <p class="alert-label">{{ $alert['label'] }}</p>
-                        <p class="alert-text">{{ $alert['text'] }}</p>
-                    </article>
+                    @php
+                        $level = $alert['level'] ?? 'neutral';
+                        $iconMap = [
+                            'danger' => '<svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>',
+                            'warning' => '<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                            'info' => '<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                            'neutral' => '<svg class="w-5 h-5 text-slate-400 dark:text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
+                        ];
+                        $icon = $iconMap[$level] ?? $iconMap['neutral'];
+                        $labelClass = match($level) {
+                            'danger' => 'text-rose-700 dark:text-rose-400',
+                            'warning' => 'text-amber-700 dark:text-amber-400',
+                            'info' => 'text-blue-700 dark:text-blue-400',
+                            default => 'text-slate-600 dark:text-zinc-300',
+                        };
+                    @endphp
+                    <div class="alert-row {{ $level }} flex items-start gap-3 transition-all duration-150 hover:shadow-sm">
+                        <div class="flex-shrink-0 mt-0.5">
+                            {!! $icon !!}
+                        </div>
+                        <div class="min-w-0 space-y-0.5">
+                            <p class="m-0 text-xs font-semibold {{ $labelClass }}">{{ $alert['label'] }}</p>
+                            @if($alert['text'])
+                                <p class="m-0 text-xs text-slate-500 dark:text-zinc-400 leading-relaxed">{{ $alert['text'] }}</p>
+                            @endif
+                        </div>
+                    </div>
                 @empty
-                    <div class="text-center py-8 text-sm text-slate-500 dark:text-zinc-400">
-                        Tidak ada alert
+                    <div class="flex flex-col items-center justify-center py-10 text-center">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <p class="m-0 text-sm font-medium text-slate-600 dark:text-zinc-400">Tidak ada alert</p>
+                        <p class="m-0 text-xs text-slate-400 dark:text-zinc-500 mt-1">Semua berjalan lancar</p>
                     </div>
                 @endforelse
             </div>
