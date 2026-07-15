@@ -27,6 +27,13 @@
         <div id="supplierTableContainer">
             @include('supplier._table')
         </div>
+
+        {{-- Skeleton loader --}}
+        <div id="supplierTableSkeleton" class="hidden">
+            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+        </div>
     </article>
 </section>
 

@@ -25,6 +25,7 @@ class SettingsController extends Controller
         $request->validate([
             'nama_toko' => 'required|string|max:255',
             'no_hp' => 'nullable|string|regex:/^[0-9]+$/|max:20',
+            'no_hp_rop_notif' => 'nullable|string|regex:/^[0-9]+$/|max:20',
             'biaya_admin_qris' => 'required|numeric|min:0',
             'footer_nota' => 'nullable|string',
             // Validasi Alamat (Pecahan)
@@ -44,7 +45,7 @@ class SettingsController extends Controller
             'bank_pemilik_2' => 'nullable|string|max:100',
         ]);
 
-        $data = $request->only(['nama_toko', 'no_hp', 'biaya_admin_qris', 'footer_nota']);
+        $data = $request->only(['nama_toko', 'no_hp', 'no_hp_rop_notif', 'biaya_admin_qris', 'footer_nota']);
         
         // Gabungkan data alamat
         $data['alamat_toko'] = [

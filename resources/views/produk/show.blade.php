@@ -15,7 +15,7 @@
 
         <div class="overview-grid">
             <article class="panel-card p-4">
-                <h2 class="m-0 text-base font-semibold text-slate-800">Informasi Utama</h2>
+                <h2 class="m-0 text-base font-semibold text-slate-800 dark:text-slate-200">Informasi Utama</h2>
                 <ul class="metric-list mt-3">
                     <li><span>Nama</span><strong>{{ $produk->nama }}</strong></li>
                     <li><span>SKU</span><strong>{{ $produk->sku }}</strong></li>
@@ -26,7 +26,7 @@
             </article>
 
             <article class="panel-card p-4">
-                <h2 class="m-0 text-base font-semibold text-slate-800">Harga dan Stok</h2>
+                <h2 class="m-0 text-base font-semibold text-slate-800 dark:text-slate-200">Harga dan Stok</h2>
                 <ul class="metric-list mt-3">
                     <li><span>Harga</span><strong>Rp {{ number_format((float) $produk->harga, 0, ',', '.') }}</strong></li>
                     <li><span>Stok</span><strong>{{ (int) $produk->stok }}</strong></li>
@@ -34,7 +34,7 @@
             </article>
 
             <article class="panel-card p-4">
-                <h2 class="m-0 text-base font-semibold text-slate-800">Dimensi</h2>
+                <h2 class="m-0 text-base font-semibold text-slate-800 dark:text-slate-200">Dimensi</h2>
                 @if ($produk->panjang !== null || $produk->lebar !== null || $produk->tinggi !== null)
                     <ul class="metric-list mt-3">
                         <li><span>Panjang</span><strong>{{ $produk->panjang }} cm</strong></li>
@@ -43,15 +43,15 @@
                         <li><span>Volume</span><strong>{{ $produk->volume }} kg</strong></li>
                     </ul>
                 @else
-                    <p class="mt-3 text-sm text-slate-500">Produk ini tidak memiliki data dimensi.</p>
+                    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">Produk ini tidak memiliki data dimensi.</p>
                 @endif
             </article>
         </div>
 
         <article class="panel-card p-4">
-            <h2 class="m-0 text-base font-semibold text-slate-800">Foto Produk</h2>
+            <h2 class="m-0 text-base font-semibold text-slate-800 dark:text-slate-200">Foto Produk</h2>
             @if (!$produk->foto)
-                <p class="mt-3 text-sm text-slate-500">Belum ada foto produk.</p>
+                <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">Belum ada foto produk.</p>
             @else
                 <div class="product-photo-list mt-4">
                     <div class="product-photo-item">

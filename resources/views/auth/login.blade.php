@@ -3,42 +3,53 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Login | MitraPOS pemilik</title>
+        <title>Login | MitraPOS</title>
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 
         @vite(['resources/css/app.css'])
     </head>
-    <body class="min-h-screen bg-[radial-gradient(circle_at_20%_20%,#dbeafe_0%,#F8F9FA_40%,#dbeafe_100%)]">
-        <main class="mx-auto grid min-h-screen w-full max-w-6xl place-items-center px-4 py-8 lg:px-8">
-            <section class="w-full overflow-hidden rounded-3xl border border-slate-200/80 bg-white/95 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.35)] backdrop-blur lg:grid lg:grid-cols-[1.08fr_0.92fr]">
-                <aside class="relative hidden overflow-hidden bg-gradient-to-br from-[#1E40AF] via-[#3B82F6] to-[#1E40AF] p-9 text-white lg:flex lg:flex-col">
-                    <div class="absolute -left-20 -top-20 h-52 w-52 rounded-full bg-white/20 blur-2xl"></div>
-                    <div class="absolute -bottom-16 -right-10 h-44 w-44 rounded-full bg-blue-900/20 blur-xl"></div>
-
-                    <div class="relative z-10">
-                        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-blue-100">MitraPOS Pemilik Portal</p>
-                        <h1 class="mt-4 max-w-md font-['Poppins'] text-4xl font-semibold leading-tight">Optimalkan performa bisnis Anda dengan cerdas.</h1>
-                        <p class="mt-4 max-w-md text-sm text-blue-50/90">Akses kendali penuh operasional, pantau pertumbuhan secara real-time, dan ambil keputusan strategis lebih cepat.</p>
+    <body class="min-h-screen bg-slate-50">
+        <main class="grid min-h-screen lg:grid-cols-[1fr_420px]">
+            {{-- Left: Brand Panel --}}
+            <aside class="hidden items-center justify-center bg-[#1E40AF] p-12 lg:flex">
+                <div class="max-w-md">
+                    <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-2xl font-bold text-white">M</div>
+                    <h1 class="text-4xl font-bold leading-tight text-white">MitraPOS</h1>
+                    <p class="mt-3 text-base text-blue-100">Sistem manajemen toko kemasan yang membantu Anda mengontrol stok, transaksi, dan pertumbuhan bisnis, semuanya dalam satu tempat.</p>
+                    <div class="mt-10 flex gap-8 text-sm text-blue-200">
+                        <div class="flex-1">
+                            <p class="text-2xl font-bold text-white">Real-time</p>
+                            <p class="mt-1">Dashboard & analitik</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-2xl font-bold text-white">Batch</p>
+                            <p class="mt-1">Batching</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-2xl font-bold text-white">ROP</p>
+                            <p class="mt-1">Auto restok alert</p>
+                        </div>
                     </div>
+                </div>
+            </aside>
 
-
-                </aside>
-
-                <div class="p-6 sm:p-8 lg:p-10">
-                    <div class="mb-7">
-                        <div class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E40AF] text-base font-extrabold text-white shadow-lg shadow-blue-200">M</div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Sign In</p>
-                        <h2 class="mt-2 font-['Poppins'] text-3xl font-semibold text-slate-800">Masuk ke Dashboard Pemilik</h2>
+            {{-- Right: Login Form --}}
+            <div class="flex items-center justify-center px-6 py-12">
+                <div class="w-full max-w-sm">
+                    <div class="mb-8">
+                        <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E40AF] text-sm font-bold text-white">M</div>
+                        <h2 class="text-2xl font-bold text-slate-900">Masuk ke dashboard</h2>
+                        <p class="mt-1.5 text-sm text-slate-500">Gunakan akun pemilik toko Anda</p>
                     </div>
 
                     @if ($errors->any())
-                        <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs text-rose-700">
+                        <div class="mb-5 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                             {{ $errors->first() }}
                         </div>
                     @endif
@@ -47,35 +58,37 @@
                         @csrf
                         <label class="block text-sm font-medium text-slate-700">Email
                             <input
-                                class="field mt-1 !h-11 !w-full"
+                                class="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-500 focus:border-[#1E40AF] focus:ring-2 focus:ring-[#1E40AF]/10"
                                 type="email"
                                 name="email"
                                 value="{{ old('email') }}"
-                                autofocus
-                                autocomplete="email"
+                                placeholder="nama@toko.com"
                                 required
+                                autofocus
                             >
                         </label>
 
                         <label class="block text-sm font-medium text-slate-700">Password
                             <input
-                                class="field mt-1 !h-11 !w-full"
+                                class="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-500 focus:border-[#1E40AF] focus:ring-2 focus:ring-[#1E40AF]/10"
                                 type="password"
                                 name="password"
-                                autocomplete="current-password"
+                                placeholder="Masukkan password"
                                 required
                             >
                         </label>
 
-
-
-                        <button type="submit" class="btn w-full justify-center rounded-lg border-[#1E40AF] bg-[#1E40AF] py-2.5 text-white hover:bg-[#3B82F6]">Masuk</button>
+                        <button
+                            type="submit"
+                            class="mt-2 w-full rounded-lg bg-[#1E40AF] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#1d4ed8] active:scale-[0.98]"
+                        >
+                            Masuk
+                        </button>
                     </form>
 
+                    <p class="mt-8 text-center text-xs text-slate-400">MitraPOS &copy; {{ date('Y') }}</p>
                 </div>
-            </section>
+            </div>
         </main>
     </body>
 </html>
-
-

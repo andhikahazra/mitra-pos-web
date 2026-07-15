@@ -15,16 +15,16 @@
                     <td>
                         <div class="flex flex-col">
                             <span class="font-bold text-slate-700 dark:text-slate-200">{{ $product->nama }}</span>
-                            <span class="text-[10px] text-slate-400 font-mono uppercase">{{ $product->sku }}</span>
+                            <span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono uppercase">{{ $product->sku }}</span>
                         </div>
                     </td>
                     <td><span class="tag neutral">{{ $product->kategori->nama ?? '-' }}</span></td>
                     <td>
                         <div class="flex items-center gap-2">
-                            <span class="text-lg font-extrabold {{ ($product->total_qty_sisa ?? 0) > 0 ? 'text-slate-800' : 'text-slate-300' }}">
+                            <span class="text-lg font-extrabold {{ ($product->total_qty_sisa ?? 0) > 0 ? 'text-slate-800 dark:text-zinc-200' : 'text-slate-300' }}">
                                 {{ number_format($product->total_qty_sisa ?? 0, 0, ',', '.') }}
                             </span>
-                            <span class="text-xs text-slate-400">Unit</span>
+                            <span class="text-xs text-slate-400 dark:text-zinc-500">Unit</span>
                         </div>
                     </td>
                     <td>
@@ -41,7 +41,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center text-slate-500 py-12">Tidak ada data produk yang ditemukan.</td>
+                    <td colspan="5" class="text-center text-slate-500 dark:text-zinc-400 py-12">Tidak ada data produk yang ditemukan.</td>
                 </tr>
             @endforelse
         </tbody>

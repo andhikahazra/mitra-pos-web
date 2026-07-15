@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Produk;
 use App\Models\Rop;
+use App\Models\Setting;
 use App\Services\FonnteService;
 use Illuminate\Support\Facades\Log;
 
@@ -45,10 +46,11 @@ class SendRopWarningCommand extends Command
 
         $criticalItemsArray = $criticalProducts->toArray();
         
-        $target = env('FONNTE_OWNER_TARGET');
+        $setting = Setting::first();
+        $target = $setting->no_hp_rop_notif ?? env('FONNTE_OWNER_TARGET');
         if (empty($target)) {
-            $this->error('FONNTE_OWNER_TARGET belum diatur di .env');
-            Log::error('Gagal mengirim ROP Warning: FONNTE_OWNER_TARGET kosong');
+            $this->error('Nomor tujuan notifikasi ROP belum diatur di Pengaturan atau .env');
+            Log::error('Gagal mengirim ROP Warning: no_hp_rop_notif dan FONNTE_OWNER_TARGET kosong');
             return 1;
         }
 

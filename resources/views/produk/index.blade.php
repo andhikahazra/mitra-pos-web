@@ -23,6 +23,15 @@
             <div id="productTableContainer">
                 @include('produk._table')
             </div>
+
+            {{-- Skeleton loader (hidden by default) --}}
+            <div id="productTableSkeleton" class="hidden">
+                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+            </div>
         </article>
     </section>
 

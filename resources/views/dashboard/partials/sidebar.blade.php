@@ -1,4 +1,4 @@
-<aside class="pemilik-sidebar" id="sidebar">
+<aside class="pemilik-sidebar" id="sidebar" aria-label="Main navigation">
     <div class="sidebar-head">
         <button class="brand-icon brand-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">M</button>
         <div class="brand-text">
@@ -7,13 +7,13 @@
         </div>
     </div>
 
-    <div class="sidebar-search-wrap">
+    <div class="sidebar-search-wrap" role="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="globalSearch" type="text" placeholder="Quick search...">
+        <input id="globalSearch" type="text" placeholder="Quick search..." aria-label="Quick search">
         <span>Ctrl K</span>
     </div>
 
-    <nav class="sidebar-menu" id="mainMenu">
+    <nav class="sidebar-menu" id="mainMenu" aria-label="Main menu">
         <p class="menu-group-title">Monitoring</p>
         <a class="menu-link {{ request()->routeIs('pemilik.dashboard') ? 'active' : '' }}" href="{{ route('pemilik.dashboard') }}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.5Z"/></svg>

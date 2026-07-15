@@ -20,7 +20,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h2 class="font-['Poppins'] text-lg font-bold tracking-tight text-slate-800 dark:text-slate-100 sm:text-xl">
+                    <h2 class="text-lg font-bold tracking-tight text-slate-800 dark:text-slate-100 sm:text-xl">
                         {{ $transaksi->kode }}
                     </h2>
                     @if($transaksi->status === 'Selesai')
@@ -83,7 +83,7 @@
                     <tbody class="align-top">
                         @forelse($items as $i => $item)
                             <tr class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                                <td class="font-medium text-slate-500 w-12 text-center border-b border-slate-100 dark:border-slate-800/80">{{ $i + 1 }}</td>
+                                <td class="font-medium text-slate-500 dark:text-zinc-400 w-12 text-center border-b border-slate-100 dark:border-slate-800/80">{{ $i + 1 }}</td>
                                 <td class="border-b border-slate-100 dark:border-slate-800/80 py-4">
                                     <span class="block font-medium text-slate-700 dark:text-slate-200">{{ $item['name'] }}</span>
                                 </td>
@@ -101,7 +101,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center text-slate-500 py-6">Belum ada rincian barang.</td>
+                                <td colspan="5" class="text-center text-slate-500 dark:text-zinc-400 py-6">Belum ada rincian barang.</td>
                             </tr>
                         @endforelse
                     </tbody>

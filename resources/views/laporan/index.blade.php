@@ -64,7 +64,7 @@
                             <th>Omset (Rp)</th>
                         </tr>
                     </thead>
-                    <tbody class="text-slate-900">
+                    <tbody class="text-slate-900 dark:text-zinc-100">
                         @forelse($dailyStats as $stat)
                             <tr>
                                 <td class="font-bold">{{ date('d M Y', strtotime($stat->date)) }}</td>
@@ -73,7 +73,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center py-6 text-slate-400">Tidak ada data untuk periode ini.</td>
+                                <td colspan="3" class="text-center py-6 text-slate-400 dark:text-zinc-500">Tidak ada data untuk periode ini.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -96,7 +96,7 @@
                             <th class="text-right">Total Penjualan</th>
                         </tr>
                     </thead>
-                    <tbody class="text-slate-900">
+                    <tbody class="text-slate-900 dark:text-zinc-100">
                         @forelse($topProducts as $top)
                             <tr>
                                 <td class="font-medium">{{ $top->produk->nama ?? '-' }}</td>
@@ -105,7 +105,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center py-6 text-slate-400">Belum ada produk terjual.</td>
+                                <td colspan="3" class="text-center py-6 text-slate-400 dark:text-zinc-500">Belum ada produk terjual.</td>
                             </tr>
                         @endforelse
                     </tbody>

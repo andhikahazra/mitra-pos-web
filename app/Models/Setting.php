@@ -12,6 +12,7 @@ class Setting extends Model
         'nama_toko',
         'alamat_toko',
         'no_hp',
+        'no_hp_rop_notif',
         'deskripsi',
         'biaya_admin_qris',
         'rekening_bank',

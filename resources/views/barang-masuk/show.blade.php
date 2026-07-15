@@ -17,7 +17,7 @@
                 <div class="flex gap-8">
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Kode Penerimaan</p>
-                        <p class="mt-1 font-['Poppins'] text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">{{ $incoming->kode }}</p>
+                        <p class="mt-1 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">{{ $incoming->kode }}</p>
                     </div>
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Supplier</p>
@@ -45,7 +45,7 @@
                             @if($incoming->foto_struk)
                                 <img src="{{ asset('storage/' . $incoming->foto_struk) }}" alt="Struk" class="max-w-full max-h-full object-contain">
                             @else
-                                <div class="text-center text-slate-400">
+                                <div class="text-center text-slate-400 dark:text-zinc-500">
                                     <svg class="mx-auto h-12 w-12 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     <p class="mt-2 text-xs">Tidak ada struk</p>
                                 </div>
@@ -80,7 +80,7 @@
                                         <td class="px-4 py-3">
                                             <div class="flex flex-col">
                                                 <span class="font-medium text-slate-800 dark:text-slate-200">{{ $item->produk->nama ?? '-' }}</span>
-                                                <span class="text-[10px] text-slate-400">SKU: {{ $item->produk->sku ?? '-' }}</span>
+                                                <span class="text-[10px] text-slate-400 dark:text-zinc-500">SKU: {{ $item->produk->sku ?? '-' }}</span>
                                             </div>
                                         </td>
                                         <td class="px-4 py-3 text-right text-slate-600 dark:text-slate-300 font-bold">{{ $item->jumlah }} Unit</td>
@@ -116,7 +116,7 @@
                     <button type="submit" name="status" value="Ditolak" class="btn btn-ghost !border-rose-200 !text-rose-600 hover:!bg-rose-50 dark:!border-rose-900/50 dark:!bg-slate-900 dark:!text-rose-500 dark:hover:!bg-rose-900/20">
                         Tolak Dokumen
                     </button>
-                    <button type="submit" name="status" value="Disetujui" class="btn btn-primary bg-emerald-600 border-emerald-600 hover:bg-emerald-700 hover:border-emerald-700 focus:ring-emerald-500/20 dark:bg-emerald-600 dark:border-emerald-600 dark:hover:bg-emerald-500">
+                    <button type="submit" name="status" value="Disetujui" class="btn btn-primary bg-emerald-700 border-emerald-700 hover:bg-emerald-800 hover:border-emerald-800 focus:ring-emerald-500/20 dark:bg-emerald-600 dark:border-emerald-600 dark:hover:bg-emerald-500">
                         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         ACC & Tambah Stok
                     </button>
@@ -128,11 +128,11 @@
                     <p class="text-sm font-bold {{ $incoming->isDisetujui() ? 'text-emerald-600' : 'text-rose-600' }} uppercase tracking-widest">
                         Status: {{ $incoming->status }}
                     </p>
-                    <p class="text-xs text-slate-400">Diproses pada: {{ $incoming->tanggal_terima ? $incoming->tanggal_terima->format('d M Y, H:i') : '-' }}</p>
+                    <p class="text-xs text-slate-400 dark:text-zinc-500">Diproses pada: {{ $incoming->tanggal_terima ? $incoming->tanggal_terima->format('d M Y, H:i') : '-' }}</p>
                 </div>
                 @if($incoming->catatan)
                     <div class="max-w-md text-right">
-                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Catatan pemilik:</p>
+                        <p class="text-xs font-bold text-slate-400 dark:text-zinc-500 uppercase mb-1">Catatan pemilik:</p>
                         <p class="text-sm text-slate-700 dark:text-slate-300 italic">"{{ $incoming->catatan }}"</p>
                     </div>
                 @endif

@@ -5,12 +5,12 @@
         {{-- Page Header --}}
         <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <span class="text-[10px] bg-indigo-50 text-indigo-600 dark:bg-indigo-950/45 dark:text-indigo-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2 inline-block border border-indigo-100 dark:border-indigo-900/40">Mode Presentasi Alur Perhitungan</span>
+                <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950/45 dark:text-blue-400 px-3 py-1 rounded-full font-bold uppercase tracking-wider mb-2 inline-block border border-blue-100 dark:border-blue-900/40">Mode Presentasi Alur Perhitungan</span>
                 <h1 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Detail Perhitungan ROP (Akademik & Terperinci)</h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Produk: <strong class="text-indigo-600 dark:text-indigo-400">{{ $produk->nama }}</strong></p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Produk: <strong class="text-blue-600 dark:text-blue-400">{{ $produk->nama }}</strong></p>
             </div>
             <div>
-                <a href="{{ route('rop.show', $produk) }}" class="group inline-flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 rounded-md text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200 shadow-sm">
+                <a href="{{ route('rop.show', $produk) }}" class="group inline-flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 rounded-md text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 dark:hover:border-blue-900 transition-all duration-200 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200" fill="none" viewbox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -50,8 +50,8 @@
                                     </td>
                                     <td class="px-6 py-6 text-center">
                                         <div class="flex flex-col gap-1.5">
-                                            <span class="text-xs font-mono font-bold text-indigo-400 tracking-widest">d &times; L</span>
-                                            <span class="text-base font-mono font-bold text-indigo-600 dark:text-indigo-400">{{ number_format($rataPenjualan, 2) }} &times; {{ $leadTime }}</span>
+                                            <span class="text-xs font-mono font-bold text-blue-400 tracking-widest">d &times; L</span>
+                                            <span class="text-base font-mono font-bold text-blue-600 dark:text-blue-400">{{ number_format($rataPenjualan, 2) }} &times; {{ $leadTime }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6 text-right font-mono text-xl font-extrabold text-slate-800 dark:text-slate-200">
@@ -73,8 +73,8 @@
                                     </td>
                                     <td class="px-6 py-6 text-center">
                                         <div class="flex flex-col gap-1.5">
-                                            <span class="text-xs font-mono font-bold text-indigo-400 tracking-widest">Z &times; &sigma; &times; &radic;L</span>
-                                            <span class="text-base font-mono font-bold text-indigo-600 dark:text-indigo-400">{{ $zScore }} &times; {{ number_format($standarDeviasi, 2) }} &times; {{ number_format($sqrtLT, 2) }}</span>
+                                            <span class="text-xs font-mono font-bold text-blue-400 tracking-widest">Z &times; &sigma; &times; &radic;L</span>
+                                            <span class="text-base font-mono font-bold text-blue-600 dark:text-blue-400">{{ $zScore }} &times; {{ number_format($standarDeviasi, 2) }} &times; {{ number_format($sqrtLT, 2) }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6 text-right font-mono text-xl font-extrabold text-slate-800 dark:text-slate-200">
@@ -83,25 +83,25 @@
                                 </tr>
 
                                 {{-- Baris 3: Final ROP --}}
-                                <tr class="bg-indigo-50/10 dark:bg-indigo-950/5 cursor-pointer hover:bg-indigo-50/20 dark:hover:bg-indigo-950/10 transition-colors audit-trail-row" 
+                                <tr class="bg-blue-50/10 dark:bg-blue-950/5 cursor-pointer hover:bg-blue-50/20 dark:hover:bg-blue-950/10 transition-colors audit-trail-row" 
                                     data-type="rop"
                                     data-usagelt="{{ number_format($usageLT, 2) }}"
                                     data-safetystock="{{ number_format($safetyStock, 2) }}"
                                     data-result="{{ $rop }}"
                                     title="Klik untuk detail penjelasan">
                                     <td class="px-6 py-6">
-                                        <p class="text-base font-black text-indigo-900 dark:text-indigo-300 uppercase tracking-tight">Reorder Point (ROP)</p>
-                                        <p class="text-[11px] text-indigo-400 dark:text-indigo-500 mt-1.5 font-bold italic">(d &times; L) + SS</p>
+                                        <p class="text-base font-black text-blue-900 dark:text-blue-300 uppercase tracking-tight">Reorder Point (ROP)</p>
+                                        <p class="text-[11px] text-blue-400 dark:text-blue-500 mt-1.5 font-bold italic">(d &times; L) + SS</p>
                                     </td>
-                                    <td class="px-6 py-6 text-center border-x border-indigo-50 dark:border-indigo-950/40">
+                                    <td class="px-6 py-6 text-center border-x border-blue-50 dark:border-blue-950/40">
                                         <div class="flex flex-col gap-1.5">
-                                            <span class="text-xs font-mono font-bold text-indigo-500 tracking-widest">(d &times; L) + SS</span>
-                                            <span class="text-base font-mono text-indigo-700 dark:text-indigo-400 font-extrabold">{{ number_format($usageLT, 2) }} + {{ number_format($safetyStock, 2) }}</span>
+                                            <span class="text-xs font-mono font-bold text-blue-500 tracking-widest">(d &times; L) + SS</span>
+                                            <span class="text-base font-mono text-blue-700 dark:text-blue-400 font-extrabold">{{ number_format($usageLT, 2) }} + {{ number_format($safetyStock, 2) }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6 text-right">
-                                        <span class="text-3xl font-black text-indigo-600 dark:text-indigo-300">{{ $rop }}</span>
-                                        <span class="text-xs text-indigo-400 dark:text-indigo-500 font-bold uppercase ml-1">Unit</span>
+                                        <span class="text-3xl font-black text-blue-600 dark:text-blue-300">{{ $rop }}</span>
+                                        <span class="text-xs text-blue-400 dark:text-blue-500 font-bold uppercase ml-1">Unit</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -127,14 +127,14 @@
                             <span class="text-sm text-slate-600 dark:text-slate-400 font-medium">Standar Deviasi (&sigma;)</span>
                             <span class="text-base font-extrabold text-slate-900 dark:text-slate-200">{{ number_format($standarDeviasi, 2) }}</span>
                         </div>
-                        <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-800/40 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 leadtime-history-trigger"
+                        <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-800/40 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 leadtime-history-trigger"
                              data-leadtime-history="{{ json_encode($leadTimeHistory) }}"
                              data-leadtime-average="{{ $leadTime }}"
                              title="Klik untuk melihat riwayat penerimaan barang masuk">
                             <span class="text-sm text-slate-600 dark:text-slate-400 font-medium">Lead Time (L)</span>
                             <span class="text-base font-extrabold text-slate-900 dark:text-slate-200 underline">{{ $leadTime }} Hari</span>
                         </div>
-                        <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-800/40 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 leadtime-history-trigger"
+                        <div class="flex justify-between py-2 border-b border-slate-50 dark:border-slate-800/40 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 leadtime-history-trigger"
                              data-leadtime-history="{{ json_encode($leadTimeHistory) }}"
                              data-leadtime-average="{{ $leadTime }}"
                              title="Klik untuk melihat riwayat penerimaan barang masuk">
@@ -170,8 +170,8 @@
                                 $diff = ($qty ?? 0) - $mean;
                                 $sqDiff = pow($diff, 2);
                             @endphp
-                            <div class="flex flex-col flex-shrink-0 w-16 bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs hover:border-indigo-300 dark:hover:border-indigo-900 transition-all duration-150">
-                                <div class="text-center py-2 bg-indigo-500 text-white">
+                            <div class="flex flex-col flex-shrink-0 w-16 bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-xs hover:border-blue-300 dark:hover:border-blue-900 transition-all duration-150">
+                                <div class="text-center py-2 bg-blue-500 text-white">
                                     <span class="text-sm font-black">{{ $qty ?? 0 }}</span>
                                 </div>
                                 <div class="flex-1 p-2 flex flex-col justify-between items-center bg-white dark:bg-slate-900/60">
@@ -233,7 +233,7 @@
                                 title="Klik untuk penjelasan detail">
                                 <td class="px-6 py-5 font-bold text-slate-700 dark:text-slate-200">2. Rata-rata (d)</td>
                                 <td class="px-6 py-5 text-sm text-slate-500 dark:text-slate-400 italic">Total Unit &divide; 30 Hari</td>
-                                <td class="px-6 py-5 text-right font-mono font-extrabold text-base text-indigo-700 dark:text-indigo-400">{{ number_format($rataPenjualan, 2) }}</td>
+                                <td class="px-6 py-5 text-right font-mono font-extrabold text-base text-blue-700 dark:text-blue-400">{{ number_format($rataPenjualan, 2) }}</td>
                             </tr>
 
                             {{-- Langkah 3 --}}
@@ -253,7 +253,7 @@
                                     
                                     $sqDiffsVerticalHtml .= "<div class='flex justify-between font-mono text-xs border-b border-slate-100 dark:border-slate-800/40 py-1.5'>";
                                     $sqDiffsVerticalHtml .= "<span class='text-slate-500 dark:text-slate-400'>Hari {$dayIndex} (" . $dateObjVal->translatedFormat('d M') . ")</span>";
-                                    $sqDiffsVerticalHtml .= "<span class='text-slate-700 dark:text-slate-300'>({$qtyVal} - " . number_format($rataPenjualan, 2) . ")&sup2; = <strong class='text-indigo-600 dark:text-indigo-400'>{$sqVal}</strong></span>";
+                                    $sqDiffsVerticalHtml .= "<span class='text-slate-700 dark:text-slate-300'>({$qtyVal} - " . number_format($rataPenjualan, 2) . ")&sup2; = <strong class='text-blue-600 dark:text-blue-400'>{$sqVal}</strong></span>";
                                     $sqDiffsVerticalHtml .= "</div>";
                                     $dayIndex++;
                                 }
@@ -275,14 +275,14 @@
                                     Total dari 30 kotak harian (&Sigma;(x<sub>i</sub>-d)&sup2;)<br>
                                     <div class="mt-3 p-3 bg-slate-50 dark:bg-slate-950/20 rounded-xl border border-slate-100 dark:border-slate-800/60 max-w-xl">
                                         <p class="text-[10px] font-bold text-slate-600 dark:text-slate-400 mb-1.5 tracking-tight underline">Contoh Hitung (Hari 1):</p>
-                                        <p class="text-xs font-mono text-indigo-600 dark:text-indigo-400">
+                                        <p class="text-xs font-mono text-blue-600 dark:text-blue-400">
                                             (x<sub>1</sub> - d)&sup2; = 
                                             ({{ $firstQtyVal }} - {{ number_format($rataPenjualan, 2) }})&sup2; = 
                                             {{ $firstSqDiffVal }}
                                         </p>
                                     </div>
-                                    <button type="button" class="mt-2.5 text-xs text-indigo-600 dark:text-indigo-400 font-bold hover:underline flex items-center gap-1">
-                                        👁️ Lihat rincian selisih kuadrat 30 hari
+                                    <button type="button" class="mt-2.5 text-xs text-blue-600 dark:text-blue-400 font-bold hover:underline flex items-center gap-1">
+                                        Lihat rincian selisih kuadrat 30 hari
                                     </button>
                                 </td>
                                 <td class="px-6 py-5 text-right font-mono font-bold text-base text-slate-800 dark:text-slate-200">{{ number_format($sumSqDiff, 2) }}</td>
@@ -319,13 +319,13 @@
                                         &radic;{{ number_format($variance, 2) }} = {{ number_format($standarDeviasi, 2) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-5 text-right font-mono font-extrabold text-base text-indigo-700 dark:text-indigo-400">{{ number_format($standarDeviasi, 2) }}</td>
+                                <td class="px-6 py-5 text-right font-mono font-extrabold text-base text-blue-700 dark:text-blue-400">{{ number_format($standarDeviasi, 2) }}</td>
                             </tr>
 
                             {{-- Hasil Analisis --}}
-                            <tr class="bg-indigo-50/10 dark:bg-indigo-950/5">
-                                <td class="px-6 py-5 font-bold text-indigo-900 dark:text-indigo-300" colspan="2">Kesimpulan Analisis Variabel Demand</td>
-                                <td class="px-6 py-5 text-right font-mono font-black text-indigo-900 dark:text-indigo-300">Valid & Terverifikasi</td>
+                            <tr class="bg-blue-50/10 dark:bg-blue-950/5">
+                                <td class="px-6 py-5 font-bold text-blue-900 dark:text-blue-300" colspan="2">Kesimpulan Analisis Variabel Demand</td>
+                                <td class="px-6 py-5 text-right font-mono font-black text-blue-900 dark:text-blue-300">Valid & Terverifikasi</td>
                             </tr>
                         </tbody>
                     </table>
@@ -385,17 +385,17 @@
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Definisi Komponen</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Permintaan Selama Waktu Tunggu</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Definisi Komponen</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Permintaan Selama Waktu Tunggu</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Mengukur rata-rata jumlah unit yang diperkirakan terjual selama masa pengiriman barang dari supplier.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
                                 <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold">Substitusi Nilai</p>
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">${mean} <span class="text-xs text-slate-400">(d)</span> &times; ${leadtime} <span class="text-xs text-slate-400">(L)</span></p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Akhir</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Akhir</p>
                                 <p class="text-3xl font-black mt-1">${result} Unit</p>
                             </div>
                         </div>
@@ -408,17 +408,17 @@
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Definisi Komponen</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Stok Cadangan Pengaman</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Definisi Komponen</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Stok Cadangan Pengaman</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Jumlah stok cadangan darurat untuk mencegah habisnya persediaan akibat fluktuasi harian atau keterlambatan pengiriman.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
                                 <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold">Substitusi Nilai</p>
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">${zscore} <span class="text-xs text-slate-400">(Z)</span> &times; ${stddev} <span class="text-xs text-slate-400">(&sigma;)</span> &times; ${sqrtlt} <span class="text-xs text-slate-400">(&radic;L)</span></p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Akhir</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Akhir</p>
                                 <p class="text-3xl font-black mt-1">${result} Unit</p>
                             </div>
                         </div>
@@ -430,17 +430,17 @@
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Definisi Komponen</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Titik Pemesanan Kembali</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Definisi Komponen</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Titik Pemesanan Kembali</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Batas persediaan minimum yang memicu pembuatan pesanan stok baru agar tidak kehabisan barang di masa mendatang.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
                                 <p class="text-[10px] uppercase font-bold text-slate-400 font-semibold">Substitusi Nilai</p>
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">${usagelt} <span class="text-xs text-slate-400">(Lead Time Demand)</span> + ${safetystock} <span class="text-xs text-slate-400">(Safety Stock)</span></p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Akhir</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Akhir</p>
                                 <p class="text-3xl font-black mt-1">${result} Unit</p>
                             </div>
                         </div>
@@ -464,13 +464,13 @@
                     const periode = this.dataset.periode;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Total Unit Terjual (30 Hari)</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Deskripsi Langkah</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Total Unit Terjual (30 Hari)</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Menjumlahkan seluruh unit barang yang laku terjual dari transaksi harian selama periode analisis.</p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Penjumlahan (&Sigma;x<sub>i</sub>)</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Penjumlahan (&Sigma;x<sub>i</sub>)</p>
                                 <p class="text-3xl font-black mt-1">${sum} Unit</p>
                             </div>
                         </div>
@@ -482,9 +482,9 @@
                     const mean = this.dataset.mean;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Rata-rata Penjualan Harian (d)</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Deskripsi Langkah</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Rata-rata Penjualan Harian (d)</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Membagi jumlah total unit terjual dengan lamanya hari dalam periode analisis.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
@@ -492,8 +492,8 @@
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">d = Total Unit &divide; Periode</p>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 italic">Di mana: ${sum} unit &divide; ${periode} hari = ${mean}</p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Rata-rata Harian</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Rata-rata Harian</p>
                                 <p class="text-3xl font-black mt-1">${mean} Unit/Hari</p>
                             </div>
                         </div>
@@ -507,9 +507,9 @@
                     const verticalHtml = this.dataset.sqdiffsVerticalHtml;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Jumlah Selisih Kuadrat (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Deskripsi Langkah</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Jumlah Selisih Kuadrat (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Menjumlahkan kuadrat selisih antara penjualan harian riil (x<sub>i</sub>) dengan rata-rata penjualan (d). Langkah awal untuk mengukur tingkat dispersi/variabilitas penjualan.</p>
                             </div>
                             
@@ -526,8 +526,8 @@
                                 </div>
                             </div>
 
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Total (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Total (&Sigma;(x<sub>i</sub> - d)<sup>2</sup>)</p>
                                 <p class="text-3xl font-black mt-1">${result}</p>
                             </div>
                         </div>
@@ -540,9 +540,9 @@
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Varians Penjualan Harian (s<sup>2</sup>)</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Deskripsi Langkah</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Varians Penjualan Harian (s<sup>2</sup>)</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Membagi jumlah selisih kuadrat dengan total hari dikurang satu (n - 1) menggunakan rumus sampel variance.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
@@ -550,8 +550,8 @@
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">s<sup>2</sup> = &Sigma;(x<sub>i</sub> - d)<sup>2</sup> &divide; (n - 1)</p>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 italic">Di mana: &Sigma;(x<sub>i</sub> - d)<sup>2</sup> = ${sumsqdiff}, n = ${periode} (sehingga n - 1 = ${nminus1})</p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Varians (s<sup>2</sup>)</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Varians (s<sup>2</sup>)</p>
                                 <p class="text-3xl font-black mt-1">${result}</p>
                             </div>
                         </div>
@@ -562,9 +562,9 @@
                     const result = this.dataset.result;
                     html = `
                         <div class="space-y-4 text-left">
-                            <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4">
-                                <p class="text-[10px] uppercase font-bold text-indigo-400 font-semibold">Deskripsi Langkah</p>
-                                <h3 class="text-base font-black text-indigo-950 dark:text-indigo-200 mt-1">Standar Deviasi Permintaan Harian (&sigma;)</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4">
+                                <p class="text-[10px] uppercase font-bold text-blue-400 font-semibold">Deskripsi Langkah</p>
+                                <h3 class="text-base font-black text-blue-950 dark:text-blue-200 mt-1">Standar Deviasi Permintaan Harian (&sigma;)</h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Menghitung akar kuadrat dari varians penjualan harian untuk mendapatkan ukuran fluktuasi dalam satuan unit produk yang sama.</p>
                             </div>
                             <div class="bg-slate-50 dark:bg-slate-950/20 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
@@ -572,8 +572,8 @@
                                 <p class="text-lg font-mono font-bold text-slate-800 dark:text-slate-200 mt-1">&sigma; = &radic;s<sup>2</sup></p>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 italic">Di mana: s<sup>2</sup> (Varians) = ${variance}</p>
                             </div>
-                            <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                                <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Standar Deviasi (&sigma;)</p>
+                            <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                                <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Standar Deviasi (&sigma;)</p>
                                 <p class="text-3xl font-black mt-1">${result}</p>
                             </div>
                         </div>
@@ -609,17 +609,17 @@
                                 <td class="px-4 py-3 font-mono font-bold text-slate-700 dark:text-slate-300">${record.kode || '-'}</td>
                                 <td class="px-4 py-3 text-slate-600 dark:text-slate-400">${record.tanggal_pesan}</td>
                                 <td class="px-4 py-3 text-slate-600 dark:text-slate-400">${record.tanggal_terima}</td>
-                                <td class="px-4 py-3 text-right font-mono font-bold text-indigo-600 dark:text-indigo-400">${record.selisih} Hari</td>
+                                <td class="px-4 py-3 text-right font-mono font-bold text-blue-600 dark:text-blue-400">${record.selisih} Hari</td>
                             </tr>
                         `;
                     });
                 }
 
                 const explanation = historyData.length === 0 ? "" : `
-                    <div class="bg-indigo-50 dark:bg-indigo-950/45 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        <p class="font-bold text-indigo-800 dark:text-indigo-400 mb-1">💡 Cara Kalkulasi Rata-rata:</p>
+                    <div class="bg-blue-50 dark:bg-blue-950/45 border border-blue-100 dark:border-blue-900/40 rounded-xl p-4 text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        <p class="font-bold text-blue-800 dark:text-blue-400 mb-1">Cara Kalkulasi Rata-rata:</p>
                         <p>
-                            Total Hari (${historyData.reduce((acc, r) => acc + r.selisih, 0)} Hari) &divide; Total Transaksi (${historyData.length} Transaksi) = <strong class="text-indigo-600 dark:text-indigo-400">${average} Hari</strong>
+                            Total Hari (${historyData.reduce((acc, r) => acc + r.selisih, 0)} Hari) &divide; Total Transaksi (${historyData.length} Transaksi) = <strong class="text-blue-600 dark:text-blue-400">${average} Hari</strong>
                         </p>
                     </div>
                 `;
@@ -648,8 +648,8 @@
 
                         ${explanation}
 
-                        <div class="bg-indigo-600 text-white rounded-xl p-4 text-center shadow-md">
-                            <p class="text-[10px] uppercase font-bold text-indigo-200">Hasil Rata-rata Lead Time (L)</p>
+                        <div class="bg-blue-600 text-white rounded-xl p-4 text-center shadow-md">
+                            <p class="text-[10px] uppercase font-bold text-blue-200">Hasil Rata-rata Lead Time (L)</p>
                             <p class="text-3xl font-black mt-1">${average} Hari</p>
                         </div>
                     </div>

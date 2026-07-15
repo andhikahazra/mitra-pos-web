@@ -75,7 +75,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center text-slate-500 py-8">Tidak ada data yang sesuai filter.</td>
+                            <td colspan="7" class="text-center text-slate-500 dark:text-zinc-400 py-8">Tidak ada data yang sesuai filter.</td>
                         </tr>
                     @endforelse
                 </tbody>

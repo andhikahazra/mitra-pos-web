@@ -116,7 +116,7 @@ class BarangMasukController extends Controller
                     // 1. Tambah Stok Global Produk
                     $produk->increment('stok', $item->jumlah);
 
-                    // 2. Buat Stok Batch baru (FIFO)
+                    // 2. Buat Stok Batch baru (Batching)
                     StokBatch::create([
                         'produk_id' => $produk->id,
                         'detail_barang_masuk_id' => $item->id,

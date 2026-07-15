@@ -41,7 +41,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center text-slate-500">Belum ada data produk.</td>
+                    <td colspan="8" class="text-center text-slate-500 dark:text-zinc-400">Belum ada data produk.</td>
                 </tr>
             @endforelse
         </tbody>

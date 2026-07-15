@@ -11,7 +11,7 @@
                 </span>
             </div>
             <h1>{{ $produk->nama }}</h1>
-            <p class="font-mono text-sm text-slate-400">SKU: {{ $produk->sku ?? '-' }} | Kategori: {{ $produk->kategori->nama ?? '-' }}</p>
+            <p class="font-mono text-sm text-slate-400 dark:text-zinc-500">SKU: {{ $produk->sku ?? '-' }} | Kategori: {{ $produk->kategori->nama ?? '-' }}</p>
         </div>
         <a class="btn btn-ghost" href="{{ route('stok-batch.index') }}">
             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7 7l-7-7 7-7"/></svg>
@@ -22,13 +22,13 @@
     {{-- Stats Row --}}
     <div class="overview-grid mb-6">
         <article class="panel-card p-5 border-l-4 border-l-blue-500">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Stok Tersedia</p>
-            <h2 class="text-3xl font-extrabold text-slate-800 m-0">{{ number_format($summary['total_stok'], 0, ',', '.') }} <span class="text-sm font-normal text-slate-400 uppercase">Unit</span></h2>
+            <p class="text-xs font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-1">Total Stok Tersedia</p>
+            <h2 class="text-3xl font-extrabold text-slate-800 dark:text-zinc-200 m-0">{{ number_format($summary['total_stok'], 0, ',', '.') }} <span class="text-sm font-normal text-slate-400 dark:text-zinc-500 uppercase">Unit</span></h2>
         </article>
 
         <article class="panel-card p-5 border-l-4 border-l-orange-500">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Jumlah Batch Aktif</p>
-            <h2 class="text-3xl font-extrabold text-slate-800 m-0">{{ $summary['total_batch'] }} <span class="text-sm font-normal text-slate-400 uppercase">Batch</span></h2>
+            <p class="text-xs font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-1">Jumlah Batch Aktif</p>
+            <h2 class="text-3xl font-extrabold text-slate-800 dark:text-zinc-200 m-0">{{ $summary['total_batch'] }} <span class="text-sm font-normal text-slate-400 dark:text-zinc-500 uppercase">Batch</span></h2>
         </article>
     </div>
 
@@ -37,7 +37,7 @@
         <div class="panel-head">
             <div>
                 <h2 class="m-0 font-bold text-lg">Rincian Batch Aktif</h2>
-                <p class="text-xs text-slate-500">Daftar stok berdasarkan tanggal masuk dan harga beli.</p>
+                <p class="text-xs text-slate-500 dark:text-zinc-400">Daftar stok berdasarkan tanggal masuk dan harga beli.</p>
             </div>
             <span class="tag green">Available</span>
         </div>
@@ -56,13 +56,13 @@
                 <tbody>
                     @forelse($activeBatches as $batch)
                         <tr>
-                            <td class="font-mono text-xs font-bold text-slate-400">#{{ $batch->id }}</td>
+                            <td class="font-mono text-xs font-bold text-slate-400 dark:text-zinc-500">#{{ $batch->id }}</td>
                             <td>{{ $batch->tanggal_masuk ? $batch->tanggal_masuk->format('d M Y') : '-' }}</td>
-                            <td class="font-bold text-slate-700">Rp {{ number_format($batch->harga_beli, 0, ',', '.') }}</td>
-                            <td class="text-slate-400">{{ $batch->detailBarangMasuk->jumlah ?? '-' }}</td>
+                            <td class="font-bold text-slate-700 dark:text-zinc-300">Rp {{ number_format($batch->harga_beli, 0, ',', '.') }}</td>
+                            <td class="text-slate-400 dark:text-zinc-500">{{ $batch->detailBarangMasuk->jumlah ?? '-' }}</td>
                             <td>
                                 <div class="flex items-center gap-2">
-                                    <div class="h-2 w-16 bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-2 w-16 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
                                         @php 
                                             $awal = $batch->detailBarangMasuk->jumlah ?? 1;
                                             $persen = ($batch->qty_sisa / $awal) * 100;
@@ -84,7 +84,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-slate-400 py-12">Tidak ada batch aktif untuk produk ini.</td>
+                            <td colspan="6" class="text-center text-slate-400 dark:text-zinc-500 py-12">Tidak ada batch aktif untuk produk ini.</td>
                         </tr>
                     @endforelse
                 </tbody>

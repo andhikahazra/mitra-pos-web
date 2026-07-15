@@ -10,7 +10,7 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
         <script>
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -18,12 +18,19 @@
             } else {
                 document.documentElement.classList.remove('dark');
             }
+            // Apply sidebar state immediately to avoid flash
+            (function() {
+                var saved = localStorage.getItem('sidebar-collapsed');
+                var isCollapsed = saved !== 'false'; // default collapsed
+                if (isCollapsed) {
+                    document.documentElement.setAttribute('data-sidebar-collapsed', '1');
+                }
+            })();
         </script>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-
         <div class="app-shell" id="appRoot">
             @include('dashboard.partials.sidebar')
             
@@ -91,7 +98,6 @@
 
         <style>
             @media (max-width: 1023px) {
-                /* ID selectors have much higher specificity than classes */
                 #appRoot, #appRoot .main-shell, #appRoot .pemilik-topbar {
                     display: flex !important;
                     flex-direction: column !important;

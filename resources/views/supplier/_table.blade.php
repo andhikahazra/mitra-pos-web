@@ -27,7 +27,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4" class="text-center text-slate-500 py-8">Tidak ada data supplier.</td>
+                    <td colspan="4" class="text-center text-slate-500 dark:text-zinc-400 py-8">Tidak ada data supplier.</td>
                 </tr>
             @endforelse
         </tbody>

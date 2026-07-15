@@ -45,7 +45,7 @@ class StokBatchController extends Controller
 
     public function show(Produk $produk): View
     {
-        // Ambil batch yang masih ada isinya (FIFO)
+        // Ambil batch yang masih ada isinya (Batching)
         $activeBatches = StokBatch::query()
             ->where('produk_id', $produk->id)
             ->where('qty_sisa', '>', 0)

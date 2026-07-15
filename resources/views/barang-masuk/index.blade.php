@@ -5,7 +5,7 @@
     <div class="section-head mb-6">
         <div>
             <h1>Approval Barang Masuk</h1>
-            <p class="text-slate-500 text-sm mt-1">Kelola dan tinjau riwayat pengadaan stok barang.</p>
+            <p class="text-slate-500 dark:text-zinc-400 text-sm mt-1">Kelola dan tinjau riwayat pengadaan stok barang.</p>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
     <div class="panel-card mb-6 p-4">
         <form action="{{ route('barang-masuk.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
             <div class="flex-1 min-w-[200px]">
-                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Status Approval</label>
+                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Status Approval</label>
                 <select name="status" class="field" onchange="this.form.submit()">
                     <option value="">Semua Status</option>
                     <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="w-[180px]">
-                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Bulan</label>
+                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Bulan</label>
                 <select name="month" class="field" onchange="this.form.submit()">
                     @for($i = 1; $i <= 12; $i++)
                         <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
@@ -50,7 +50,7 @@
                 </select>
             </div>
             <div class="w-[120px]">
-                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 block">Tahun</label>
+                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Tahun</label>
                 <select name="year" class="field" onchange="this.form.submit()">
                     @php $currentYear = now()->year; @endphp
                     @for($y = $currentYear; $y >= $currentYear - 3; $y--)
@@ -90,28 +90,28 @@
                         <tr>
                             <td>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-slate-900">#{{ $item->kode }}</span>
-                                    <span class="text-[10px] text-slate-400 font-mono">{{ $item->tanggal_pesan ? $item->tanggal_pesan->format('d M Y, H:i') : '-' }}</span>
+                                    <span class="font-bold text-slate-900 dark:text-zinc-100">#{{ $item->kode }}</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">{{ $item->tanggal_pesan ? $item->tanggal_pesan->format('d M Y, H:i') : '-' }}</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="flex items-center gap-2">
-                                    <div class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                                    <div class="h-8 w-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-400 dark:text-zinc-500">
                                         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                                     </div>
-                                    <span class="font-medium text-slate-700">{{ $item->supplier->nama ?? '-' }}</span>
+                                    <span class="font-medium text-slate-700 dark:text-zinc-300">{{ $item->supplier->nama ?? '-' }}</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-slate-700">{{ $totalItems }} Produk</span>
-                                    <span class="text-[11px] text-slate-400 truncate max-w-[200px]">
+                                    <span class="font-bold text-slate-700 dark:text-zinc-300">{{ $totalItems }} Produk</span>
+                                    <span class="text-[11px] text-slate-400 dark:text-zinc-500 truncate max-w-[200px]">
                                         {{ $firstItem?->produk?->nama ?? '-' }} {{ $totalItems > 1 ? '...' : '' }}
                                     </span>
                                 </div>
                             </td>
                             <td>
-                                <span class="font-extrabold text-slate-900 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
+                                <span class="font-extrabold text-slate-900 dark:text-zinc-100 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
                             </td>
                             <td>
                                 @if (strtolower($item->status) === 'disetujui')
@@ -131,7 +131,15 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-slate-500 py-12">Belum ada data barang masuk yang perlu ditinjau.</td>
+                            <td colspan="6" class="p-0">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25-2.25M12 13.875V7.5" /></svg>
+                                    </div>
+                                    <p class="empty-state-title">Belum ada data</p>
+                                    <p class="empty-state-desc">Belum ada data barang masuk yang perlu ditinjau.</p>
+                                </div>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>

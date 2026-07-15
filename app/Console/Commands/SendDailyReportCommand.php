@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Transaksi;
+use App\Models\Setting;
 use App\Services\FonnteService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -69,10 +70,11 @@ class SendDailyReportCommand extends Command
             ];
         }
 
-        $target = env('FONNTE_OWNER_TARGET');
+        $setting = Setting::first();
+        $target = $setting->no_hp_rop_notif ?? env('FONNTE_OWNER_TARGET');
         if (empty($target)) {
-            $this->error('FONNTE_OWNER_TARGET belum diatur di .env');
-            Log::error('Gagal mengirim Daily Report: FONNTE_OWNER_TARGET kosong');
+            $this->error('Nomor tujuan notifikasi belum diatur di Pengaturan atau .env');
+            Log::error('Gagal mengirim Daily Report: no_hp_rop_notif dan FONNTE_OWNER_TARGET kosong');
             return 1;
         }
 
