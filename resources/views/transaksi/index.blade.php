@@ -136,7 +136,7 @@
         </div>
 
         <div class="pagination">
-            {{ $transaksi->links() }}
+            {{ $transaksi->links('pagination::tailwind') }}
         </div>
     </article>
 </section>

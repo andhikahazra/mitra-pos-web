@@ -49,5 +49,5 @@
 </div>
 
 <div class="pagination">
-    {{ $produk->links() }}
+    {{ $produk->links('pagination::tailwind') }}
 </div>

@@ -82,5 +82,5 @@
 </div>
 
 <div class="mt-4">
-    {{ $movements->links() }}
+    {{ $movements->links('pagination::tailwind') }}
 </div>
