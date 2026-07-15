@@ -57,41 +57,7 @@
         </article>
     </div>
 
-    <div class="grid gap-6 xl:grid-cols-2">
-        {{-- Daily Breakdown --}}
-        <article class="panel-card overflow-hidden !p-0 flex flex-col">
-            <div class="panel-head px-5 py-4 m-0 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/50">
-                <h2 class="text-base font-semibold text-slate-800 dark:text-zinc-100 m-0">Rincian Harian</h2>
-            </div>
-            <div class="table-wrap !border-none !rounded-none flex-1">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="border-b border-slate-200 dark:border-zinc-800">
-                            <th class="py-3 px-5 text-left font-medium text-slate-500 uppercase tracking-wider text-[11px]">Tanggal</th>
-                            <th class="py-3 px-5 text-center font-medium text-slate-500 uppercase tracking-wider text-[11px]">Transaksi</th>
-                            <th class="py-3 px-5 text-right font-medium text-slate-500 uppercase tracking-wider text-[11px]">Omset (Rp)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
-                        @forelse($dailyStats as $stat)
-                            <tr class="hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
-                                <td class="py-3 px-5 whitespace-nowrap">
-                                    <span class="font-medium text-slate-800 dark:text-zinc-200">{{ date('d M Y', strtotime($stat->date)) }}</span>
-                                    <span class="ml-2 text-xs text-slate-400">{{ date('D', strtotime($stat->date)) }}</span>
-                                </td>
-                                <td class="py-3 px-5 text-center font-mono text-slate-600 dark:text-zinc-400">{{ $stat->count }}</td>
-                                <td class="py-3 px-5 text-right font-mono font-semibold text-slate-800 dark:text-zinc-200">{{ number_format($stat->omset, 0, ',', '.') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="text-center py-8 text-slate-400 text-sm">Tidak ada data rincian harian untuk periode ini.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </article>
-
+    <div class="flex flex-col gap-6">
         {{-- Top Selling Products --}}
         <article class="panel-card overflow-hidden !p-0 flex flex-col">
             <div class="panel-head px-5 py-4 m-0 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/50">
@@ -121,6 +87,40 @@
                         @empty
                             <tr>
                                 <td colspan="3" class="text-center py-8 text-slate-400 text-sm">Belum ada produk yang terjual.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        {{-- Daily Breakdown --}}
+        <article class="panel-card overflow-hidden !p-0 flex flex-col">
+            <div class="panel-head px-5 py-4 m-0 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/50">
+                <h2 class="text-base font-semibold text-slate-800 dark:text-zinc-100 m-0">Rincian Harian</h2>
+            </div>
+            <div class="table-wrap !border-none !rounded-none flex-1">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-200 dark:border-zinc-800">
+                            <th class="py-3 px-5 text-left font-medium text-slate-500 uppercase tracking-wider text-[11px]">Tanggal</th>
+                            <th class="py-3 px-5 text-center font-medium text-slate-500 uppercase tracking-wider text-[11px]">Transaksi</th>
+                            <th class="py-3 px-5 text-right font-medium text-slate-500 uppercase tracking-wider text-[11px]">Omset (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
+                        @forelse($dailyStats as $stat)
+                            <tr class="hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
+                                <td class="py-3 px-5 whitespace-nowrap">
+                                    <span class="font-medium text-slate-800 dark:text-zinc-200">{{ date('d M Y', strtotime($stat->date)) }}</span>
+                                    <span class="ml-2 text-xs text-slate-400">{{ date('D', strtotime($stat->date)) }}</span>
+                                </td>
+                                <td class="py-3 px-5 text-center font-mono text-slate-600 dark:text-zinc-400">{{ $stat->count }}</td>
+                                <td class="py-3 px-5 text-right font-mono font-semibold text-slate-800 dark:text-zinc-200">{{ number_format($stat->omset, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center py-8 text-slate-400 text-sm">Tidak ada data rincian harian untuk periode ini.</td>
                             </tr>
                         @endforelse
                     </tbody>
