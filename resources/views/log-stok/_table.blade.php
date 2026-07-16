@@ -16,7 +16,7 @@
                 <tr>
                     <td>
                         <div class="flex flex-col">
-                            <span class="font-bold text-slate-700 dark:text-slate-200">
+                            <span class="font-semibold text-slate-700 dark:text-slate-200">
                                 {{ $mov->tanggal->translatedFormat('d M Y') }}
                             </span>
                             <span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">
@@ -26,7 +26,7 @@
                     </td>
                     <td>
                         <div class="flex flex-col">
-                            <span class="font-bold text-slate-700 dark:text-slate-200">{{ $mov->produk_nama }}</span>
+                            <span class="font-semibold text-slate-700 dark:text-slate-200">{{ $mov->produk_nama }}</span>
                             <span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono uppercase">{{ $mov->produk_sku }}</span>
                         </div>
                     </td>
