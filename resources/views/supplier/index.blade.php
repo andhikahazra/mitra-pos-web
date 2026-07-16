@@ -12,29 +12,27 @@
         </a>
     </div>
 
-    <article class="panel-card">
-        <form class="toolbar !flex-row !flex-wrap gap-3" method="GET" action="{{ route('supplier.index') }}" id="supplierFilterForm">
-            <div class="relative flex-1 min-w-[300px]">
-                <input class="field w-full" name="search" id="supplierSearchInput" type="text" placeholder="Cari nama atau nomor telepon..." 
-                       value="{{ $search }}" autocomplete="off">
-            </div>
-            
-            @if($search)
-                <a class="btn btn-ghost" href="{{ route('supplier.index') }}">Reset</a>
-            @endif
-        </form>
-
-        <div id="supplierTableContainer">
-            @include('supplier._table')
+    <form class="toolbar !flex-row !flex-wrap gap-3" method="GET" action="{{ route('supplier.index') }}" id="supplierFilterForm">
+        <div class="relative flex-1 min-w-[300px]">
+            <input class="field w-full" name="search" id="supplierSearchInput" type="text" placeholder="Cari nama atau nomor telepon..." 
+                   value="{{ $search }}" autocomplete="off">
         </div>
+        
+        @if($search)
+            <a class="btn btn-ghost" href="{{ route('supplier.index') }}">Reset</a>
+        @endif
+    </form>
 
-        {{-- Skeleton loader --}}
-        <div id="supplierTableSkeleton" class="hidden">
-            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
-            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
-            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
-        </div>
-    </article>
+    <div id="supplierTableContainer">
+        @include('supplier._table')
+    </div>
+
+    {{-- Skeleton loader --}}
+    <div id="supplierTableSkeleton" class="hidden">
+        <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+        <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+        <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div></div></div>
+    </div>
 </section>
 
 <script>

@@ -28,47 +28,44 @@
     </div>
 
     {{-- Filter Toolbar --}}
-    <div class="panel-card mb-6 p-4">
-        <form action="{{ route('barang-masuk.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
-            <div class="flex-1 min-w-[200px]">
-                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Status Approval</label>
-                <select name="status" class="field" onchange="this.form.submit()">
-                    <option value="">Semua Status</option>
-                    <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                    <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
-                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-                </select>
-            </div>
-            <div class="w-[180px]">
-                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Bulan</label>
-                <select name="month" class="field" onchange="this.form.submit()">
-                    @for($i = 1; $i <= 12; $i++)
-                        <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
-                            {{ \Carbon\Carbon::create(null, $i)->translatedFormat('F') }}
-                        </option>
-                    @endfor
-                </select>
-            </div>
-            <div class="w-[120px]">
-                <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Tahun</label>
-                <select name="year" class="field" onchange="this.form.submit()">
-                    @php $currentYear = now()->year; @endphp
-                    @for($y = $currentYear; $y >= $currentYear - 3; $y--)
-                        <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
-                    @endfor
-                </select>
-            </div>
-            <div class="flex flex-col">
-                <label class="text-[11px] mb-2 block opacity-0">&nbsp;</label>
-                <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost !h-11 w-11 !p-0 flex items-center justify-center" title="Reset Filter">
-                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                </a>
-            </div>
-        </form>
-    </div>
+    <form action="{{ route('barang-masuk.index') }}" method="GET" class="flex flex-wrap items-end gap-4 mb-6">
+        <div class="flex-1 min-w-[200px]">
+            <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Status Approval</label>
+            <select name="status" class="field" onchange="this.form.submit()">
+                <option value="">Semua Status</option>
+                <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+            </select>
+        </div>
+        <div class="w-[180px]">
+            <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Bulan</label>
+            <select name="month" class="field" onchange="this.form.submit()">
+                @for($i = 1; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>
+                        {{ \Carbon\Carbon::create(null, $i)->translatedFormat('F') }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+        <div class="w-[120px]">
+            <label class="text-[11px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-2 block">Tahun</label>
+            <select name="year" class="field" onchange="this.form.submit()">
+                @php $currentYear = now()->year; @endphp
+                @for($y = $currentYear; $y >= $currentYear - 3; $y--)
+                    <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                @endfor
+            </select>
+        </div>
+        <div class="flex flex-col">
+            <label class="text-[11px] mb-2 block opacity-0">&nbsp;</label>
+            <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost !h-11 w-11 !p-0 flex items-center justify-center" title="Reset Filter">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </a>
+        </div>
+    </form>
 
-    <article class="panel-card">
-        <div class="table-wrap">
+    <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
@@ -145,6 +142,5 @@
                 </tbody>
             </table>
         </div>
-    </article>
 </section>
 @endsection

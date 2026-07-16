@@ -8,43 +8,38 @@
         </div>
     </div>
 
-    <article class="panel-card">
-        <form class="toolbar !flex-row !flex-wrap gap-3" id="logStokFilterForm" method="GET" action="{{ route('log-stok.index') }}">
-            <!-- Search Input -->
-            <div class="relative flex-1 min-w-[300px]">
-                <input class="field w-full" name="search" id="logStokSearch" type="text" placeholder="Cari produk atau keterangan..." value="{{ $search }}" autocomplete="off">
-            </div>
-
-            <!-- Product Dropdown Filter -->
-            <div class="min-w-[200px]">
-                <select class="field w-full" name="produk_id" id="logStokProduct">
-                    <option value="all" {{ $productFilter === 'all' ? 'selected' : '' }}>Semua Produk</option>
-                    @foreach($products as $prod)
-                        <option value="{{ $prod->id }}" {{ (string)$productFilter === (string)$prod->id ? 'selected' : '' }}>
-                            {{ $prod->nama }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Type Dropdown Filter -->
-            <div class="min-w-[150px]">
-                <select class="field w-full" name="type" id="logStokType">
-                    <option value="all" {{ $typeFilter === 'all' ? 'selected' : '' }}>Semua Tipe</option>
-                    <option value="Masuk" {{ $typeFilter === 'Masuk' ? 'selected' : '' }}>Masuk</option>
-                    <option value="Keluar" {{ $typeFilter === 'Keluar' ? 'selected' : '' }}>Keluar</option>
-                </select>
-            </div>
-
-            @if($search || $typeFilter !== 'all' || $productFilter !== 'all')
-                <a href="{{ route('log-stok.index') }}" class="btn btn-ghost" style="text-decoration: none; display: flex; align-items: center;">Reset Filter</a>
-            @endif
-        </form>
-
-        <div id="logStokTableContainer">
-            @include('log-stok._table')
+    <form class="toolbar !flex-row !flex-wrap gap-3" id="logStokFilterForm" method="GET" action="{{ route('log-stok.index') }}">
+        <div class="relative flex-1 min-w-[300px]">
+            <input class="field w-full" name="search" id="logStokSearch" type="text" placeholder="Cari produk atau keterangan..." value="{{ $search }}" autocomplete="off">
         </div>
-    </article>
+
+        <div class="min-w-[200px]">
+            <select class="field w-full" name="produk_id" id="logStokProduct">
+                <option value="all" {{ $productFilter === 'all' ? 'selected' : '' }}>Semua Produk</option>
+                @foreach($products as $prod)
+                    <option value="{{ $prod->id }}" {{ (string)$productFilter === (string)$prod->id ? 'selected' : '' }}>
+                        {{ $prod->nama }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="min-w-[150px]">
+            <select class="field w-full" name="type" id="logStokType">
+                <option value="all" {{ $typeFilter === 'all' ? 'selected' : '' }}>Semua Tipe</option>
+                <option value="Masuk" {{ $typeFilter === 'Masuk' ? 'selected' : '' }}>Masuk</option>
+                <option value="Keluar" {{ $typeFilter === 'Keluar' ? 'selected' : '' }}>Keluar</option>
+            </select>
+        </div>
+
+        @if($search || $typeFilter !== 'all' || $productFilter !== 'all')
+            <a href="{{ route('log-stok.index') }}" class="btn btn-ghost" style="text-decoration: none; display: flex; align-items: center;">Reset Filter</a>
+        @endif
+    </form>
+
+    <div id="logStokTableContainer">
+        @include('log-stok._table')
+    </div>
 </section>
 
 <script>
