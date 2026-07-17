@@ -71,7 +71,7 @@
 
             <div class="max-w-full overflow-x-auto pb-2">
                 <table class="w-full min-w-[600px] border-collapse text-left text-sm text-slate-600 dark:text-slate-400">
-                    <thead class="bg-slate-50/80 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800/50">
+                    <thead class="bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800/50">
                         <tr>
                             <th class="w-12 rounded-l-lg border-b border-slate-100 py-3 text-center dark:border-slate-800/80">No</th>
                             <th class="border-b border-slate-100 py-3 dark:border-slate-800/80">Nama Barang</th>
@@ -83,9 +83,9 @@
                     <tbody class="align-top">
                         @forelse($items as $i => $item)
                             <tr class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                                <td class="font-medium text-slate-500 dark:text-zinc-400 w-12 text-center border-b border-slate-100 dark:border-slate-800/80">{{ $i + 1 }}</td>
+                                <td class="text-slate-500 dark:text-zinc-400 w-12 text-center border-b border-slate-100 dark:border-slate-800/80">{{ $i + 1 }}</td>
                                 <td class="border-b border-slate-100 dark:border-slate-800/80 py-4">
-                                    <span class="block font-medium text-slate-700 dark:text-slate-200">{{ $item['name'] }}</span>
+                                    <span class="block font-semibold text-slate-700 dark:text-slate-200">{{ $item['name'] }}</span>
                                 </td>
                                 <td class="text-right border-b border-slate-100 dark:border-slate-800/80 w-32 py-4">
                                     <div class="inline-flex shrink-0 items-center justify-center gap-1 rounded bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
@@ -95,7 +95,7 @@
                                 <td class="text-right whitespace-nowrap text-slate-600 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800/80 w-40 py-4">
                                     Rp {{ number_format($item['price'], 0, ',', '.') }}
                                 </td>
-                                <td class="text-right whitespace-nowrap font-medium text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800/80 w-40 py-4">
+                                <td class="text-right whitespace-nowrap text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800/80 w-40 py-4">
                                     Rp {{ number_format($item['subtotal'], 0, ',', '.') }}
                                 </td>
                             </tr>
@@ -107,8 +107,8 @@
                     </tbody>
                     <tfoot class="border-t-2 border-slate-100 text-sm font-semibold dark:border-slate-800/80">
                         <tr>
-                            <td colspan="4" class="py-5 text-right font-medium text-slate-600 dark:text-slate-400">Total Akhir</td>
-                            <td class="py-5 text-right text-lg font-bold text-slate-800 dark:text-slate-100">
+                            <td colspan="4" class="py-5 text-right font-semibold text-slate-600 dark:text-slate-400">Total Akhir</td>
+                            <td class="py-5 text-right font-bold text-slate-800 dark:text-slate-100">
                                 Rp {{ number_format((float) $transaksi->total_harga, 0, ',', '.') }}
                             </td>
                         </tr>

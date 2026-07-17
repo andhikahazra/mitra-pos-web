@@ -56,9 +56,9 @@
                 <tbody>
                     @forelse($activeBatches as $batch)
                         <tr>
-                            <td class="font-mono text-xs font-bold text-slate-400 dark:text-zinc-500">#{{ $batch->id }}</td>
+                            <td class="font-mono text-xs text-slate-400 dark:text-zinc-500">#{{ $batch->id }}</td>
                             <td>{{ $batch->tanggal_masuk ? $batch->tanggal_masuk->format('d M Y') : '-' }}</td>
-                            <td class="font-bold text-slate-700 dark:text-zinc-300">Rp {{ number_format($batch->harga_beli, 0, ',', '.') }}</td>
+                            <td class="font-semibold text-slate-700 dark:text-zinc-300">Rp {{ number_format($batch->harga_beli, 0, ',', '.') }}</td>
                             <td class="text-slate-400 dark:text-zinc-500">{{ $batch->detailBarangMasuk->jumlah ?? '-' }}</td>
                             <td>
                                 <div class="flex items-center gap-2">
@@ -69,7 +69,7 @@
                                         @endphp
                                         <div class="h-full bg-green-500" style="width: {{ $persen }}%"></div>
                                     </div>
-                                    <span class="font-extrabold text-green-600">{{ $batch->qty_sisa }}</span>
+                                    <span class="font-bold text-green-600">{{ $batch->qty_sisa }}</span>
                                 </div>
                             </td>
                             <td>

@@ -110,9 +110,9 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50/50 border-b border-slate-100">
-                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest w-1/3">Komponen Perhitungan</th>
-                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest w-1/3 text-center">Persamaan / Formula</th>
-                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest w-1/3 text-right">Hasil Akhir</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3">Komponen Perhitungan</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3 text-center">Persamaan / Formula</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3 text-right">Hasil Akhir</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50">
@@ -124,12 +124,12 @@
                                     data-result="{{ number_format($usageLT, 2) }}"
                                     title="Klik untuk detail perhitungan">
                                     <td class="px-6 py-5">
-                                        <p class="text-xs font-bold text-slate-700">Demand During Lead Time</p>
-                                        <p class="text-[10px] text-slate-400 mt-1 italic">Rata-rata permintaan harian (d) &times; Lead Time (L)</p>
+                                        <p class="text-xs font-semibold text-slate-700">Demand During Lead Time</p>
+                                        <p class="text-xs text-slate-400 mt-1 italic">Rata-rata permintaan harian (d) &times; Lead Time (L)</p>
                                     </td>
                                     <td class="px-6 py-5 text-center">
                                         <div class="flex flex-col gap-1">
-                                            <span class="text-[10px] font-mono font-bold text-blue-400 tracking-widest">d &times; L</span>
+                                            <span class="text-xs font-mono font-semibold text-blue-400 tracking-wider">d &times; L</span>
                                             <span class="text-xs font-mono text-slate-500">{{ number_format($rataPenjualan, 2) }} &times; {{ $leadTime }}</span>
                                         </div>
                                     </td>
@@ -147,12 +147,12 @@
                                     data-result="{{ number_format($safetyStock, 2) }}"
                                     title="Klik untuk detail perhitungan">
                                     <td class="px-6 py-5">
-                                        <p class="text-xs font-bold text-slate-700">Safety Stock (SS)</p>
-                                        <p class="text-[10px] text-slate-400 mt-1 italic">Z &times; &sigma; &times; &radic;L</p>
+                                        <p class="text-xs font-semibold text-slate-700">Safety Stock (SS)</p>
+                                        <p class="text-xs text-slate-400 mt-1 italic">Z &times; &sigma; &times; &radic;L</p>
                                     </td>
                                     <td class="px-6 py-5 text-center">
                                         <div class="flex flex-col gap-1">
-                                            <span class="text-[10px] font-mono font-bold text-blue-400 tracking-widest">Z &times; &sigma; &times; &radic;L</span>
+                                            <span class="text-xs font-mono font-semibold text-blue-400 tracking-wider">Z &times; &sigma; &times; &radic;L</span>
                                             <span class="text-xs font-mono text-slate-500">{{ $zScore }} &times; {{ number_format($standarDeviasi, 2) }} &times; {{ number_format($sqrtLT, 2) }}</span>
                                         </div>
                                     </td>
@@ -169,18 +169,18 @@
                                     data-result="{{ $rop }}"
                                     title="Klik untuk detail perhitungan">
                                     <td class="px-6 py-5">
-                                        <p class="text-xs font-black text-blue-900 uppercase tracking-tight">Reorder Point (ROP)</p>
-                                        <p class="text-[10px] text-blue-400 mt-1 font-bold italic">(d &times; L) + SS</p>
+                                        <p class="text-xs font-bold text-blue-900 uppercase tracking-tight">Reorder Point (ROP)</p>
+                                        <p class="text-xs text-blue-400 mt-1 italic">(d &times; L) + SS</p>
                                     </td>
                                     <td class="px-6 py-5 text-center border-x border-blue-100">
                                         <div class="flex flex-col gap-1">
-                                            <span class="text-[10px] font-mono font-bold text-blue-500 tracking-widest">(d &times; L) + SS</span>
+                                            <span class="text-xs font-mono font-semibold text-blue-500 tracking-wider">(d &times; L) + SS</span>
                                             <span class="text-xs font-mono text-blue-700 font-bold">{{ number_format($usageLT, 2) }} + {{ number_format($safetyStock, 2) }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-5 text-right">
-                                        <span class="text-2xl font-black text-blue-900">{{ $rop }}</span>
-                                        <span class="text-[10px] font-bold text-blue-400 ml-1 uppercase">Unit</span>
+                                        <span class="text-lg font-bold text-blue-900">{{ $rop }}</span>
+                                        <span class="text-xs font-mono font-semibold text-blue-400 ml-1 uppercase">Unit</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -205,13 +205,13 @@
                                 {{-- Kolom Label Tetap di Kiri --}}
                                 <div class="flex-none w-20 flex flex-col gap-1 mr-4">
                                     <div class="h-[38px] flex items-center">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase leading-tight">Penjualan<br>(x<sub>i</sub>)</span>
+                                        <span class="text-[9px] font-bold text-slate-400 uppercase leading-tight">Penjualan<br>(x<sub>i</sub>)</span>
                                     </div>
                                     <div class="h-[26px] flex items-center">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase leading-tight">Kuadrat<br>Selisih</span>
+                                        <span class="text-[9px] font-bold text-slate-400 uppercase leading-tight">Kuadrat<br>Selisih</span>
                                     </div>
                                     <div class="h-[14px] flex items-center">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase">Tanggal</span>
+                                        <span class="text-[9px] font-bold text-slate-400 uppercase">Tanggal</span>
                                     </div>
                                 </div>
 
@@ -231,7 +231,7 @@
                                              title="Klik untuk detail harian">
                                              {{-- Penjualan --}}
                                             <div class="h-[38px]">
-                                                <div class="py-2 border border-slate-300 rounded text-[11px] font-black" 
+                                                <div class="py-2 border border-slate-300 rounded text-[11px] font-bold" 
                                                      style="{{ ($qty ?? 0) > 0 ? 'background-color: #1E40AF !important; color: #ffffff !important; border-color: #1E40AF !important;' : 'background-color: #f8fafc !important; color: #64748b !important;' }}">
                                                     {{ $qty ?? 0 }}
                                                 </div>
@@ -266,9 +266,9 @@
                                 <table class="w-full text-left border-collapse">
                                     <thead class="bg-slate-50">
                                         <tr>
-                                            <th class="px-4 py-2 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">Langkah</th>
-                                            <th class="px-4 py-2 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">Deskripsi / Proses</th>
-                                            <th class="px-4 py-2 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200 text-right">Hasil Kalkulasi</th>
+<th class="px-4 py-2 text-xs font-semibold text-slate-600 uppercase border-b border-slate-200">Langkah</th>
+                                        <th class="px-4 py-2 text-xs font-semibold text-slate-600 uppercase border-b border-slate-200">Deskripsi / Proses</th>
+                                        <th class="px-4 py-2 text-xs font-semibold text-slate-600 uppercase border-b border-slate-200 text-right">Hasil Kalkulasi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-[11px]">
@@ -370,18 +370,18 @@
                                             data-variance="{{ number_format($variance, 2) }}"
                                             data-result="{{ number_format($standarDeviasi, 2) }}"
                                             title="Klik untuk melihat penjelasan detail">
-                                            <td class="px-4 py-2 border-b border-slate-100 font-bold text-slate-700 font-black">5. Standar Deviasi (&sigma;)</td>
+                                            <td class="px-4 py-2 border-b border-slate-100 font-bold text-slate-700">5. Standar Deviasi (&sigma;)</td>
                                             <td class="px-4 py-2 border-b border-slate-100 text-slate-500 italic">
                                                 Akar Kuadrat dari Varians (&radic;s&sup2;)<br>
                                                 <span class="text-[9px] font-mono text-slate-400">
                                                     &radic;{{ number_format($variance, 2) }} = {{ number_format($standarDeviasi, 2) }}
                                                 </span>
                                             </td>
-                                            <td class="px-4 py-2 border-b border-slate-100 text-right font-mono font-black text-blue-700">{{ number_format($standarDeviasi, 2) }}</td>
+                                            <td class="px-4 py-2 border-b border-slate-100 text-right font-mono font-bold text-blue-700">{{ number_format($standarDeviasi, 2) }}</td>
                                         </tr>
                                         <tr class="bg-blue-50/30">
                                             <td class="px-4 py-2 font-bold text-blue-900" colspan="2">Kesimpulan Analisis Variabel Demand</td>
-                                            <td class="px-4 py-2 text-right font-mono font-black text-blue-900">Valid & Terverifikasi</td>
+                                            <td class="px-4 py-2 text-right font-mono font-bold text-blue-900">Valid & Terverifikasi</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1060,7 +1060,7 @@
                             <div class="max-h-60 overflow-y-auto pr-1 custom-scroll">
                                 <table class="w-full text-left border-collapse">
                                     <thead>
-                                        <tr class="border-b border-slate-200 dark:border-slate-800 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                                        <tr class="border-b border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                                             <th class="px-4 py-2 w-1/12">No</th>
                                             <th class="px-4 py-2 w-1/3">Kode</th>
                                             <th class="px-4 py-2">Pesan</th>

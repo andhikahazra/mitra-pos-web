@@ -11,7 +11,7 @@
         <tbody>
             @forelse($suppliers as $supplier)
                 <tr>
-                    <td class="font-medium text-slate-700 dark:text-slate-200">{{ $supplier->nama }}</td>
+                    <td class="font-semibold text-slate-700 dark:text-slate-200">{{ $supplier->nama }}</td>
                     <td>{{ $supplier->no_telp ?? '-' }}</td>
                     <td class="max-w-xs truncate">{{ $supplier->alamat ?? '-' }}</td>
                     <td class="text-right">

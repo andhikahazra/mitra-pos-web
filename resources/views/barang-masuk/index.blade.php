@@ -87,7 +87,7 @@
                         <tr>
                             <td>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-slate-900 dark:text-zinc-100">#{{ $item->kode }}</span>
+                                    <span class="font-semibold text-slate-900 dark:text-zinc-100">#{{ $item->kode }}</span>
                                     <span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">{{ $item->tanggal_pesan ? $item->tanggal_pesan->format('d M Y, H:i') : '-' }}</span>
                                 </div>
                             </td>
@@ -96,19 +96,19 @@
                                     <div class="h-8 w-8 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-400 dark:text-zinc-500">
                                         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                                     </div>
-                                    <span class="font-medium text-slate-700 dark:text-zinc-300">{{ $item->supplier->nama ?? '-' }}</span>
+                                    <span class="font-semibold text-slate-700 dark:text-zinc-300">{{ $item->supplier->nama ?? '-' }}</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-slate-700 dark:text-zinc-300">{{ $totalItems }} Produk</span>
-                                    <span class="text-[11px] text-slate-400 dark:text-zinc-500 truncate max-w-[200px]">
+                                    <span class="font-semibold text-slate-700 dark:text-zinc-300">{{ $totalItems }} Produk</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-zinc-500 truncate max-w-[200px]">
                                         {{ $firstItem?->produk?->nama ?? '-' }} {{ $totalItems > 1 ? '...' : '' }}
                                     </span>
                                 </div>
                             </td>
                             <td>
-                                <span class="font-extrabold text-slate-900 dark:text-zinc-100 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
+                                <span class="font-bold text-slate-900 dark:text-zinc-100 text-sm">Rp {{ number_format($totalValue, 0, ',', '.') }}</span>
                             </td>
                             <td>
                                 @if (strtolower($item->status) === 'disetujui')

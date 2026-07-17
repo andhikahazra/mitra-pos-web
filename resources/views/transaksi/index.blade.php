@@ -95,10 +95,10 @@
             <tbody>
                 @forelse($transaksi as $trx)
                     <tr>
-                        <td class="font-bold text-slate-900 dark:text-slate-100">{{ $trx->kode }}</td>
+                        <td class="font-semibold text-slate-900 dark:text-slate-100">{{ $trx->kode }}</td>
                         <td>
-                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100">{{ $trx->tanggal ? $trx->tanggal->format('d M Y') : '-' }}</div>
-                            <div class="text-xs text-slate-500 dark:text-slate-400">{{ $trx->tanggal ? $trx->tanggal->format('H:i') : '' }} WIB</div>
+<div class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ $trx->tanggal ? $trx->tanggal->format('d M Y') : '-' }}</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400">{{ $trx->tanggal ? $trx->tanggal->format('H:i') : '' }} WIB</div>
                         </td>
                         <td>{{ $trx->user->nama ?? '-' }}</td>
                         <td>

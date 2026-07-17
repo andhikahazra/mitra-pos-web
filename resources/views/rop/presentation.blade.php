@@ -31,9 +31,9 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50/50 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800/60">
-                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-1/3">Komponen Perhitungan</th>
-                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-1/3 text-center">Persamaan / Formula</th>
-                                    <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-1/3 text-right">Hasil Akhir</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3">Komponen Perhitungan</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3 text-center">Persamaan / Formula</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/3 text-right">Hasil Akhir</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -199,9 +199,9 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-50/50 dark:bg-slate-950/20 border-b border-slate-100 dark:border-slate-800/60">
-                                <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-1/4">Langkah</th>
-                                <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-2/3">Deskripsi / Proses</th>
-                                <th class="px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-1/12 text-right">Hasil Kalkulasi</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/4">Langkah</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-2/3">Deskripsi / Proses</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider w-1/12 text-right">Hasil Kalkulasi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">

@@ -79,11 +79,11 @@
                                     <tr>
                                         <td class="px-4 py-3">
                                             <div class="flex flex-col">
-                                                <span class="font-medium text-slate-800 dark:text-slate-200">{{ $item->produk->nama ?? '-' }}</span>
+                                                <span class="font-semibold text-slate-800 dark:text-slate-200">{{ $item->produk->nama ?? '-' }}</span>
                                                 <span class="text-[10px] text-slate-400 dark:text-zinc-500">SKU: {{ $item->produk->sku ?? '-' }}</span>
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-right text-slate-600 dark:text-slate-300 font-bold">{{ $item->jumlah }} Unit</td>
+                                        <td class="px-4 py-3 text-right text-slate-600 dark:text-slate-300 font-semibold">{{ $item->jumlah }} Unit</td>
                                         <td class="px-4 py-3 text-right text-slate-600 dark:text-slate-300">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                                         <td class="px-4 py-3 text-right font-medium text-slate-800 dark:text-slate-200">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
                                     </tr>
@@ -92,7 +92,7 @@
                             <tfoot class="border-t-2 border-slate-100 dark:border-slate-800 bg-slate-50/30">
                                 <tr>
                                     <td colspan="3" class="px-4 py-3 text-right font-medium text-slate-600 dark:text-slate-400 uppercase text-xs tracking-wider">Total Nilai Dokumen</td>
-                                    <td class="px-4 py-3 text-right font-bold text-slate-800 dark:text-slate-200 text-lg">Rp {{ number_format($grandTotal, 0, ',', '.') }}</td>
+                                    <td class="px-4 py-3 text-right font-bold text-slate-800 dark:text-slate-200">Rp {{ number_format($grandTotal, 0, ',', '.') }}</td>
                                 </tr>
                             </tfoot>
                         </table>

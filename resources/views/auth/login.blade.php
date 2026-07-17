@@ -22,20 +22,7 @@
                     <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-2xl font-bold text-white">M</div>
                     <h1 class="text-4xl font-bold leading-tight text-white">MitraPOS</h1>
                     <p class="mt-3 text-base text-blue-100">Sistem manajemen toko kemasan yang membantu Anda mengontrol stok, transaksi, dan pertumbuhan bisnis, semuanya dalam satu tempat.</p>
-                    <div class="mt-10 flex gap-8 text-sm text-blue-200">
-                        <div class="flex-1">
-                            <p class="text-2xl font-bold text-white">Real-time</p>
-                            <p class="mt-1">Dashboard & analitik</p>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-2xl font-bold text-white">Batch</p>
-                            <p class="mt-1">Batching</p>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-2xl font-bold text-white">ROP</p>
-                            <p class="mt-1">Auto restok alert</p>
-                        </div>
-                    </div>
+
                 </div>
             </aside>
 

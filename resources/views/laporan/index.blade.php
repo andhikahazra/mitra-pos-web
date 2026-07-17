@@ -67,9 +67,9 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b border-slate-200 dark:border-zinc-800">
-                            <th class="py-3 px-5 text-left font-medium text-slate-500 uppercase tracking-wider text-[11px]">Produk</th>
-                            <th class="py-3 px-5 text-center font-medium text-slate-500 uppercase tracking-wider text-[11px]">Terjual</th>
-                            <th class="py-3 px-5 text-right font-medium text-slate-500 uppercase tracking-wider text-[11px]">Total Penjualan</th>
+                            <th class="py-3 px-5 text-left font-semibold text-slate-500 uppercase tracking-wider text-xs">Produk</th>
+                            <th class="py-3 px-5 text-center font-semibold text-slate-500 uppercase tracking-wider text-xs">Terjual</th>
+                            <th class="py-3 px-5 text-right font-semibold text-slate-500 uppercase tracking-wider text-xs">Total Penjualan</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
@@ -78,7 +78,7 @@
                                 <td class="py-3 px-5 whitespace-nowrap">
                                     <div class="flex items-center gap-3">
                                         <span class="text-xs font-semibold text-slate-400 w-4">{{ $index + 1 }}.</span>
-                                        <span class="font-medium text-slate-800 dark:text-zinc-200">{{ $top->produk->nama ?? '-' }}</span>
+                                        <span class="font-semibold text-slate-800 dark:text-zinc-200">{{ $top->produk->nama ?? '-' }}</span>
                                     </div>
                                 </td>
                                 <td class="py-3 px-5 text-center font-mono text-slate-600 dark:text-zinc-400">{{ (int)$top->total_qty }}</td>
@@ -103,16 +103,16 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b border-slate-200 dark:border-zinc-800">
-                            <th class="py-3 px-5 text-left font-medium text-slate-500 uppercase tracking-wider text-[11px]">Tanggal</th>
-                            <th class="py-3 px-5 text-center font-medium text-slate-500 uppercase tracking-wider text-[11px]">Transaksi</th>
-                            <th class="py-3 px-5 text-right font-medium text-slate-500 uppercase tracking-wider text-[11px]">Omset (Rp)</th>
+                            <th class="py-3 px-5 text-left font-semibold text-slate-500 uppercase tracking-wider text-xs">Tanggal</th>
+                            <th class="py-3 px-5 text-center font-semibold text-slate-500 uppercase tracking-wider text-xs">Transaksi</th>
+                            <th class="py-3 px-5 text-right font-semibold text-slate-500 uppercase tracking-wider text-xs">Omset (Rp)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
                         @forelse($dailyStats as $stat)
                             <tr class="hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors">
                                 <td class="py-3 px-5 whitespace-nowrap">
-                                    <span class="font-medium text-slate-800 dark:text-zinc-200">{{ date('d M Y', strtotime($stat->date)) }}</span>
+                                    <span class="font-semibold text-slate-800 dark:text-zinc-200">{{ date('d M Y', strtotime($stat->date)) }}</span>
                                     <span class="ml-2 text-xs text-slate-400">{{ date('D', strtotime($stat->date)) }}</span>
                                 </td>
                                 <td class="py-3 px-5 text-center font-mono text-slate-600 dark:text-zinc-400">{{ $stat->count }}</td>
