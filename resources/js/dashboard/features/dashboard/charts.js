@@ -1,4 +1,4 @@
-export function initCharts(charts = {}) {
+export function initCharts(charts = {}, range = 'today') {
     if (!window.Chart) {
         return;
     }
@@ -6,6 +6,8 @@ export function initCharts(charts = {}) {
     const isDark = document.documentElement.classList.contains('dark');
     const gridColor = isDark ? 'rgba(63, 63, 70, 0.4)' : 'rgba(226, 232, 240, 0.6)';
     const tickColor = isDark ? '#71717a' : '#94a3b8';
+
+    const hideDateLabels = range === '1m';
 
     const salesRows = Array.isArray(charts.sales7days) ? charts.sales7days : [];
     const stockRows = Array.isArray(charts.stockByCategory) ? charts.stockByCategory : [];
@@ -81,7 +83,7 @@ export function initCharts(charts = {}) {
                     x: {
                         grid: { display: false },
                         border: { display: false },
-                        ticks: { color: tickColor, font: { size: 11 } },
+                        ticks: { color: tickColor, font: { size: 11 }, display: !hideDateLabels },
                     },
                     y: {
                         beginAtZero: true,

@@ -10,7 +10,7 @@
 
     {{-- Summary Cards --}}
     <div class="kpi-strip mb-4">
-        <article class="kpi-card border-t-2 border-t-indigo-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Omzet</p>
                 <svg class="w-4 h-4 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -19,7 +19,7 @@
             <p class="kpi-trend text-slate-500 text-xs mt-1">{{ $summary['total_transaksi'] }} transaksi &middot; {{ $summary['total_item'] }} item</p>
         </article>
 
-        <article class="kpi-card border-t-2 border-t-emerald-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Pendapatan</p>
                 <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -28,7 +28,7 @@
             <p class="kpi-trend text-slate-500 text-xs mt-1">Total Lunas</p>
         </article>
 
-        <article class="kpi-card border-t-2 border-t-amber-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Piutang</p>
                 <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -37,23 +37,23 @@
             <p class="kpi-trend text-slate-500 text-xs mt-1">Belum Terbayar</p>
         </article>
 
-        <article class="kpi-card border-t-2 border-t-slate-400">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Rincian Metode</p>
                 <svg class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            <div class="mt-2 grid grid-cols-3 gap-2 text-xs">
-                <div>
-                    <p class="text-slate-400 dark:text-zinc-500">Tunai</p>
-                    <p class="font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</p>
+            <div class="mt-3 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-slate-500 dark:text-zinc-400">Tunai</span>
+                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</span>
                 </div>
-                <div>
-                    <p class="text-slate-400 dark:text-zinc-500">QRIS</p>
-                    <p class="font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-slate-500 dark:text-zinc-400">QRIS</span>
+                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</span>
                 </div>
-                <div>
-                    <p class="text-slate-400 dark:text-zinc-500">Transfer</p>
-                    <p class="font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-slate-500 dark:text-zinc-400">Transfer</span>
+                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</span>
                 </div>
             </div>
         </article>

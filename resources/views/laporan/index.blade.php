@@ -20,7 +20,7 @@
 
     {{-- Financial Summary KPI --}}
     <div class="kpi-strip mb-6">
-        <article class="kpi-card border-t-2 border-t-blue-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Omset</p>
                 <svg class="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -29,7 +29,7 @@
             <p class="kpi-trend text-slate-500 text-xs mt-1">Total Penjualan Kotor</p>
         </article>
         
-        <article class="kpi-card border-t-2 border-t-amber-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Modal</p>
                 <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -38,7 +38,7 @@
             <p class="kpi-trend text-slate-500 text-xs mt-1">Harga Pokok Penjualan</p>
         </article>
 
-        <article class="kpi-card border-t-2 border-t-emerald-500 bg-emerald-50/30 dark:bg-emerald-900/10">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">Laba Kotor</p>
                 <svg class="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -47,7 +47,7 @@
             <p class="kpi-trend text-emerald-600/80 text-xs mt-1">Keuntungan Penjualan</p>
         </article>
 
-        <article class="kpi-card border-t-2 border-t-slate-400">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Transaksi</p>
                 <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>

@@ -36,7 +36,8 @@ class BarangMasukController extends Controller
         }
 
         $incomingGoods = $query->orderByDesc('id')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         // Hitung Modal Keseluruhan (Hanya yang Disetujui)
         $totalModalOverall = DB::table('barang_masuk')

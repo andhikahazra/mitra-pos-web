@@ -33,7 +33,7 @@
                         </span>
                     </td>
                     <td class="text-right">
-                        <a href="{{ route('stok-batch.show', $product) }}" class="btn btn-ghost btn-sm">
+                        <a href="{{ route('stok-batch.show', $product) }}" class="btn btn-ghost btn-sm hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-900/20 dark:hover:text-blue-300">
                             Detail
                             <svg viewBox="0 0 24 24" class="h-3 w-3 inline ml-1" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 7l5 5-5 5M6 12h12"/></svg>
                         </a>

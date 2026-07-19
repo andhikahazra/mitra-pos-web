@@ -4,8 +4,7 @@
 <section class="feature-section active" style="display:block;opacity:1;visibility:visible;" id="section-incoming-goods">
     <div class="section-head mb-6">
         <div>
-            <h1>Approval Barang Masuk</h1>
-            <p class="text-slate-500 dark:text-zinc-400 text-sm mt-1">Kelola dan tinjau riwayat pengadaan stok barang.</p>
+            <h1>Barang Masuk</h1>
         </div>
     </div>
 
@@ -120,10 +119,10 @@
                                 @endif
                             </td>
                             <td class="text-right">
-                                <a href="{{ route('barang-masuk.show', $item->id) }}" class="btn btn-ghost btn-sm">
-                                    Review
-                                    <svg viewBox="0 0 24 24" class="h-3 w-3 inline ml-1" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 7l5 5-5 5M6 12h12"/></svg>
-                                </a>
+                            <a href="{{ route('barang-masuk.show', $item->id) }}" class="btn btn-ghost btn-sm hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-900/20 dark:hover:text-blue-300">
+                                Review
+                                <svg viewBox="0 0 24 24" class="h-3 w-3 inline ml-1" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 7l5 5-5 5M6 12h12"/></svg>
+                            </a>
                             </td>
                         </tr>
                     @empty
@@ -142,5 +141,9 @@
                 </tbody>
             </table>
         </div>
+
+    <div class="mt-4">
+        {{ $incomingGoods->links() }}
+    </div>
 </section>
 @endsection

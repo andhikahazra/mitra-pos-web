@@ -366,7 +366,10 @@
     }
 
     .kpi-strip {
-        @apply grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+        @apply grid gap-3;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        @media (min-width: 640px) { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        @media (min-width: 1024px) { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
     }
 
     .kpi-card {
@@ -1190,7 +1193,8 @@
     }
     
     .kpi-strip {
-        @apply grid-cols-1;
+        @apply grid gap-3;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
     
     .overview-grid, .account-panels-grid {
@@ -1518,7 +1522,25 @@
     }
 
     /* Receipt/Struk print */
-    .receipt-printable {
+    #alertPopupOverlay {
+    animation: fadeIn 0.15s ease-out;
+}
+
+#alertPopup {
+    animation: slideUp 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.receipt-printable {
         width: 80mm;
         font-family: 'Courier New', monospace;
         font-size: 12px;

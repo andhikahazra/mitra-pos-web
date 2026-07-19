@@ -5,7 +5,7 @@
     <div class="section-head">
         <div>
             <h1>Manajemen User</h1>
-            <p>Kelola akun pengguna, role, dan status akses.</p>
+            
         </div>
         <a class="btn btn-primary" href="{{ route('users.create') }}">Tambah User</a>
     </div>

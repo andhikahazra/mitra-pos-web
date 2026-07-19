@@ -22,7 +22,7 @@ function bootDashboard() {
     const payload = window.__DASHBOARD_DATA__;
     if (payload) {
         initOverview(payload);
-        initCharts(payload.charts);
+        initCharts(payload.charts, payload.range);
     }
 }
 

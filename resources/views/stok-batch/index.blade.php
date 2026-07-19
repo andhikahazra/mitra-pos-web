@@ -10,7 +10,7 @@
 
     {{-- Summary Cards Assets --}}
     <div class="kpi-strip mb-4">
-        <article class="kpi-card border-t-2 border-t-indigo-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Modal Aset</p>
                 <svg class="w-4 h-4 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -18,7 +18,7 @@
             <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-800 dark:text-zinc-100">Rp {{ number_format($summary['total_modal'], 0, ',', '.') }}</h3>
             <p class="kpi-trend text-slate-500 text-xs mt-1">Uang yang mengendap di stok</p>
         </article>
-        <article class="kpi-card border-t-2 border-t-emerald-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Total Nilai Jual</p>
                 <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -26,7 +26,7 @@
             <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-800 dark:text-zinc-100">Rp {{ number_format($summary['total_aset'], 0, ',', '.') }}</h3>
             <p class="kpi-trend text-slate-500 text-xs mt-1">Potensi jika semua terjual</p>
         </article>
-        <article class="kpi-card border-t-2 border-t-amber-500">
+        <article class="kpi-card">
             <div class="flex justify-between items-start">
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Potensi Margin</p>
                 <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>

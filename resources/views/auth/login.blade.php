@@ -19,20 +19,19 @@
             {{-- Left: Brand Panel --}}
             <aside class="hidden items-center justify-center bg-[#1E40AF] p-12 lg:flex">
                 <div class="max-w-md">
-                    <div class="mb-8 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-2xl font-bold text-white">M</div>
-                    <h1 class="text-4xl font-bold leading-tight text-white">MitraPOS</h1>
-                    <p class="mt-3 text-base text-blue-100">Sistem manajemen toko kemasan yang membantu Anda mengontrol stok, transaksi, dan pertumbuhan bisnis, semuanya dalam satu tempat.</p>
-
+                    <div class="mb-5 flex items-center gap-3">
+                        <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-lg font-bold text-white">M</div>
+                        <h1 class="text-2xl font-bold leading-tight text-white">MitraPOS</h1>
+                    </div>
                 </div>
             </aside>
 
             {{-- Right: Login Form --}}
             <div class="flex items-center justify-center px-6 py-12">
                 <div class="w-full max-w-sm">
-                    <div class="mb-8">
-                        <div class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E40AF] text-sm font-bold text-white">M</div>
+                    <div class="mb-8 flex items-center gap-3">
+                        <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#1E40AF] text-sm font-bold text-white">M</div>
                         <h2 class="text-2xl font-bold text-slate-900">Masuk ke dashboard</h2>
-                        <p class="mt-1.5 text-sm text-slate-500">Gunakan akun pemilik toko Anda</p>
                     </div>
 
                     @if ($errors->any())

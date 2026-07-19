@@ -161,17 +161,21 @@
                             default => 'text-slate-600 dark:text-zinc-300',
                         };
                     @endphp
-                    <div class="alert-row {{ $level }} flex items-start gap-3 transition-all duration-150 hover:shadow-sm">
+                    <button type="button" class="alert-btn alert-row {{ $level }} w-full text-left flex items-start gap-3 transition-all duration-150 hover:shadow-sm cursor-pointer"
+                        data-alert-level="{{ $level }}" data-alert-label="{{ $alert['label'] }}" data-alert-text="{{ $alert['text'] ?? '' }}">
                         <div class="flex-shrink-0 mt-0.5">
                             {!! $icon !!}
                         </div>
-                        <div class="min-w-0 space-y-0.5">
+                        <div class="min-w-0 space-y-0.5 flex-1">
                             <p class="m-0 text-xs font-semibold {{ $labelClass }}">{{ $alert['label'] }}</p>
                             @if($alert['text'])
                                 <p class="m-0 text-xs text-slate-500 dark:text-zinc-400 leading-relaxed">{{ $alert['text'] }}</p>
                             @endif
                         </div>
-                    </div>
+                        <div class="flex-shrink-0 ml-2">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                        </div>
+                    </button>
                 @empty
                     <div class="flex flex-col items-center justify-center py-10 text-center">
                         <div class="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-3">
@@ -187,6 +191,70 @@
         </article>
     </div>
 </section>
+
+{{-- Alert Detail Popup --}}
+<div id="alertPopupOverlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div id="alertPopup" class="w-full max-w-sm rounded-xl border border-slate-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-950">
+        <div class="flex items-start gap-3 p-5">
+            <div id="alertPopupIcon" class="flex-shrink-0 mt-0.5"></div>
+            <div class="min-w-0 flex-1">
+                <p id="alertPopupLabel" class="m-0 text-sm font-semibold"></p>
+                <p id="alertPopupText" class="m-0 mt-1 text-xs text-slate-500 dark:text-zinc-400 leading-relaxed"></p>
+            </div>
+            <button type="button" id="alertPopupClose" class="flex-shrink-0 -mr-1 -mt-1 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const overlay = document.getElementById('alertPopupOverlay');
+        const popupIcon = document.getElementById('alertPopupIcon');
+        const popupLabel = document.getElementById('alertPopupLabel');
+        const popupText = document.getElementById('alertPopupText');
+        const iconMap = {
+            danger: '<svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>',
+            warning: '<svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+            info: '<svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+            neutral: '<svg class="w-6 h-6 text-slate-400 dark:text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
+        };
+        const labelClassMap = {
+            danger: 'text-rose-700 dark:text-rose-400',
+            warning: 'text-amber-700 dark:text-amber-400',
+            info: 'text-blue-700 dark:text-blue-400',
+            neutral: 'text-slate-600 dark:text-zinc-300',
+        };
+
+        function openPopup(btn) {
+            const level = btn.dataset.alertLevel || 'neutral';
+            popupIcon.innerHTML = iconMap[level] || iconMap.neutral;
+            popupLabel.className = 'm-0 text-sm font-semibold ' + (labelClassMap[level] || labelClassMap.neutral);
+            popupLabel.textContent = btn.dataset.alertLabel || '';
+            popupText.textContent = btn.dataset.alertText || '';
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+        }
+
+        function closePopup() {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        }
+
+        document.querySelectorAll('.alert-btn').forEach((btn) => {
+            btn.addEventListener('click', () => openPopup(btn));
+        });
+
+        document.getElementById('alertPopupClose').addEventListener('click', closePopup);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closePopup();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePopup();
+        });
+    })();
+</script>
 
 {{-- Inject chart data untuk JS --}}
 <script>
