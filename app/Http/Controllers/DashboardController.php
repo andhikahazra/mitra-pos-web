@@ -192,6 +192,14 @@ class DashboardController extends Controller
                 'level' => 'danger',
                 'label' => 'Restock',
                 'text'  => $count . ' produk (' . $names . $suffix . ') menyentuh batas ROP. Peringatan segera restock!',
+                'products' => $restockItems->take(5)->map(function ($item) {
+                    return [
+                        'name' => $item['name'] ?? '-',
+                        'sku' => $item['sku'] ?? '-',
+                        'stok' => $item['stock'] ?? 0,
+                        'rop' => $item['rop'] ?? 0,
+                    ];
+                })->all(),
             ];
         }
 
@@ -205,6 +213,14 @@ class DashboardController extends Controller
                 'level' => 'warning',
                 'label' => 'Warning',
                 'text'  => $count . ' produk (' . $names . $suffix . ') mendekati batas kritis.',
+                'products' => $hampirHabisItems->take(5)->map(function ($item) {
+                    return [
+                        'name' => $item['name'] ?? '-',
+                        'sku' => $item['sku'] ?? '-',
+                        'stok' => $item['stock'] ?? 0,
+                        'rop' => $item['rop'] ?? 0,
+                    ];
+                })->all(),
             ];
         }
 
@@ -214,6 +230,24 @@ class DashboardController extends Controller
                 'level' => 'info',
                 'label' => 'Action',
                 'text'  => $pendingCount . ' dokumen barang masuk menunggu ACC.',
+                'pending_docs' => BarangMasuk::where('status', 'menunggu')
+                    ->with(['supplier', 'detail.produk'])
+                    ->take(5)
+                    ->get()
+                    ->map(function ($doc) {
+                        return [
+                            'id' => $doc->id,
+                            'kode' => $doc->kode,
+                            'supplier' => $doc->supplier->nama ?? '-',
+                            'tanggal' => $doc->tanggal_pesan,
+                            'total_value' => $doc->detail->sum(fn($d) => $d->jumlah * $d->harga),
+                            'items' => $doc->detail->take(3)->map(fn($d) => [
+                                'produk' => $d->produk->nama,
+                                'jumlah' => $d->jumlah,
+                                'harga' => $d->harga,
+                            ])->all(),
+                        ];
+                    })->all(),
             ];
         }
 
@@ -222,6 +256,7 @@ class DashboardController extends Controller
                 'level' => 'neutral',
                 'label' => 'Info',
                 'text'  => 'Seluruh stok utama dalam kondisi aman.',
+                'products' => [],
             ];
         }
 

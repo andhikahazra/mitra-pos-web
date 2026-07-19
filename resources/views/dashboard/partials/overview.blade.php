@@ -162,7 +162,7 @@
                         };
                     @endphp
                     <button type="button" class="alert-btn alert-row {{ $level }} w-full text-left flex items-start gap-3 transition-all duration-150 hover:shadow-sm cursor-pointer"
-                        data-alert-level="{{ $level }}" data-alert-label="{{ $alert['label'] }}" data-alert-text="{{ $alert['text'] ?? '' }}">
+                        data-alert-level="{{ $level }}" data-alert-index="{{ $loop->index }}">
                         <div class="flex-shrink-0 mt-0.5">
                             {!! $icon !!}
                         </div>
@@ -192,19 +192,59 @@
     </div>
 </section>
 
+{{-- Inject chart data untuk JS --}}
+<script>
+    window.__DASHBOARD_DATA__ = {
+        range: @json($activeRange),
+        charts: @json($charts),
+        metrics: @json($metrics),
+        latestTransactions: @json($latestTransactions),
+        alerts: @json($alerts),
+    };
+</script>
+
+@if($alerts)
+<script>
+    window.__ALERT_DETAILS__ = [
+@foreach($alerts as $alert)
+    {
+        products: [
+            @foreach(($alert['products'] ?? []) as $p)
+                {name: '{{ $p['name'] }}', sku: '{{ $p['sku'] }}', stok: {{ $p['stok'] }}, rop: {{ $p['rop'] }} },
+            @endforeach
+        ],
+        pending_docs: [
+            @foreach(($alert['pending_docs'] ?? []) as $d)
+                {kode: '{{ $d['kode'] }}', supplier: '{{ $d['supplier'] }}', total_value: {{ $d['total_value'] }},
+                    items: [
+                        @foreach($d['items'] ?? [] as $i)
+                            {produk: '{{ $i['produk'] }}', jumlah: {{ $i['jumlah'] }}},
+                        @endforeach
+                    ]
+                },
+            @endforeach
+        ],
+    },
+@endforeach
+];
+</script>
+@endif
+
 {{-- Alert Detail Popup --}}
 <div id="alertPopupOverlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-    <div id="alertPopup" class="w-full max-w-sm rounded-xl border border-slate-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-950">
-        <div class="flex items-start gap-3 p-5">
-            <div id="alertPopupIcon" class="flex-shrink-0 mt-0.5"></div>
-            <div class="min-w-0 flex-1">
-                <p id="alertPopupLabel" class="m-0 text-sm font-semibold"></p>
-                <p id="alertPopupText" class="m-0 mt-1 text-xs text-slate-500 dark:text-zinc-400 leading-relaxed"></p>
+    <div id="alertPopup" class="w-full max-w-lg rounded-xl border border-slate-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-950">
+        <div class="flex items-start justify-between p-5 pb-3">
+            <div class="flex items-start gap-3">
+                <div id="alertPopupIcon" class="flex-shrink-0 mt-0.5"></div>
+                <div>
+                    <p id="alertPopupLabel" class="m-0 text-sm font-semibold"></p>
+                </div>
             </div>
-            <button type="button" id="alertPopupClose" class="flex-shrink-0 -mr-1 -mt-1 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">
+            <button type="button" id="alertPopupClose" class="flex-shrink-0 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
+        <div id="alertPopupBody" class="px-5 pb-5 space-y-2 max-h-[60vh] overflow-y-auto"></div>
     </div>
 </div>
 
@@ -213,7 +253,8 @@
         const overlay = document.getElementById('alertPopupOverlay');
         const popupIcon = document.getElementById('alertPopupIcon');
         const popupLabel = document.getElementById('alertPopupLabel');
-        const popupText = document.getElementById('alertPopupText');
+        const popupBody = document.getElementById('alertPopupBody');
+        const alertsData = window.__ALERT_DETAILS__ || (window.__DASHBOARD_DATA__ && window.__DASHBOARD_DATA__.alerts) || [];
         const iconMap = {
             danger: '<svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>',
             warning: '<svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
@@ -227,12 +268,64 @@
             neutral: 'text-slate-600 dark:text-zinc-300',
         };
 
+        function renderProductList(products) {
+            if (!products || products.length === 0) {
+                return '<p class="text-xs text-slate-400 dark:text-zinc-500">Tidak ada data.</p>';
+            }
+            return '<div class="divide-y divide-slate-100 dark:divide-zinc-800">' +
+                products.map(function(p) {
+                    return '<div class="flex items-center justify-between py-1.5">' +
+                        '<div class="flex flex-col min-w-0">' +
+                            '<span class="text-sm font-medium text-slate-700 dark:text-zinc-200 truncate">' + (p.name || '-') + '</span>' +
+                            '<span class="text-[10px] text-slate-400 dark:text-zinc-500 font-mono uppercase">' + (p.sku || '-') + '</span>' +
+                        '</div>' +
+                        '<div class="text-right flex-shrink-0 ml-3">' +
+                            '<span class="text-xs font-semibold ' + (p.stok <= p.rop ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400') + '">' + (p.stok || 0) + '</span>' +
+                            '<span class="text-[10px] text-slate-400 dark:text-zinc-500 ml-1">/ ROP ' + (p.rop || 0) + '</span>' +
+                        '</div>' +
+                    '</div>';
+                }).join('') +
+            '</div>';
+        }
+
+        function renderDocList(docs) {
+            if (!docs || docs.length === 0) return '';
+            return '<div class="divide-y divide-slate-100 dark:divide-zinc-800">' +
+                docs.map(function(d) {
+                    var itemsHtml = (d.items || []).map(function(i) {
+                        return '<span class="text-xs text-slate-500 dark:text-zinc-400">' + i.produk + ' x' + i.jumlah + '</span>';
+                    }).join(', ');
+                    return '<div class="py-2">' +
+                        '<div class="flex items-center justify-between">' +
+                            '<span class="text-sm font-semibold text-blue-600 dark:text-blue-400">#' + (d.kode || '-') + '</span>' +
+                            '<span class="text-xs text-slate-500 dark:text-zinc-400">' + (d.supplier || '-') + '</span>' +
+                        '</div>' +
+                        '<div class="mt-0.5 text-xs text-slate-400 dark:text-zinc-500">' + itemsHtml + '</div>' +
+                        '<div class="mt-0.5 text-xs font-semibold text-slate-700 dark:text-zinc-300">Rp ' + (d.total_value ? Number(d.total_value).toLocaleString('id-ID') : '0') + '</div>' +
+                    '</div>';
+                }).join('') +
+            '</div>';
+        }
+
         function openPopup(btn) {
-            const level = btn.dataset.alertLevel || 'neutral';
+            var level = btn.dataset.alertLevel || 'neutral';
+            var idx = parseInt(btn.dataset.alertIndex, 10);
+            var alert = alertsData[idx] || {};
             popupIcon.innerHTML = iconMap[level] || iconMap.neutral;
             popupLabel.className = 'm-0 text-sm font-semibold ' + (labelClassMap[level] || labelClassMap.neutral);
-            popupLabel.textContent = btn.dataset.alertLabel || '';
-            popupText.textContent = btn.dataset.alertText || '';
+            popupLabel.textContent = alert.label || '';
+
+            var products = alert.products || [];
+            var docs = alert.pending_docs || [];
+
+            var html = '';
+            if (products.length > 0) {
+                html += renderProductList(products);
+            } else if (docs.length > 0) {
+                html += renderDocList(docs);
+            }
+            popupBody.innerHTML = html || '<p class="text-xs text-slate-400 dark:text-zinc-500">Tidak ada detail.</p>';
+
             overlay.classList.remove('hidden');
             overlay.classList.add('flex');
         }
@@ -242,27 +335,16 @@
             overlay.classList.remove('flex');
         }
 
-        document.querySelectorAll('.alert-btn').forEach((btn) => {
-            btn.addEventListener('click', () => openPopup(btn));
+        document.querySelectorAll('.alert-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() { openPopup(btn); });
         });
 
         document.getElementById('alertPopupClose').addEventListener('click', closePopup);
-        overlay.addEventListener('click', (e) => {
+        overlay.addEventListener('click', function(e) {
             if (e.target === overlay) closePopup();
         });
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closePopup();
         });
     })();
-</script>
-
-{{-- Inject chart data untuk JS --}}
-<script>
-    window.__DASHBOARD_DATA__ = {
-        range: @json($activeRange),
-        charts: @json($charts),
-        metrics: @json($metrics),
-        latestTransactions: @json($latestTransactions),
-        alerts: @json($alerts),
-    };
 </script>
