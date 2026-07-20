@@ -55,36 +55,36 @@
                     <h2 class="m-0 text-base font-semibold text-slate-800 dark:text-slate-200">Harga dan Stok</h2>
                 </div>
                 <div class="p-5">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="text-center">
-                            <div class="w-20 h-20 mx-auto mb-2 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                                <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">Rp</span>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center">
+                                <p class="m-0 text-xs font-medium text-slate-500 dark:text-zinc-400 uppercase tracking-wide mb-2">Harga Satuan</p>
+                                <div class="w-20 h-20 mx-auto mb-2 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                                    <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">Rp</span>
+                                </div>
+                                <p class="m-0 mt-1 text-xl font-bold text-slate-800 dark:text-zinc-200">Rp {{ number_format((float) $produk->harga, 0, ',', '.') }}</p>
                             </div>
-                            <p class="m-0 text-xs text-slate-500 dark:text-zinc-400 uppercase tracking-wide">Harga Satuan</p>
-                            <p class="m-0 mt-1 text-xl font-bold text-slate-800 dark:text-zinc-200">Rp {{ number_format((float) $produk->harga, 0, ',', '.') }}</p>
-                        </div>
-                        <div>
-                            <p class="m-0 text-xs font-medium text-slate-500 dark:text-zinc-400 uppercase tracking-wide mb-2">Stok Tersedia</p>
-                            @php
-                                $stok = (int) $produk->stok;
-                                $stokPct = min((float) $stok, 100);
-                            @endphp
-                            <div class="flex items-center justify-center">
-                                <div class="relative w-20 h-20">
-                                    <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
-                                        <path class="text-slate-200 dark:text-zinc-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
-                                        <path class="{{ $stok > 10 ? 'text-green-500 dark:text-green-400' : ($stok > 0 ? 'text-amber-500 dark:text-amber-400' : 'text-red-500 dark:text-red-400') }}" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8" stroke-dasharray="{{ $stokPct }},{{ 100 - $stokPct }}" stroke-linecap="round"/>
-                                    </svg>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="text-lg font-bold {{ $stok > 10 ? 'text-green-600 dark:text-green-400' : ($stok > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400') }}">{{ $stok }}</span>
+                            <div class="text-center">
+                                <p class="m-0 text-xs font-medium text-slate-500 dark:text-zinc-400 uppercase tracking-wide mb-2">Stok Tersedia</p>
+                                @php
+                                    $stok = (int) $produk->stok;
+                                    $stokPct = min((float) $stok, 100);
+                                @endphp
+                                <div class="flex items-center justify-center">
+                                    <div class="relative w-20 h-20">
+                                        <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+                                            <path class="text-slate-200 dark:text-zinc-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"/>
+                                            <path class="{{ $stok > 10 ? 'text-green-500 dark:text-green-400' : ($stok > 0 ? 'text-amber-500 dark:text-amber-400' : 'text-red-500 dark:text-red-400') }}" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8" stroke-dasharray="{{ $stokPct }},{{ 100 - $stokPct }}" stroke-linecap="round"/>
+                                        </svg>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <span class="text-lg font-bold {{ $stok > 10 ? 'text-green-600 dark:text-green-400' : ($stok > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400') }}">{{ $stok }}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <p class="m-0 mt-2 text-xs text-center text-slate-500 dark:text-zinc-400">
+                                    {{ $stok > 10 ? 'Stok Aman' : ($stok > 0 ? 'Stok Rendah' : 'Stok Habis') }}
+                                </p>
                             </div>
-                            <p class="m-0 mt-2 text-xs text-center text-slate-500 dark:text-zinc-400">
-                                {{ $stok > 10 ? 'Stok Aman' : ($stok > 0 ? 'Stok Rendah' : 'Stok Habis') }}
-                            </p>
                         </div>
-                    </div>
                 </div>
             </article>
 
