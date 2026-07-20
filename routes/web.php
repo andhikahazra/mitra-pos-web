@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 // Nota Digital (Public - no auth)
 Route::get('/nota/{kode}', [ReceiptController::class, 'show'])->name('nota.show');
-Route::get('/nota/{kode}/og-image', [ReceiptController::class, 'ogImage'])->name('nota.og-image');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
