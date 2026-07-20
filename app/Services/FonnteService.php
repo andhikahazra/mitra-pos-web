@@ -57,7 +57,7 @@ class FonnteService
     public function sendRopWarning(string $target, array $criticalItems): bool
     {
         if (empty($criticalItems)) {
-            return true; // Nothing to send
+            return true;
         }
 
         $date = Carbon::now()->locale('id')->isoFormat('D MMMM YYYY');
@@ -101,31 +101,15 @@ class FonnteService
      */
     public function sendReceipt(string $target, Transaksi $transaksi): bool
     {
-        $date = Carbon::parse($transaksi->tanggal)->locale('id')->isoFormat('D MMMM YYYY HH:mm');
-        
-        $message = "*NOTA DIGITAL - MITRA POS*\n";
-        $message .= "---------------------------------\n";
-        $message .= "Kode   : {$transaksi->kode}\n";
+        $setting = \App\Models\Setting::first();
+
+        $grandTotal = (float) $transaksi->total_harga + (float) $transaksi->biaya_admin;
+        $date = Carbon::parse($transaksi->tanggal)->locale('id')->isoFormat('D MMMM YYYY');
+
+        $message = "*NOTA DIGITAL - {$transaksi->kode}*\n\n";
         $message .= "Tanggal: {$date}\n";
-        $message .= "---------------------------------\n";
-
-        foreach ($transaksi->detail_transaksi as $detail) {
-            $message .= "- {$detail->produk->nama}\n";
-            $message .= "  {$detail->jumlah} x Rp " . number_format($detail->harga, 0, ',', '.') . " = Rp " . number_format($detail->subtotal, 0, ',', '.') . "\n";
-        }
-
-        $message .= "---------------------------------\n";
-        $message .= "Subtotal : Rp " . number_format($transaksi->total_harga, 0, ',', '.') . "\n";
-        
-        if ($transaksi->biaya_admin > 0) {
-            $message .= "Biaya Admin: Rp " . number_format($transaksi->biaya_admin, 0, ',', '.') . "\n";
-        }
-        
-        $grandTotal = $transaksi->total_harga + $transaksi->biaya_admin;
-        $message .= "*TOTAL    : Rp " . number_format($grandTotal, 0, ',', '.') . "*\n";
-        $message .= "---------------------------------\n";
-        $message .= "Pembayaran : {$transaksi->metode_pembayaran}\n\n";
-        $message .= "Terima kasih telah berbelanja di toko kami!";
+        $message .= "Total: Rp " . number_format($grandTotal, 0, ',', '.') . "\n\n";
+        $message .= url('/nota/' . $transaksi->kode);
 
         return $this->sendMessage($target, $message);
     }
