@@ -13,6 +13,9 @@ class LogStokController extends Controller
         $search = $request->string('search')->trim()->value();
         $typeFilter = $request->string('type', 'all')->value();
         $productFilter = $request->string('produk_id', 'all')->value();
+        $range = $request->query('range', 'today');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
 
         // 1. Kueri data penjualan (Keluar)
         $salesQuery = DB::table('detail_transaksi')
@@ -71,6 +74,19 @@ class LogStokController extends Controller
             $subquery->where('produk_id', '=', $productFilter);
         }
 
+        // Date range filter
+        if ($range === 'today') {
+            $subquery->whereBetween('tanggal', [now()->startOfDay(), now()->endOfDay()]);
+        } elseif ($range === '7d') {
+            $subquery->whereBetween('tanggal', [now()->subDays(6)->startOfDay(), now()->endOfDay()]);
+        } elseif ($range === '1m') {
+            $subquery->whereBetween('tanggal', [now()->subDays(29)->startOfDay(), now()->endOfDay()]);
+        } elseif ($range === 'custom' && $startDate && $endDate) {
+            $start = \Carbon\Carbon::parse($startDate)->startOfDay();
+            $end = \Carbon\Carbon::parse($endDate)->endOfDay();
+            $subquery->whereBetween('tanggal', [$start, $end]);
+        }
+
         // Ambil data movements terpaginasi
         $movements = $subquery->orderBy('tanggal', 'desc')
             ->paginate(10)
@@ -95,7 +111,10 @@ class LogStokController extends Controller
             'products' => $products,
             'search' => $search,
             'typeFilter' => $typeFilter,
-            'productFilter' => $productFilter
+            'productFilter' => $productFilter,
+            'range' => $range,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]);
     }
 }
