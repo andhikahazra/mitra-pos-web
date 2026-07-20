@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RopController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StokBatchController;
 use App\Http\Controllers\SupplierController;
@@ -62,6 +63,8 @@ Route::middleware(['auth', 'pemilik'])->group(function (): void {
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+    Route::get('/plan/major-update', [PlanController::class, 'majorUpdate'])->name('plan.major-update');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
