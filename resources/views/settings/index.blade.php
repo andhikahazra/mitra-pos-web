@@ -164,10 +164,7 @@
             </div>
 
             <div class="settings-actions">
-                <div class="settings-actions-hint" id="settings-hint">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                    Klik "Edit" untuk mengubah pengaturan
-                </div>
+
                 <div id="action-buttons" class="flex items-center gap-3" style="display: none;">
                     <button type="button" id="btn-cancel" class="btn btn-ghost h-9 text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>

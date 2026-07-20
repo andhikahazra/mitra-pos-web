@@ -56,13 +56,9 @@
                         </td>
                         <td>
                             @if($isIncoming)
-                                <span class="tag success inline-flex items-center bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 px-2 py-0.5 rounded text-[11px] font-semibold">
-                                    Masuk
-                                </span>
+                                <span class="status-pill success">Masuk</span>
                             @else
-                                <span class="tag info inline-flex items-center bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-300 dark:border-blue-700 px-2 py-0.5 rounded text-[11px] font-semibold">
-                                    Keluar
-                                </span>
+                                <span class="status-pill danger">Keluar</span>
                             @endif
                         </td>
                         <td class="font-bold text-sm {{ $isIncoming ? 'text-emerald-500 dark:text-emerald-400' : 'text-red-500 dark:text-red-400' }}">
