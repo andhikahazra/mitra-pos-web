@@ -39,8 +39,15 @@ class ReceiptController extends Controller
         $ogImage      = asset('favicon.png');
         $ogUrl        = url()->current();
 
+        $totals = [
+            'subtotal'    => $subtotal,
+            'admin'       => $admin,
+            'method'      => $method,
+            'grand_total' => $grandTotal,
+        ];
+
         return view('nota.show', compact(
-            'transaksi', 'items', 'setting', 'alamat',
+            'transaksi', 'items', 'setting', 'alamat', 'totals',
             'title', 'ogTitle', 'ogDescription', 'ogImage', 'ogUrl'
         ));
     }
