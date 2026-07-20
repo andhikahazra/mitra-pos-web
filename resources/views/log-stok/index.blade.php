@@ -56,9 +56,7 @@
             @endforeach
         </div>
 
-        @if($search || $typeFilter !== 'all' || $productFilter !== 'all' || $range !== 'all')
-            <a href="{{ route('log-stok.index') }}" class="btn btn-ghost text-xs flex-shrink-0" style="text-decoration: none; display: flex; align-items: center;">Reset Filter</a>
-        @endif
+        <a href="{{ route('log-stok.index') }}" class="btn btn-ghost" style="text-decoration: none; display: flex; align-items: center;">Reset Filter</a>
 
         {{-- Custom range wrapper --}}
         <div id="logStokCustomRange" class="w-full flex items-center gap-2 mt-2 {{ $range === 'custom' ? '' : 'hidden' }}">
