@@ -12,7 +12,7 @@
         </div>
 
         <div class="product-form-grid">
-            <label class="full-field">Nama Resmi Supplier
+            <label class="full-field sm:col-span-1">Nama Resmi Supplier
                 <input class="field" name="nama" required placeholder="Contoh: PT. Sumber Makmur Abadi"
                        value="{{ old('nama', $isEdit ? $supplier->nama : '') }}">
             </label>
@@ -27,7 +27,7 @@
                 </div>
             </label>
 
-            <label class="full-field">Alamat Kantor / Gudang
+            <label class="full-field sm:col-span-2">Alamat Kantor / Gudang
                 <textarea class="field min-h-[120px]" name="alamat" placeholder="Tuliskan alamat lengkap untuk keperluan pengiriman data atau penjemputan barang...">{{ old('alamat', $isEdit ? $supplier->alamat : '') }}</textarea>
             </label>
         </div>
