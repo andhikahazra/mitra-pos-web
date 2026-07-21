@@ -58,8 +58,8 @@
         </div>
         <div class="flex flex-col">
             <label class="text-[11px] mb-2 block opacity-0">&nbsp;</label>
-            <a href="{{ route('barang-masuk.index') }}" class="btn btn-ghost !h-11 w-11 !p-0 flex items-center justify-center" title="Reset Filter">
-                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <a href="{{ route('barang-masuk.index') }}" class="btn h-10 bg-blue-600 text-white hover:bg-blue-700 px-4 text-sm whitespace-nowrap">
+                Reset
             </a>
         </div>
     </form>
