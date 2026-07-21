@@ -42,20 +42,22 @@
                 <p class="kpi-label uppercase tracking-wider text-[11px]">Rincian Metode</p>
                 <svg class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            <div class="mt-3 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 dark:text-zinc-400">Tunai</span>
-                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 dark:text-zinc-400">QRIS</span>
-                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 dark:text-zinc-400">Transfer</span>
-                    <span class="text-sm font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</span>
-                </div>
-            </div>
+            <table class="mt-2 w-full text-xs">
+                <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
+                    <tr>
+                        <td class="py-1 text-slate-500 dark:text-zinc-400">Tunai</td>
+                        <td class="py-1 text-right font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Tunai'], 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-1 text-slate-500 dark:text-zinc-400">QRIS</td>
+                        <td class="py-1 text-right font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['QRIS'], 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-1 text-slate-500 dark:text-zinc-400">Transfer</td>
+                        <td class="py-1 text-right font-semibold text-slate-800 dark:text-zinc-200">Rp {{ number_format($summary['pembayaran']['Transfer'] ?? 0, 0, ',', '.') }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
     </div>
 

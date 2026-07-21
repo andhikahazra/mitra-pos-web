@@ -27,13 +27,9 @@ class BarangMasukController extends Controller
             $query->where('status', $request->status);
         }
 
-        // Filter Bulan/Tahun (berdasarkan tanggal_pesan)
-        if ($request->filled('month')) {
-            $query->whereMonth('tanggal_pesan', $request->month);
-        }
-        if ($request->filled('year')) {
-            $query->whereYear('tanggal_pesan', $request->year);
-        }
+        // Filter Bulan/Tahun (berdasarkan tanggal_pesan) — default ke bulan/tahun saat ini
+        $query->whereMonth('tanggal_pesan', $request->month ?? now()->month);
+        $query->whereYear('tanggal_pesan', $request->year ?? now()->year);
 
         $incomingGoods = $query->orderByDesc('id')
             ->paginate(10)
